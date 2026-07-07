@@ -256,6 +256,12 @@ body{font-family:Georgia,'Times New Roman',serif;background:var(--cream);color:v
       </div>
       <input type="text" id="reg-role" placeholder="Your role (optional)" autocomplete="off" style="display:none;margin-top:10px">
     </div>
+    <div class="pre-start" style="background:rgba(255,255,255,.05);border:1px solid rgba(156,107,46,.5);border-radius:10px;padding:14px 16px;margin-bottom:16px;font-family:sans-serif;font-size:.82rem;line-height:1.7;color:rgba(255,255,255,.75)">
+      <div style="color:#C79A5B;letter-spacing:1.5px;text-transform:uppercase;font-size:.7rem;margin-bottom:8px">Before you start</div>
+      ⏱ Takes about <strong>10–15 minutes</strong> per venue — set aside a quiet moment and do it properly.<br>
+      ⚡ Some rounds are <strong>timed</strong> — read each situation carefully and stay focused.<br>
+      🔁 Refresh <strong>monthly</strong>, and whenever new dishes or wines by the glass launch.
+    </div>
     <button class="btn btn-gold btn-full" onclick="startJourney()">Enter the Academy →</button>
     <p style="color:rgba(255,255,255,.4);font-size:.78rem;text-align:center;margin-top:16px">Your progress is saved on this device.</p>
   </div>
@@ -281,6 +287,24 @@ body{font-family:Georgia,'Times New Roman',serif;background:var(--cream);color:v
   <p class="page-title" id="section-venue-name"></p>
   <p class="page-sub">Choose a training track</p>
   <div class="choose-grid" id="section-grid" style="max-width:620px"></div>
+</div>
+
+<!-- WEEKLY / FORTNIGHTLY CHECK (scaffold · content added later) -->
+<div id="screen-weekly" class="screen">
+  <div class="topbar">
+    <button class="crumb" onclick="goScreen('screen-section')">← Back</button>
+    <span class="who" id="who-weekly"></span>
+  </div>
+  <div class="read" id="weekly-content"></div>
+</div>
+
+<!-- READING THE TABLE (reflection · not scored) -->
+<div id="screen-reflect" class="screen">
+  <div class="topbar">
+    <button class="crumb" onclick="goScreen('screen-section')">← Back</button>
+    <span class="who" id="who-reflect"></span>
+  </div>
+  <div class="read" id="reflect-content"></div>
 </div>
 
 <!-- READING / TRAINING -->
@@ -555,7 +579,54 @@ function openVenue(v){
     c.onclick=()=>openTrack(v,t.key);
     g.appendChild(c);
   });
+  const wc=document.createElement('div'); wc.className='choice-card';
+  wc.innerHTML=`<div class="icon">🗓️</div><h3>Weekly Check-In</h3><p>Short knowledge checks — weekly & fortnightly</p>
+    <span class="tag tag-todo">Coming soon</span>`;
+  wc.onclick=()=>openWeekly(v);
+  g.appendChild(wc);
+  const rc=document.createElement('div'); rc.className='choice-card';
+  rc.innerHTML=`<div class="icon">🪑</div><h3>Reading the Table</h3><p>Read guests before you recommend — a quick reflection</p>
+    <span class="tag tag-todo">Optional · not scored</span>`;
+  rc.onclick=()=>startReflection();
+  g.appendChild(rc);
   goScreen('screen-section');
+}
+function openWeekly(v){
+  document.getElementById('weekly-content').innerHTML=`
+    <p class="page-title">Weekly Check-In</p>
+    <p class="page-sub" style="margin-bottom:18px">${VENUES[v].name} · short knowledge checks to keep the team sharp.</p>
+    <div style="background:#fff;border:1px dashed #cbb78f;border-radius:12px;padding:28px 20px;text-align:center;color:#666">
+      <div style="font-size:2rem;margin-bottom:10px">🗓️</div>
+      <div style="color:var(--navy);font-size:1.05rem;margin-bottom:8px">Coming soon</div>
+      <div style="font-family:sans-serif;font-size:.9rem;line-height:1.6">This is where each week's — and fortnight's — quick knowledge checks will appear for ${VENUES[v].name}.<br>Your manager adds the questions here.</div>
+    </div>`;
+  const w=document.getElementById('who-weekly'); if(w) w.textContent=S.name;
+  goScreen('screen-weekly');
+}
+function startReflection(){
+  const items=[
+    {s:"Two guests sit down, unhurried, taking in the room. One reaches for the wine list first. How do you read them — and how do you open?",
+     c:"Signals of a relaxed, experience-led table: no time pressure, wine-led. Give them a moment, greet warmly, and let the wine list be your way in — a by-the-glass suggestion, or ask what they usually enjoy. Match their pace; never rush the order."},
+    {s:"A group arrives mid-service, talking fast, phones out, one already asking how long the food takes. What's your read, and what do you lead with?",
+     c:"Time-sensitive table. Acknowledge the pace up front, steer toward dishes that come out quickly, and pace the order so nothing stalls. Reassure them on timing before they have to ask again — take control of the tempo for them."},
+    {s:"A solo guest takes a seat, sets the phone face-down, and watches the room. How do you read them, and what's your first line?",
+     c:"Often open to conversation and to your guidance. A warm, low-pressure opener and a genuine recommendation land well. Solo guests are a chance to make the room feel personal — check in without hovering."}
+  ];
+  const body=items.map((it,idx)=>`
+    <div style="background:#fff;border:1px solid #e5e0d8;border-radius:12px;padding:18px;margin-bottom:16px">
+      <div style="font-family:sans-serif;font-size:.72rem;letter-spacing:1px;text-transform:uppercase;color:var(--gold);margin-bottom:8px">Table ${idx+1}</div>
+      <div style="color:var(--navy);line-height:1.5;margin-bottom:12px">${it.s}</div>
+      <textarea rows="3" placeholder="Your read — a sentence or two…" style="width:100%;padding:10px;border:1px solid #ccc;border-radius:8px;font-family:inherit;font-size:.95rem;resize:vertical"></textarea>
+      <button onclick="this.nextElementSibling.style.display='block';this.style.display='none'" style="margin-top:10px;background:none;border:1px solid var(--gold);color:var(--gold);padding:8px 14px;border-radius:8px;font-family:sans-serif;font-size:.82rem;cursor:pointer">Reveal coaching note</button>
+      <div style="display:none;margin-top:12px;padding:12px 14px;background:rgba(31,58,95,.06);border-radius:8px;color:var(--navy);line-height:1.5;font-size:.92rem">${it.c}</div>
+    </div>`).join('');
+  document.getElementById('reflect-content').innerHTML=`
+    <p class="page-title">Reading the Table</p>
+    <p class="page-sub" style="margin-bottom:18px">Every table is different. There are no scores here — read the situation, write your take, then compare with a coaching note.</p>
+    ${body}
+    <p style="font-family:sans-serif;font-size:.85rem;color:#888;margin:8px 0 24px">The point isn't a perfect answer — it's building the habit of reading the guests before you recommend.</p>`;
+  const w=document.getElementById('who-reflect'); if(w) w.textContent=S.name;
+  goScreen('screen-reflect');
 }
 function trackComplete(v,t){
   const list = t==='service'?SERVICE_GAMES[v]:ALLERGY_CORE;
@@ -937,7 +1008,8 @@ const GAMES={
       setMeta(`<span class="pill red">${'❤️'.repeat(lives)}</span><span class="pill gold">${score}/${objs.length}</span>`);
       setArea(`<div class="lives">${'❤️'.repeat(lives)}${'🖤'.repeat(3-lives)}</div>
         <div class="q-progress">Objection ${i+1} of ${objs.length}</div>
-        <div class="obj-phrase">${ob.obj}</div>
+        <div class="obj-phrase"><span style="display:block;font-style:normal;font-family:sans-serif;font-size:.72rem;letter-spacing:1px;text-transform:uppercase;color:var(--gold);margin-bottom:6px">A guest says</span>${ob.obj}</div>
+        <div style="font-family:sans-serif;font-size:.85rem;color:#666;margin:-6px 0 14px">How do you respond?</div>
         <div class="options">${shuffle(ob.r).map(x=>`<div class="option" data-rt="${x.rt}" onclick="window._po(this)">${x.t}</div>`).join('')}</div>
         <div class="feedback" id="fb"></div>`);
     }
