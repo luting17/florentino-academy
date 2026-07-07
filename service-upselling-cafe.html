@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light">
+<title>Service Excellence &amp; Upselling — Café Florentino</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,900;1,9..144,500&family=Hanken+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    color-scheme:light;
+    --paper:#F7F1E6;
+    --paper-2:#FBF7EF;
+    --ink:#211C16;
+    --ink-soft:#5c5346;
+    --line:#E0D5C2;
+    --gold:#9C6B2E;
+    --gold-deep:#7A4E1D;
+    --gold-soft:#C79A5B;
+    --wine:#7B2D33;
+    --red:#C9402F;
+    --red-deep:#8E2417;
+    --green:#5C7349;
+    --green-deep:#3f5132;
+    --blue:#3C6E84;
+    --shadow:0 1px 0 rgba(33,28,22,.04), 0 18px 40px -24px rgba(33,28,22,.45);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:
+      radial-gradient(900px 500px at 12% -5%, rgba(156,107,46,.09), transparent 60%),
+      radial-gradient(800px 600px at 100% 8%, rgba(123,45,51,.06), transparent 55%),
+      var(--paper);
+    color:var(--ink);
+    font-family:"Hanken Grotesk",system-ui,sans-serif;
+    font-size:17px;
+    line-height:1.62;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1040px;margin:0 auto;padding:0 26px;}
+  h1,h2,h3,h4{font-family:"Fraunces",Georgia,serif;line-height:1.05;margin:0;letter-spacing:-.01em;}
+  p{margin:0 0 1em;}
+  a{color:var(--gold-deep);}
+  strong{font-weight:700;}
+  .mono{font-family:"Space Mono",monospace;}
+
+  /* ---------- COVER ---------- */
+  .cover{position:relative;overflow:hidden;background:linear-gradient(160deg,#2a231b 0%,#1a150f 100%);color:var(--paper-2);padding:80px 0 70px;}
+  .cover::before{content:"";position:absolute;inset:0;background:radial-gradient(600px 300px at 88% 10%, rgba(199,154,91,.34), transparent 60%),radial-gradient(520px 380px at 5% 100%, rgba(123,45,51,.26), transparent 55%);pointer-events:none;}
+  .cover .wrap{position:relative;}
+  .kicker{font-family:"Space Mono",monospace;font-size:12.5px;letter-spacing:.28em;text-transform:uppercase;color:#E6CBA0;margin-bottom:26px;display:flex;align-items:center;gap:14px;}
+  .kicker::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,rgba(230,203,160,.6),transparent);}
+  .cover h1{font-size:clamp(40px,8vw,78px);font-weight:900;color:#fff;letter-spacing:-.025em;}
+  .cover h1 em{font-style:italic;font-weight:500;color:#E6CBA0;}
+  .cover .sub{margin-top:24px;max-width:620px;font-size:18.5px;color:#d8cdbb;line-height:1.55;}
+  .cover-meta{margin-top:46px;display:flex;flex-wrap:wrap;gap:14px;}
+  .chip{font-family:"Space Mono",monospace;font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;padding:9px 15px;border:1px solid rgba(255,255,255,.22);border-radius:100px;color:#e9ddca;background:rgba(255,255,255,.04);}
+  .byline{margin-top:30px;font-size:13.5px;color:#b6a98f;font-family:"Space Mono",monospace;letter-spacing:.04em;}
+
+  /* ---------- SECTION SCAFFOLD ---------- */
+  section{padding:60px 0;border-bottom:1px solid var(--line);}
+  .sec-head{display:flex;gap:20px;align-items:flex-start;margin-bottom:30px;}
+  .sec-num{font-family:"Space Mono",monospace;font-size:14px;font-weight:700;color:var(--gold);border:1.5px solid var(--gold);border-radius:50%;width:46px;height:46px;flex:none;display:grid;place-items:center;margin-top:6px;}
+  .sec-head h2{font-size:clamp(28px,5vw,42px);font-weight:900;color:var(--gold-deep);}
+  .sec-head .lead{color:var(--ink-soft);margin-top:10px;font-size:18px;max-width:64ch;}
+
+  /* ---------- CALLOUTS ---------- */
+  .callout{border-radius:16px;padding:20px 22px;margin:22px 0;font-size:16px;line-height:1.55;border:1px solid var(--line);background:var(--paper-2);position:relative;}
+  .callout .tag{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;display:block;margin-bottom:7px;}
+  .callout.rule{background:#2a231b;color:#f0e7d6;border-color:#2a231b;}
+  .callout.rule .tag{color:#E6CBA0;}
+  .callout.rule strong{color:#fff;}
+  .callout.gold{background:#F6ECD9;border-color:#E7D2A8;}
+  .callout.gold .tag{color:var(--gold-deep);}
+  .callout.safe{background:#EEF2E7;border-color:#CFDABc;}
+  .callout.safe .tag{color:var(--green-deep);}
+  .callout.info{background:#E9F1F4;border-color:#BFD6DE;}
+  .callout.info .tag{color:#2c596b;}
+
+  /* ---------- PSYCHOLOGY LIST ---------- */
+  .why{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin:6px 0 18px;}
+  .why-item{background:var(--paper-2);border:1px solid var(--line);border-radius:14px;padding:16px 18px;box-shadow:var(--shadow);font-size:15.5px;}
+  .why-item .h{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);font-weight:700;display:block;margin-bottom:5px;}
+
+  /* ---------- SEQUENCE FLOW ---------- */
+  .flow{list-style:none;counter-reset:f;margin:0;padding:0;display:grid;gap:12px;}
+  .flow li{counter-increment:f;display:grid;grid-template-columns:46px 1fr;gap:16px;align-items:start;background:var(--paper-2);border:1px solid var(--line);border-radius:14px;padding:16px 18px;box-shadow:var(--shadow);}
+  .flow li::before{content:counter(f);font-family:"Fraunces",serif;font-weight:900;font-size:22px;color:#fff;background:var(--gold);width:46px;height:46px;border-radius:13px;display:grid;place-items:center;}
+  .flow li.star::before{background:var(--wine);}
+  .flow .st{font-family:"Hanken Grotesk";font-weight:700;font-size:16.5px;color:var(--ink);}
+  .flow .sd{font-size:14.5px;color:var(--ink-soft);margin-top:2px;}
+
+  /* ---------- DISCOVERY QUESTIONS ---------- */
+  .qlist{list-style:none;margin:0;padding:0;display:grid;gap:11px;}
+  .qlist li{background:var(--paper-2);border:1px solid var(--line);border-left:4px solid var(--blue);border-radius:0 11px 11px 0;padding:13px 16px;font-size:16px;font-style:italic;color:var(--ink);}
+
+  /* ---------- DO / DON'T SPLIT ---------- */
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:16px;}
+  .side{border-radius:14px;padding:18px 20px;font-size:15px;line-height:1.5;}
+  .side h4{font-size:16px;font-family:"Hanken Grotesk";font-weight:700;margin-bottom:10px;display:flex;gap:8px;align-items:center;}
+  .side.A{background:#FBEBE7;border:1px solid #E9C3BA;}
+  .side.A h4{color:var(--red-deep);}
+  .side.B{background:#EEF2E7;border:1px solid #CFDABc;}
+  .side.B h4{color:var(--green-deep);}
+  .side ul{margin:0;padding-left:18px;}
+  .side li{margin-bottom:7px;}
+
+  /* ---------- PHRASE CHIPS / SCRIPTS ---------- */
+  .phrases{display:grid;gap:9px;margin:14px 0;}
+  .phrase{background:var(--paper-2);border:1px solid var(--line);border-radius:10px;padding:12px 15px;font-size:15.5px;font-style:italic;color:var(--ink);}
+  .phrase b{font-style:normal;font-weight:700;color:var(--gold-deep);}
+  .four{counter-reset:p;display:grid;gap:10px;margin:14px 0;}
+  .four .pf{counter-increment:p;display:grid;grid-template-columns:38px 1fr;gap:14px;align-items:center;background:#F6ECD9;border:1px solid #E7D2A8;border-radius:12px;padding:13px 16px;font-size:16px;font-style:italic;}
+  .four .pf::before{content:counter(p);font-family:"Fraunces",serif;font-weight:900;font-size:18px;color:#fff;background:var(--gold);width:34px;height:34px;border-radius:9px;display:grid;place-items:center;}
+
+  /* ---------- COURSE CARDS (the journey) ---------- */
+  .course{display:grid;grid-template-columns:64px 1fr;gap:20px;background:var(--paper-2);border:1px solid var(--line);border-radius:18px;padding:22px 24px;margin:16px 0;box-shadow:var(--shadow);}
+  .course .ic{width:58px;height:58px;border-radius:15px;display:grid;place-items:center;background:#F6ECD9;color:var(--gold-deep);border:1px solid #E7D2A8;flex:none;}
+  .course .ic svg{width:32px;height:32px;}
+  .course h3{font-size:21px;font-weight:600;color:var(--ink);}
+  .course .goal{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);font-weight:700;margin:2px 0 8px;}
+
+  /* ---------- GUEST TYPE CARDS ---------- */
+  .guests{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px;margin-top:8px;}
+  .gcard{background:var(--paper-2);border:1px solid var(--line);border-radius:16px;padding:20px 22px;box-shadow:var(--shadow);}
+  .gcard .ic{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;background:#F6ECD9;color:var(--gold-deep);border:1px solid #E7D2A8;margin-bottom:12px;}
+  .gcard .ic svg{width:24px;height:24px;}
+  .gcard h3{font-size:19px;font-weight:600;margin-bottom:6px;}
+  .gcard p{font-size:15px;color:var(--ink-soft);margin:0;}
+
+  /* ---------- FORMULA BAND ---------- */
+  .formula{background:linear-gradient(165deg,#2a231b,#1a150f);color:#f0e7d6;border-radius:20px;padding:30px;margin:22px 0;}
+  .formula .fl{font-family:"Space Mono",monospace;font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:#E6CBA0;margin-bottom:16px;}
+  .formula .steps{display:flex;flex-wrap:wrap;align-items:center;gap:12px;font-family:"Fraunces",serif;}
+  .formula .fstep{font-size:21px;font-weight:600;color:#fff;}
+  .formula .arrow{color:var(--gold-soft);font-size:22px;}
+  .formula .note{margin-top:16px;font-size:14.5px;color:#cabda6;}
+
+  /* ---------- PHRASE BANK GROUPS ---------- */
+  .bank{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:10px;}
+  .bgroup{background:var(--paper-2);border:1px solid var(--line);border-radius:16px;padding:18px 20px;box-shadow:var(--shadow);}
+  .bgroup h4{font-size:16px;font-family:"Hanken Grotesk";font-weight:700;color:var(--gold-deep);margin-bottom:10px;}
+  .bgroup ul{margin:0;padding-left:18px;}
+  .bgroup li{font-size:14.8px;font-style:italic;color:var(--ink);margin-bottom:7px;}
+
+  /* ---------- MANAGER NOTE ---------- */
+  .mgr{background:#E9F1F4;border:1px solid #BFD6DE;border-radius:18px;padding:24px 26px;}
+  .mgr h3{font-size:21px;color:#2c596b;font-weight:600;margin-bottom:6px;}
+  .mtags{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0;}
+  .mtags span{background:#fff;border:1px solid #BFD6DE;border-radius:8px;padding:5px 11px;font-size:14px;}
+
+  /* ---------- CHEAT SHEET ---------- */
+  .sheet{background:var(--ink);color:var(--paper-2);border-radius:20px;padding:30px;margin-top:8px;}
+  .sheet h3{color:#fff;font-size:22px;}
+  .sheet .grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:18px;}
+  .sheet .col h4{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#E6CBA0;margin-bottom:10px;font-family:"Space Mono",monospace;}
+  .sheet ol,.sheet ul{margin:0;padding-left:18px;}
+  .sheet li{font-size:14.5px;margin-bottom:6px;color:#e9ddca;}
+  .sheet .formula-mini{margin-top:14px;font-family:"Fraunces",serif;font-size:15px;color:#fff;}
+
+  footer{padding:46px 0 70px;color:var(--ink-soft);font-size:13.5px;}
+  footer .src{margin-top:10px;line-height:1.7;}
+
+  @media (max-width:720px){
+    .split,.bank{grid-template-columns:1fr;}
+    .sheet .grid{grid-template-columns:1fr;}
+    .course{grid-template-columns:1fr;}
+    .sec-head{gap:14px;}
+  }
+  @media print{
+    body{background:#fff;font-size:12pt;}
+    .cover{background:#231d16 !important;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+    section{break-inside:avoid;}
+    .course,.gcard,.formula,.sheet,.callout,.flow li,.why-item,.bgroup{break-inside:avoid;}
+    *{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  }
+</style>
+</head>
+<body>
+
+<!-- ===================== COVER ===================== -->
+<header class="cover">
+  <div class="wrap">
+    <div class="kicker">Café Florentino · Staff Training · Service &amp; Sales</div>
+    <h1>Service Excellence <em>&amp;</em><br>Upselling</h1>
+    <p class="sub">Relaxed energy, the same craft. Pick tonight's hero before service, plant the tiramisu early, and pair a glass with every plate.</p>
+    <div class="cover-meta">
+      <span class="chip">The Philosophy</span>
+      <span class="chip">Guest Psychology</span>
+      <span class="chip">The Service Sequence</span>
+      <span class="chip">Language That Sells</span>
+      <span class="chip">Objections &amp; Follow-up</span>
+    </div>
+    <div class="byline">Prepared by Iris Potus &amp; Tom Zeller</div>
+  </div>
+</header>
+
+<div class="wrap">
+
+<!-- ===================== 1. PHILOSOPHY ===================== -->
+<section id="philosophy">
+  <div class="sec-head">
+    <div class="sec-num">01</div>
+    <div>
+      <h2>The Florentino philosophy</h2>
+      <p class="lead">The objective is not to sell more food and wine. The objective is to create a better experience — and when the experience is better, spending takes care of itself.</p>
+    </div>
+  </div>
+  <p>Guests should feel <strong>welcomed, guided and cared for</strong>. When a recommendation genuinely improves their evening, they spend more naturally — not because we pushed, but because we made the night better. That is the whole game: we are hosts first, and the sales follow.</p>
+  <div class="callout rule">
+    <span class="tag">The rule</span>
+    Never recommend something <strong>solely because it is expensive</strong>. Recommend it because it <strong>adds value</strong> to the guest's experience.
+  </div>
+  <div class="callout gold">
+    <span class="tag">In the Café</span>
+    The energy is relaxed but the technique is identical. Pick tonight's <strong>hero dish</strong> before service — "Save room, the tiramisu goes fast." Suggest a side with every main, and a glass that pairs with the pasta.
+  </div>
+</section>
+
+<!-- ===================== 2. GUEST PSYCHOLOGY ===================== -->
+<section id="psychology">
+  <div class="sec-head">
+    <div class="sec-num">02</div>
+    <div>
+      <h2>Understanding guest psychology</h2>
+      <p class="lead">People don't buy products — they buy confidence. Yours transfers to them. Guests spend more when these five things are true:</p>
+    </div>
+  </div>
+  <div class="why">
+    <div class="why-item"><span class="h">Trust</span>They trust the server.</div>
+    <div class="why-item"><span class="h">Understood</span>They feel understood.</div>
+    <div class="why-item"><span class="h">Personal</span>They believe the recommendation is personalised.</div>
+    <div class="why-item"><span class="h">Occasion</span>They feel they are celebrating or treating themselves.</div>
+    <div class="why-item"><span class="h">Expertise</span>They see the server as an expert.</div>
+  </div>
+  <div class="callout gold">
+    <span class="tag">Remember</span>
+    People buy <strong>confidence</strong> more than products. Your confidence transfers to the guest — so speak with warmth and certainty.
+  </div>
+</section>
+
+<!-- ===================== 3. SERVICE SEQUENCE ===================== -->
+<section id="sequence">
+  <div class="sec-head">
+    <div class="sec-num">03</div>
+    <div>
+      <h2>The complete service sequence</h2>
+      <p class="lead">Ten stages, every table. Each one is a chance to enhance the guest experience — not just to take an order.</p>
+    </div>
+  </div>
+  <ol class="flow">
+    <li><div><div class="st">Greeting</div><div class="sd">Warm, genuine, eye contact. Set the tone for the whole evening.</div></div></li>
+    <li><div><div class="st">Water offer</div><div class="sd">Still or sparkling — a small touch of care that opens the service.</div></div></li>
+    <li><div><div class="st">Aperitif recommendation</div><div class="sd">"May I start you with a glass of something?" Begin the journey early.</div></div></li>
+    <li><div><div class="st">Discovery questions</div><div class="sd">Ask before you recommend — learn the occasion and the mood.</div></div></li>
+    <li><div><div class="st">Food recommendations</div><div class="sd">Guide them through entrées and mains with confidence.</div></div></li>
+    <li><div><div class="st">Wine recommendations</div><div class="sd">Pair to the food and the occasion, never to the price.</div></div></li>
+    <li><div><div class="st">Side recommendations</div><div class="sd">Every main deserves a side suggestion to complete the plate.</div></div></li>
+    <li class="star"><div><div class="st">Dessert planting</div><div class="sd">Plant the seed <strong>before</strong> mains are finished — give them time to say yes.</div></div></li>
+    <li><div><div class="st">Coffee, cheese &amp; digestifs</div><div class="sd">Close the meal with a coffee, a cheese course, or a digestif.</div></div></li>
+    <li><div><div class="st">Warm farewell</div><div class="sd">End as you began — make them want to return.</div></div></li>
+  </ol>
+</section>
+
+<!-- ===================== 4. DISCOVERY QUESTIONS ===================== -->
+<section id="discovery">
+  <div class="sec-head">
+    <div class="sec-num">04</div>
+    <div>
+      <h2>Discovery questions</h2>
+      <p class="lead">Ask before recommending. Good questions build trust and reveal exactly where the opportunities are.</p>
+    </div>
+  </div>
+  <ul class="qlist">
+    <li>"Are you celebrating anything special tonight?"</li>
+    <li>"What are you most excited to enjoy this evening?"</li>
+    <li>"Do you prefer something lighter, or more indulgent?"</li>
+    <li>"Would you like a few recommendations?"</li>
+  </ul>
+  <div class="callout info"><span class="tag">Why it works</span>These questions make the guest feel understood — and they hand you everything you need to recommend with precision.</div>
+</section>
+
+<!-- ===================== 5. LANGUAGE THAT SELLS ===================== -->
+<section id="language">
+  <div class="sec-head">
+    <div class="sec-num">05</div>
+    <div>
+      <h2>Language that sells</h2>
+      <p class="lead">The words you choose shape how a guest imagines a dish before it arrives. Swap flat, closed questions for warm, consultative ones — and paint a picture.</p>
+    </div>
+  </div>
+
+  <div class="split">
+    <div class="side A">
+      <h4>✕ Avoid</h4>
+      <ul>
+        <li>"Would you like anything else?"</li>
+        <li>"Do you want a side?"</li>
+        <li>"That's our most expensive wine."</li>
+      </ul>
+    </div>
+    <div class="side B">
+      <h4>✓ Use</h4>
+      <ul>
+        <li>"May I make a recommendation?"</li>
+        <li>"Many guests enjoy…"</li>
+        <li>"This pairs beautifully with…"</li>
+        <li>"The kitchen is particularly proud of…"</li>
+        <li>"If you're looking for something special…"</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3 style="font-size:21px;font-weight:600;margin:26px 0 10px;color:var(--ink);">Be specific</h3>
+  <p>Instead of "Would you like anything else?", ask: <em>"Would you like a coffee to finish — or perhaps an affogato, espresso over gelato?"</em> Specifics sound professional and consultative, and give the guest something concrete to say yes to.</p>
+
+  <h3 style="font-size:21px;font-weight:600;margin:26px 0 10px;color:var(--ink);">Paint a picture</h3>
+  <p>The words we choose change how a guest perceives a dish. Replace "nice" or "good" with <strong>divine, elegant, indulgent, beautifully crafted</strong>. "The tiramisu is absolutely divine" is far more persuasive than "It's nice." Great hospitality lets guests imagine and anticipate the experience before the dish even arrives.</p>
+
+  <!-- SOCIAL PROOF (manual 6) -->
+  <h3 style="font-size:21px;font-weight:600;margin:30px 0 10px;color:var(--ink);">Social proof &amp; authority</h3>
+  <p>People trust what others enjoy. These phrases quietly reduce the risk in a guest's mind:</p>
+  <div class="phrases">
+    <div class="phrase">"Many of our regulars enjoy this."</div>
+    <div class="phrase">"One of our most requested dishes."</div>
+    <div class="phrase">"The chef is particularly proud of this dish."</div>
+    <div class="phrase">"Our sommelier loves this pairing."</div>
+  </div>
+</section>
+
+<!-- ===================== 6. THE UPSELL JOURNEY ===================== -->
+<section id="journey">
+  <div class="sec-head">
+    <div class="sec-num">06</div>
+    <div>
+      <h2>The upsell journey, course by course</h2>
+      <p class="lead">Guide the guest through a complete dining journey. Never ask "Do you want…?" — paint a picture instead.</p>
+    </div>
+  </div>
+
+  <!-- Starters -->
+  <div class="course">
+    <div class="ic" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M8 28c0-9 7-16 16-16s16 7 16 16"/><path d="M5 28h38"/><path d="M24 12V6"/></svg></div>
+    <div>
+      <h3>Starters</h3>
+      <div class="goal">Goal · build excitement</div>
+      <div class="phrases">
+        <div class="phrase"><b>Suppli:</b> "The suppli take just two minutes and are lovely to share while you decide."</div>
+        <div class="phrase"><b>Vitello tonnato:</b> "Many guests start with the vitello tonnato — sliced veal under a silky tuna mayonnaise."</div>
+      </div>
+      <p style="font-size:14.5px;color:var(--ink-soft);margin:0;">Never ask "Do you want a starter?" — paint a picture instead.</p>
+    </div>
+  </div>
+
+  <!-- Pasta & Mains -->
+  <div class="course">
+    <div class="ic" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 24a18 12 0 0036 0z"/><path d="M4 24h40"/><path d="M14 16c2-3 6-3 8 0M24 14c2-3 6-3 8 0"/></svg></div>
+    <div>
+      <h3>Pasta &amp; mains</h3>
+      <div class="goal">Goal · guide the journey · a side for every main</div>
+      <div class="phrases">
+        <div class="phrase">"The ravioli doppio is house-made and one of our most requested dishes."</div>
+        <div class="phrase">"Tonight's market fish is elegant and generous — the kitchen is particularly proud of it."</div>
+        <div class="phrase">"The cotoletta is a guest favourite — crisp, golden and generous."</div>
+        <div class="phrase"><b>Guiding a side:</b> "A side of roasted potatoes or the rocket &amp; parmesan rounds the plate beautifully — which would you prefer?"</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Dessert -->
+  <div class="course">
+    <div class="ic" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M10 26h28l-3 14H13z"/><path d="M10 26c0-7 6-12 14-12s14 5 14 12"/><path d="M24 14v-4"/></svg></div>
+    <div>
+      <h3>Dessert strategy</h3>
+      <div class="goal">Goal · plant before mains are finished</div>
+      <div class="phrases">
+        <div class="phrase">"Save room — the tiramisu goes fast, and it's beautifully made. Shall I set one aside?"</div>
+      </div>
+      <p style="font-size:14.5px;color:var(--ink-soft);margin:0;">Guests order dessert far more often when they're given time to consider it — so plant the idea early.</p>
+    </div>
+  </div>
+
+  <!-- Wine -->
+  <div class="course">
+    <div class="ic" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8h16l-2 14a6 6 0 01-12 0z"/><path d="M24 28v10M18 38h12"/></svg></div>
+    <div>
+      <h3>Wine sales framework</h3>
+      <div class="goal">Goal · pair to the experience, not the price</div>
+      <div class="split" style="margin-top:6px;">
+        <div class="side A"><h4>✕ Never ask</h4><ul><li>"Would you like wine?"</li></ul></div>
+        <div class="side B"><h4>✓ Instead ask</h4><ul><li>"May I recommend something that pairs beautifully with your selection?"</li></ul></div>
+      </div>
+      <div class="phrases" style="margin-top:12px;">
+        <div class="phrase"><b>With the rigatoni alla vodka:</b> a glass of Chianti. <b>With the vitello:</b> a crisp Pinot Grigio.</div>
+        <div class="phrase"><b>With the chocolate tart:</b> a sweet Moscato d'Asti to finish.</div>
+      </div>
+      <p style="font-size:15px;margin-top:12px;">Focus on <strong>style · occasion · pairing · experience</strong> — and avoid focusing on price.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 7. FOUR PHRASES ===================== -->
+<section id="four">
+  <div class="sec-head">
+    <div class="sec-num">07</div>
+    <div>
+      <h2>The four phrases — for shy staff</h2>
+      <p class="lead">If you remember nothing else, remember these four. They carry you through any table.</p>
+    </div>
+  </div>
+  <div class="four">
+    <div class="pf">"May I recommend…"</div>
+    <div class="pf">"Many guests enjoy…"</div>
+    <div class="pf">"This pairs beautifully with…"</div>
+    <div class="pf">"The kitchen is particularly proud of…"</div>
+  </div>
+  <div class="callout rule">
+    <span class="tag">The challenge</span>
+    Make at least <strong>one genuine recommendation at every table</strong>. Confidence comes from repetition.
+  </div>
+</section>
+
+<!-- ===================== 8. OBJECTIONS ===================== -->
+<section id="objections">
+  <div class="sec-head">
+    <div class="sec-num">08</div>
+    <div>
+      <h2>Handling objections</h2>
+      <p class="lead">Never argue. Always guide. An objection is just an invitation to offer a better-fitting option.</p>
+    </div>
+  </div>
+  <div class="phrases">
+    <div class="phrase"><b>Guest: "We just want something quick."</b><br>"Of course — the pasta comes out fast, and the ravioli doppio is a guest favourite. A glass to go with it?"</div>
+    <div class="phrase"><b>Guest: "We're not having starters."</b><br>"No problem — the suppli take two minutes and are perfect to share while you decide."</div>
+    <div class="phrase"><b>Guest: "That's a bit much."</b><br>"Absolutely — another lovely option is the market fish, which is wonderful value tonight."</div>
+  </div>
+  <div class="callout safe"><span class="tag">The principle</span>Never argue. Always guide them toward an alternative that fits.</div>
+</section>
+
+<!-- ===================== 9. GUEST TYPES ===================== -->
+<section id="guests">
+  <div class="sec-head">
+    <div class="sec-num">09</div>
+    <div>
+      <h2>Know your guest</h2>
+      <p class="lead">Read the table and adapt. The same warmth, delivered four different ways.</p>
+    </div>
+  </div>
+  <div class="guests">
+    <div class="gcard">
+      <div class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.4 5 5.6.5-4 4 1.2 5.5L12 19l-5.2 2 1.2-5.5-4-4 5.6-.5z"/></svg></div>
+      <h3>Celebration guests</h3>
+      <p>Lean into champagne, caviar, premium wines and dessert.</p>
+    </div>
+    <div class="gcard">
+      <div class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16v12H4z"/><path d="M9 7V5h6v2"/></svg></div>
+      <h3>Business guests</h3>
+      <p>Be efficient and concise. Respect their time and their conversation.</p>
+    </div>
+    <div class="gcard">
+      <div class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h13a3 3 0 013 3v11H7a3 3 0 01-3-3z"/><path d="M8 9h8M8 13h6"/></svg></div>
+      <h3>Food enthusiasts</h3>
+      <p>Tell stories about ingredients and producers — they came for the detail.</p>
+    </div>
+    <div class="gcard">
+      <div class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 6-9 11-9 11S3 16 3 10a5 5 0 019-3 5 5 0 019 3z"/></svg></div>
+      <h3>Regulars</h3>
+      <p>Personalise from previous visits. Make them feel known.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 10. FOLLOW-UP ===================== -->
+<section id="followup">
+  <div class="sec-head">
+    <div class="sec-num">10</div>
+    <div>
+      <h2>The recommendation follow-up</h2>
+      <p class="lead">Checking back after a recommendation shows confidence and genuine interest. When a guest compliments a dish, use it to reinforce the recommendation and deepen rapport.</p>
+    </div>
+  </div>
+
+  <div class="formula">
+    <div class="fl">A simple formula to remember</div>
+    <div class="steps">
+      <span class="fstep">Recommend</span><span class="arrow">→</span>
+      <span class="fstep">Check Back</span><span class="arrow">→</span>
+      <span class="fstep">Celebrate the Choice</span><span class="arrow">→</span>
+      <span class="fstep">Suggest the Next Experience</span>
+    </div>
+    <div class="note">This turns a recommendation into a relationship — rather than just a sale.</div>
+  </div>
+
+  <p>When a guest tells you they loved it, reinforce your recommendation:</p>
+  <div class="phrases">
+    <div class="phrase">"I'm so glad you enjoyed it — that's actually one of my favourite dishes on the menu, and one of the reasons I recommended it."</div>
+    <div class="phrase">"Fantastic — it's a dish I often recommend because it consistently impresses our guests."</div>
+  </div>
+
+  <div class="bank">
+    <div class="bgroup">
+      <h4>If the guest loves the dish</h4>
+      <ul>
+        <li>"I'm so pleased you enjoyed it."</li>
+        <li>"I had a feeling that would be the perfect choice for you."</li>
+        <li>"That's exactly why it's one of my favourite recommendations."</li>
+        <li>"I'm glad it lived up to expectations."</li>
+      </ul>
+    </div>
+    <div class="bgroup">
+      <h4>To build credibility &amp; trust</h4>
+      <ul>
+        <li>"It's one of our most consistently praised dishes."</li>
+        <li>"Many of our regulars come back specifically for that."</li>
+        <li>"The chef does an incredible job with that dish."</li>
+        <li>"It showcases the kitchen at its best."</li>
+      </ul>
+    </div>
+    <div class="bgroup">
+      <h4>To create another opportunity</h4>
+      <ul>
+        <li>"If you're considering dessert, I have a favourite recommendation there too."</li>
+        <li>"Based on your feedback, I think you'd also enjoy…"</li>
+        <li>"Now that you've enjoyed that course, I'd love to suggest a wine or dessert to complement it."</li>
+      </ul>
+    </div>
+    <div class="bgroup">
+      <h4>To create a personal connection</h4>
+      <ul>
+        <li>"Thank you for trusting my recommendation."</li>
+        <li>"You've chosen one of my favourites."</li>
+        <li>"I was hoping you'd enjoy that one."</li>
+        <li>"It's nice to see it was exactly what you were looking for."</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 11. MANAGER COACHING ===================== -->
+<section id="coaching">
+  <div class="sec-head">
+    <div class="sec-num">11</div>
+    <div>
+      <h2>Manager coaching guide</h2>
+      <p class="lead">For team leaders: how to grow this skill on the floor, shift after shift.</p>
+    </div>
+  </div>
+  <div class="mgr">
+    <h3>What to observe</h3>
+    <div class="mtags">
+      <span>Confidence</span><span>Eye contact</span><span>Menu knowledge</span><span>Recommendation frequency</span><span>Guest engagement</span>
+    </div>
+    <p style="margin:0;">Coach <strong>behaviour, not personality</strong>. Praise publicly. Coach privately.</p>
+  </div>
+</section>
+
+<!-- ===================== CHEAT SHEET ===================== -->
+<section id="cheatsheet" style="border-bottom:none;">
+  <div class="sec-head">
+    <div class="sec-num">★</div>
+    <div>
+      <h2>Quick reference</h2>
+      <p class="lead">The whole guide on one card — keep it in your apron.</p>
+    </div>
+  </div>
+  <div class="sheet">
+    <h3>The Café service card</h3>
+    <div class="grid">
+      <div class="col">
+        <h4>The 10-stage sequence</h4>
+        <ol>
+          <li>Greeting</li>
+          <li>Water offer</li>
+          <li>Aperitif recommendation</li>
+          <li>Discovery questions</li>
+          <li>Food recommendations</li>
+          <li>Wine recommendations</li>
+          <li>Side recommendations</li>
+          <li>Dessert planting (before mains finish)</li>
+          <li>Coffee, cheese &amp; digestifs</li>
+          <li>Warm farewell</li>
+        </ol>
+      </div>
+      <div class="col">
+        <h4>The four phrases</h4>
+        <ul>
+          <li>"May I recommend…"</li>
+          <li>"Many guests enjoy…"</li>
+          <li>"This pairs beautifully with…"</li>
+          <li>"The kitchen is particularly proud of…"</li>
+        </ul>
+        <div class="formula-mini">Recommend → Check Back → Celebrate → Suggest the Next Experience</div>
+        <p style="color:#cabda6;font-size:13.5px;margin-top:12px;"><strong style="color:#fff;">Hero:</strong> pick tonight's hero dish — plant the tiramisu early.</p>
+        <p style="color:#cabda6;font-size:13.5px;margin-top:12px;">One genuine recommendation at <strong style="color:#fff;">every</strong> table. Never argue — always guide.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div><strong>Service Excellence &amp; Upselling — Staff Training Guide.</strong> Prepared by Iris Potus &amp; Tom Zeller as an internal training aid for Florentino floor staff.</div>
+  <div class="src">Recommend ethically: never because it's expensive, always because it adds value. Confidence comes from repetition.</div>
+</footer>
+
+</div>
+</body>
+</html>

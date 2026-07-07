@@ -1,0 +1,1284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Florentino Academy</title>
+<style>
+:root{
+  --navy:#1F3A5F; --gold:#9C6B2E; --gold-l:#C79A5B; --cream:#F7F2E9;
+  --green:#3E7C53; --red:#B5443A; --white:#fff; --ink:#2a2a2a;
+  --radius:14px; --shadow:0 6px 24px rgba(0,0,0,.12);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Georgia,'Times New Roman',serif;background:var(--cream);color:var(--navy);min-height:100vh;line-height:1.55}
+.screen{display:none;min-height:100vh;padding:28px 18px}
+.screen.active{display:flex;flex-direction:column;align-items:center}
+.wrap{width:100%;max-width:880px}
+
+/* LANDING */
+#screen-landing{background:linear-gradient(160deg,#1F3A5F,#16293f);justify-content:center}
+.logo-wrap{text-align:center;margin-bottom:38px}
+.logo-wrap h1{color:var(--gold-l);font-size:2.6rem;letter-spacing:5px;text-transform:uppercase;font-weight:normal}
+.logo-wrap .sub{color:rgba(255,255,255,.55);font-size:.8rem;letter-spacing:4px;margin-top:10px;text-transform:uppercase}
+.card-dark{background:rgba(255,255,255,.06);border:1px solid var(--gold);border-radius:var(--radius);padding:38px 32px;width:100%;max-width:430px}
+.card-dark h2{color:var(--gold-l);font-size:1.25rem;margin-bottom:22px;text-align:center;font-weight:normal}
+.fg{margin-bottom:22px}
+.fg label{display:block;color:rgba(255,255,255,.7);font-size:.78rem;letter-spacing:1.5px;margin-bottom:9px;text-transform:uppercase}
+.fg input{width:100%;padding:13px 16px;border:1px solid var(--gold);background:rgba(255,255,255,.08);color:var(--white);border-radius:9px;font-size:1.05rem;font-family:inherit;outline:none}
+.fg input::placeholder{color:rgba(255,255,255,.35)}
+.fg input:focus{border-color:var(--gold-l);background:rgba(255,255,255,.12)}
+
+/* BUTTONS */
+.btn{display:inline-block;padding:14px 28px;border:none;border-radius:9px;font-family:inherit;font-size:1rem;cursor:pointer;transition:all .18s;text-align:center;letter-spacing:.4px}
+.btn-gold{background:var(--gold);color:var(--white)}
+.btn-gold:hover{background:var(--gold-l)}
+.btn-navy{background:var(--navy);color:var(--white)}
+.btn-navy:hover{filter:brightness(1.25)}
+.btn-green{background:var(--green);color:var(--white)}
+.btn-green:hover{filter:brightness(1.1)}
+.btn-outline{background:transparent;color:var(--navy);border:1.5px solid var(--navy)}
+.btn-outline:hover{background:var(--navy);color:var(--white)}
+.btn-full{width:100%}
+.btn-sm{padding:10px 18px;font-size:.9rem}
+
+/* HEADER BAR */
+.topbar{width:100%;max-width:880px;display:flex;align-items:center;justify-content:space-between;margin-bottom:26px}
+.crumb{cursor:pointer;color:var(--navy);font-size:.92rem;display:flex;align-items:center;gap:6px;background:none;border:none;font-family:inherit}
+.crumb:hover{color:var(--gold)}
+.who{font-size:.85rem;color:var(--gold);font-style:italic}
+
+.page-title{color:var(--navy);font-size:2rem;letter-spacing:1px;text-align:center;font-weight:normal}
+.page-sub{color:var(--gold);font-size:.95rem;text-align:center;margin-top:8px;letter-spacing:.5px}
+
+/* VENUE / SECTION CARDS */
+.choose-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:20px;width:100%;max-width:820px;margin-top:36px}
+.choice-card{background:var(--white);border:1px solid rgba(31,58,95,.14);border-radius:var(--radius);padding:34px 24px;text-align:center;cursor:pointer;transition:all .2s;box-shadow:var(--shadow)}
+.choice-card:hover{transform:translateY(-4px);border-color:var(--gold)}
+.choice-card .icon{font-size:3rem;margin-bottom:16px}
+.choice-card h3{color:var(--navy);font-size:1.25rem;margin-bottom:8px;font-weight:normal}
+.choice-card p{color:#777;font-size:.85rem;line-height:1.5}
+.choice-card .tag{display:inline-block;margin-top:14px;font-size:.72rem;font-family:sans-serif;padding:4px 12px;border-radius:20px;letter-spacing:.5px}
+.tag-done{background:var(--green);color:#fff}
+.tag-todo{background:rgba(156,107,46,.15);color:var(--gold)}
+.tag-soon{background:#ddd;color:#888}
+
+/* READING / TRAINING PAGE */
+.read{width:100%;max-width:760px;background:var(--white);border-radius:var(--radius);padding:36px 38px;box-shadow:var(--shadow)}
+.read h2{font-size:1.7rem;color:var(--navy);font-weight:normal;margin-bottom:6px}
+.read .lede{color:var(--gold);font-size:1rem;margin-bottom:26px;font-style:italic}
+.read h3{font-size:1.18rem;color:var(--gold);margin:30px 0 12px;font-weight:normal;border-bottom:1px solid rgba(156,107,46,.25);padding-bottom:6px}
+.read h4{font-size:1rem;color:var(--navy);margin:20px 0 8px}
+.read p{margin-bottom:14px;color:var(--ink);font-size:.98rem}
+.read ul{margin:0 0 16px 22px}
+.read li{margin-bottom:8px;color:var(--ink);font-size:.96rem}
+.read .callout{background:rgba(156,107,46,.08);border-left:4px solid var(--gold);border-radius:0 8px 8px 0;padding:14px 18px;margin:18px 0;font-size:.95rem}
+.read .rule{background:var(--navy);color:var(--cream);border-radius:10px;padding:18px 20px;margin:18px 0;font-size:1rem}
+.read .rule strong{color:var(--gold-l)}
+.read .danger{background:rgba(181,68,58,.08);border-left:4px solid var(--red);border-radius:0 8px 8px 0;padding:14px 18px;margin:18px 0;font-size:.95rem}
+.read .phrase-list{list-style:none;margin-left:0}
+.read .phrase-list li{background:var(--cream);border-radius:8px;padding:10px 14px;margin-bottom:8px;font-style:italic;border:1px solid rgba(31,58,95,.08)}
+.read table{width:100%;border-collapse:collapse;margin:16px 0;font-size:.9rem}
+.read th,.read td{border:1px solid rgba(31,58,95,.15);padding:9px 12px;text-align:left}
+.read th{background:var(--navy);color:var(--cream);font-weight:normal}
+.read tr:nth-child(even) td{background:rgba(31,58,95,.03)}
+.read-actions{margin-top:32px;text-align:center}
+
+/* GAME HUB */
+.gh-head{width:100%;max-width:820px;text-align:center;margin-bottom:8px}
+.gh-head h2{color:var(--navy);font-size:1.6rem;font-weight:normal}
+.gh-head p{color:var(--gold);font-size:.9rem;margin-top:6px}
+.progress-wrap{background:rgba(31,58,95,.1);border-radius:20px;height:8px;width:100%;max-width:360px;margin:14px auto 4px}
+.progress-bar{height:100%;border-radius:20px;background:var(--gold);transition:width .5s}
+.module-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(255px,1fr));gap:18px;width:100%;max-width:820px;margin-top:26px}
+.module-card{background:var(--white);border:1px solid rgba(31,58,95,.14);border-radius:var(--radius);padding:22px;cursor:pointer;transition:all .2s;position:relative;box-shadow:var(--shadow)}
+.module-card:hover{transform:translateY(-3px);border-color:var(--gold)}
+.module-card.completed{border-color:var(--green)}
+.module-card .m-icon{font-size:2rem;margin-bottom:10px}
+.module-card h3{font-size:1rem;color:var(--navy);margin-bottom:5px;font-weight:bold}
+.module-card p{font-size:.8rem;color:#777;line-height:1.4}
+.module-card .badge{position:absolute;top:12px;right:12px;font-size:.68rem;padding:3px 9px;border-radius:20px;font-family:sans-serif;font-weight:600}
+.badge-done{background:var(--green);color:#fff}
+.badge-play{background:var(--gold);color:#fff}
+.module-card .score-line{margin-top:8px;font-size:.74rem;color:var(--green);font-family:sans-serif}
+
+/* GAME SCREEN */
+.game-header{width:100%;max-width:740px;display:flex;align-items:center;gap:14px;margin-bottom:24px}
+.game-back{cursor:pointer;color:var(--navy);font-size:1.3rem;flex-shrink:0;background:none;border:none}
+.game-title-wrap{flex:1}
+.game-title-wrap h2{font-size:1.15rem;color:var(--navy);font-weight:bold}
+.game-title-wrap .game-sub{font-size:.78rem;color:var(--gold)}
+.game-meta{display:flex;gap:8px;align-items:center;flex-shrink:0;flex-wrap:wrap}
+.pill{background:var(--navy);color:#fff;border-radius:20px;padding:5px 13px;font-size:.78rem;font-family:sans-serif}
+.pill.gold{background:var(--gold)}
+.pill.green{background:var(--green)}
+.pill.red{background:var(--red)}
+.game-area{width:100%;max-width:740px;background:var(--white);border-radius:var(--radius);padding:28px;box-shadow:var(--shadow);flex:1}
+
+/* MCQ */
+.q-progress{font-size:.82rem;color:#999;margin-bottom:12px;font-family:sans-serif}
+.question-text{font-size:1.12rem;color:var(--navy);margin-bottom:20px;line-height:1.5}
+.options{display:flex;flex-direction:column;gap:10px}
+.option{padding:14px 18px;border:2px solid rgba(31,58,95,.18);border-radius:9px;cursor:pointer;transition:all .18s;font-size:.95rem;line-height:1.45}
+.option:hover{border-color:var(--gold);background:rgba(156,107,46,.05)}
+.option.correct{border-color:var(--green);background:rgba(62,124,83,.1);color:var(--green)}
+.option.wrong{border-color:var(--red);background:rgba(181,68,58,.1);color:var(--red)}
+.feedback{margin-top:16px;padding:12px 16px;border-radius:8px;font-size:.9rem;display:none}
+.feedback.show{display:block}
+.feedback.good{background:rgba(62,124,83,.1);color:var(--green);border:1px solid var(--green)}
+.feedback.bad{background:rgba(181,68,58,.1);color:var(--red);border:1px solid var(--red)}
+
+/* DRAG */
+.drag-list{display:flex;flex-direction:column;gap:8px}
+.drag-item{padding:14px 16px;border:2px solid rgba(31,58,95,.18);border-radius:8px;cursor:grab;background:#fff;font-size:.93rem;display:flex;align-items:center;gap:12px;user-select:none}
+.drag-item .h{color:#ccc;font-size:1.2rem}
+.drag-item.dragging{opacity:.4;border-color:var(--gold)}
+.drag-item.over{border-color:var(--gold);background:rgba(156,107,46,.06)}
+.drag-item.correct-pos{border-color:var(--green);background:rgba(62,124,83,.08)}
+.drag-item.wrong-pos{border-color:var(--red);background:rgba(181,68,58,.08)}
+
+/* TIMER */
+.timer-wrap{height:6px;background:#eee;border-radius:3px;margin-bottom:20px;overflow:hidden}
+.timer-bar{height:100%;border-radius:3px;background:var(--green);transition:width .1s linear,background .3s}
+.timer-bar.urgent{background:var(--red)}
+.streak{font-family:sans-serif;font-size:.85rem;color:var(--gold);margin-bottom:12px}
+
+/* OBJECTION / SCENARIO */
+.obj-phrase{font-size:1.02rem;font-style:italic;color:var(--navy);padding:14px;background:rgba(31,58,95,.06);border-radius:8px;margin-bottom:18px;line-height:1.5}
+.scenario-box{background:rgba(31,58,95,.06);border-radius:8px;padding:15px;margin-bottom:16px}
+.scenario-box p{font-style:italic;color:var(--navy);line-height:1.5}
+.rating-badge{display:inline-block;padding:2px 9px;border-radius:12px;font-size:.7rem;font-family:sans-serif;font-weight:700;margin-left:6px}
+.rating-PERFECT{background:#d4edda;color:#155724}.rating-GOOD{background:#d1ecf1;color:#0c5460}
+.rating-WEAK{background:#fff3cd;color:#856404}.rating-NEVER{background:#f8d7da;color:#721c24}
+.lives{display:flex;gap:5px;margin-bottom:14px;font-size:1.25rem}
+
+/* REVENUE */
+.rev-display{text-align:center;margin-bottom:20px}
+.rev-amt{font-size:2.8rem;color:var(--gold);font-weight:bold}
+.rev-lbl{font-size:.82rem;color:#999;font-family:sans-serif}
+.decision-text{font-size:1rem;color:var(--navy);margin-bottom:16px;font-style:italic;padding:14px;background:rgba(31,58,95,.06);border-radius:8px;line-height:1.5}
+.dopt{padding:14px 18px;border:2px solid rgba(31,58,95,.18);border-radius:8px;cursor:pointer;font-size:.92rem;line-height:1.45;transition:all .2s;margin-bottom:10px}
+.dopt:hover{border-color:var(--gold);background:rgba(156,107,46,.05)}
+.dopt.best{border-color:var(--green);background:rgba(62,124,83,.1)}
+.dopt.good{border-color:var(--gold);background:rgba(156,107,46,.1)}
+.dopt.miss{border-color:var(--red);background:rgba(181,68,58,.1)}
+
+/* RESULT */
+.result-card{text-align:center;padding:28px}
+.result-score{font-size:3.6rem;color:var(--gold);font-weight:bold;line-height:1}
+.result-label{color:#777;margin-top:8px}
+.result-msg{font-size:1.08rem;color:var(--navy);margin:18px 0;line-height:1.5}
+.result-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:22px}
+
+/* CERT */
+#screen-cert{background:linear-gradient(160deg,#1F3A5F,#16293f);justify-content:center}
+.cert{background:var(--cream);border:3px solid var(--gold);border-radius:var(--radius);padding:46px 36px;max-width:600px;width:100%;text-align:center;box-shadow:var(--shadow)}
+.cert .cl{color:var(--gold);font-size:1.1rem;letter-spacing:3px;text-transform:uppercase;margin-bottom:18px}
+.cert .seal{font-size:3.6rem;margin-bottom:12px}
+.cert .ct{font-size:1.9rem;color:var(--navy);margin-bottom:6px;font-weight:normal}
+.cert .cs{color:var(--gold);font-size:.9rem;letter-spacing:1px;margin-bottom:26px}
+.cert .cn{font-size:2.2rem;color:var(--navy);border-bottom:2px solid var(--gold);padding-bottom:8px;margin:18px auto;display:inline-block}
+.cert .cv{font-size:.98rem;color:#555;margin-bottom:10px}
+.cert .cd{font-size:.82rem;color:#999;margin-bottom:26px}
+
+/* CONFETTI */
+.confetti-piece{position:fixed;width:10px;height:10px;border-radius:2px;animation:fall linear forwards;pointer-events:none;z-index:9999}
+@keyframes fall{0%{transform:translateY(-20px) rotate(0);opacity:1}100%{transform:translateY(105vh) rotate(720deg);opacity:0}}
+
+@media(max-width:600px){
+  .logo-wrap h1{font-size:2rem}.read{padding:26px 20px}.game-area{padding:20px 16px}
+  .cert{padding:30px 20px}.cert .cn{font-size:1.7rem}
+}
+@media print{.screen:not(.active){display:none}.btn{display:none}}
+
+/* PHASE CARDS (allergy reading) */
+.phase-card{display:flex;align-items:center;gap:18px;background:var(--cream);border:1px solid rgba(31,58,95,.14);border-radius:var(--radius);padding:20px 22px;margin:16px 0;cursor:pointer;transition:all .18s}
+.phase-card:hover{border-color:var(--gold);transform:translateY(-2px);box-shadow:var(--shadow)}
+.phase-card .phase-no{flex:none;width:46px;height:46px;border-radius:12px;background:var(--gold);color:#fff;font-size:1.5rem;display:grid;place-items:center;font-family:Georgia,serif}
+.phase-card .phase-body{flex:1}
+.phase-card .phase-body h3{font-size:1.12rem;color:var(--navy);font-weight:normal;margin-bottom:4px}
+.phase-card .phase-body h3 .ok{font-size:.7rem;font-family:sans-serif;color:#fff;background:var(--green);padding:2px 9px;border-radius:20px;margin-left:8px;vertical-align:middle}
+.phase-card .phase-body p{font-size:.86rem;color:#777;margin:0;line-height:1.45}
+.phase-card .phase-go{flex:none;color:var(--gold);font-size:.9rem;font-family:sans-serif}
+/* GUIDE (iframe) SCREEN */
+#screen-guide{padding:0}
+#screen-guide.active{align-items:stretch}
+.guide-bar{display:flex;align-items:center;gap:14px;background:var(--navy);color:#fff;padding:12px 18px;position:sticky;top:0;z-index:5}
+.guide-bar button{background:rgba(255,255,255,.12);color:#fff;border:none;border-radius:8px;padding:9px 16px;font-family:inherit;font-size:.92rem;cursor:pointer}
+.guide-bar button:hover{background:rgba(255,255,255,.22)}
+.guide-bar .gt{font-size:.98rem;color:var(--gold-l);letter-spacing:.3px}
+.guide-frame{flex:1;width:100%;border:none;background:#fff;min-height:calc(100vh - 52px)}
+/* LIGHTSPEED SIM — order panel */
+.sim-panel{background:var(--cream);border:1px solid rgba(31,58,95,.14);border-radius:10px;padding:12px 14px;margin-bottom:16px;font-family:sans-serif}
+.sim-panel .sp-h{font-size:.7rem;letter-spacing:1px;text-transform:uppercase;color:#999;margin-bottom:8px}
+.sim-row{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin-bottom:6px;font-size:.82rem}
+.sim-row .lbl{color:#888;min-width:84px}
+.sim-tag{background:var(--navy);color:#fff;border-radius:6px;padding:3px 10px;font-size:.78rem}
+.sim-tag.allergy{background:var(--gold)}
+.sim-tag.ana{background:var(--red)}
+.sim-tag.dish{background:var(--green)}
+.sim-empty{color:#bbb;font-style:italic}
+.sim-context{background:rgba(31,58,95,.06);border-left:4px solid var(--navy);border-radius:0 8px 8px 0;padding:12px 14px;margin-bottom:14px;font-size:.95rem;color:var(--navy)}
+.sim-step{font-size:.82rem;color:#999;margin-bottom:8px;font-family:sans-serif}
+/* STAFF SELECT (landing) */
+.staff-select{width:100%;padding:13px 16px;border:1px solid var(--gold);background:rgba(255,255,255,.08);color:#fff;border-radius:9px;font-size:1.05rem;font-family:inherit;outline:none}
+.staff-select:focus{border-color:var(--gold-l);background:rgba(255,255,255,.12)}
+.staff-select option,.staff-select optgroup{color:#222;background:#fff}
+.reg-venues{display:flex;flex-wrap:wrap;gap:8px}
+.reg-venues .rv{flex:1;min-width:120px;display:flex;align-items:center;gap:7px;padding:10px 12px;border:1px solid var(--gold);background:rgba(255,255,255,.06);border-radius:9px;color:rgba(255,255,255,.85);font-size:.92rem;cursor:pointer}
+.reg-venues .rv input{accent-color:var(--gold);width:16px;height:16px}
+</style>
+</head>
+<body>
+
+<form name="academy-completion" data-netlify="true" netlify-honeypot="bot-field" hidden>
+  <input type="text" name="staff-name"><input type="text" name="venue">
+  <input type="text" name="track"><input type="text" name="module">
+  <input type="number" name="score"><input type="text" name="date">
+</form>
+
+<!-- LANDING -->
+<div id="screen-landing" class="screen active">
+  <div class="logo-wrap">
+    <h1>Florentino</h1>
+    <div class="sub">Academy</div>
+  </div>
+  <div class="card-dark">
+    <h2>Welcome 👋</h2>
+    <div class="fg">
+      <label>Your name</label>
+      <select id="staff-select" class="staff-select"><option value="">Loading staff…</option></select>
+      <input type="text" id="name-input" placeholder="Type your full name" autocomplete="off" style="display:none;margin-top:10px">
+      <div id="reg-venue" class="reg-venues" style="display:none;margin-top:10px">
+        <label class="rv"><input type="checkbox" value="Dining Room"> Dining Room</label>
+        <label class="rv"><input type="checkbox" value="Café"> Café</label>
+        <label class="rv"><input type="checkbox" value="Cellar Bar"> Cellar Bar</label>
+      </div>
+      <input type="text" id="reg-role" placeholder="Your role (optional)" autocomplete="off" style="display:none;margin-top:10px">
+    </div>
+    <button class="btn btn-gold btn-full" onclick="startJourney()">Enter the Academy →</button>
+    <p style="color:rgba(255,255,255,.4);font-size:.78rem;text-align:center;margin-top:16px">Your progress is saved on this device.</p>
+  </div>
+</div>
+
+<!-- VENUE SELECT -->
+<div id="screen-venue" class="screen">
+  <div class="topbar">
+    <button class="crumb" onclick="goScreen('screen-landing')">← Sign out</button>
+    <span class="who" id="who-1"></span>
+  </div>
+  <p class="page-title">Choose your venue</p>
+  <p class="page-sub">Where are you training today?</p>
+  <div class="choose-grid" id="venue-grid"></div>
+</div>
+
+<!-- SECTION SELECT -->
+<div id="screen-section" class="screen">
+  <div class="topbar">
+    <button class="crumb" onclick="goScreen('screen-venue')">← Venues</button>
+    <span class="who" id="who-2"></span>
+  </div>
+  <p class="page-title" id="section-venue-name"></p>
+  <p class="page-sub">Choose a training track</p>
+  <div class="choose-grid" id="section-grid" style="max-width:620px"></div>
+</div>
+
+<!-- READING / TRAINING -->
+<div id="screen-read" class="screen">
+  <div class="topbar">
+    <button class="crumb" id="read-back" >← Back</button>
+    <span class="who" id="who-3"></span>
+  </div>
+  <div class="read" id="read-content"></div>
+</div>
+
+<!-- GUIDE (iframe) -->
+<div id="screen-guide" class="screen">
+  <div class="guide-bar">
+    <button id="guide-back">← Back</button>
+    <span class="gt" id="guide-title"></span>
+  </div>
+  <iframe id="guide-frame" class="guide-frame" title="Training guide"></iframe>
+</div>
+
+<!-- GAME HUB -->
+<div id="screen-hub" class="screen">
+  <div class="topbar">
+    <button class="crumb" id="hub-back">← Back</button>
+    <span class="who" id="who-4"></span>
+  </div>
+  <div class="gh-head">
+    <h2 id="hub-title"></h2>
+    <p id="hub-desc"></p>
+    <div class="progress-wrap"><div class="progress-bar" id="hub-progress" style="width:0%"></div></div>
+    <p id="hub-progress-text" style="font-size:.78rem;color:#999;margin-top:6px;font-family:sans-serif"></p>
+  </div>
+  <div class="module-grid" id="hub-modules"></div>
+</div>
+
+<!-- GAME -->
+<div id="screen-game" class="screen">
+  <div class="game-header">
+    <button class="game-back" onclick="exitGame()">←</button>
+    <div class="game-title-wrap">
+      <h2 id="game-title"></h2>
+      <div class="game-sub" id="game-sub"></div>
+    </div>
+    <div class="game-meta" id="game-meta"></div>
+  </div>
+  <div class="game-area" id="game-area"></div>
+</div>
+
+<!-- CERT -->
+<div id="screen-cert" class="screen">
+  <div class="cert">
+    <div class="cl">✦ Florentino Academy ✦</div>
+    <div class="seal">🏆</div>
+    <div class="ct">Certificate of Completion</div>
+    <div class="cs" id="cert-track"></div>
+    <div style="color:#777;font-size:.92rem">This certifies that</div>
+    <div class="cn" id="cert-name"></div>
+    <div class="cv" id="cert-detail"></div>
+    <div class="cd" id="cert-date"></div>
+    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+      <button class="btn btn-gold" onclick="window.print()">🖨️ Print</button>
+      <button class="btn btn-navy" onclick="goScreen('screen-venue')">← Academy</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ============================================================
+   CONFIG — paste your Google Apps Script Web App URL below.
+   (Leave empty to run locally without tracking.)
+   ============================================================ */
+const TRACKING_URL = 'https://script.google.com/macros/s/AKfycbwZg0tpwkl1DXt6Y3CT81IA9K39TqqnU0xHUR8Nv30rrrNzXaR28RM12QpzB2vrdedc/exec'; // e.g. 'https://script.google.com/macros/s/AKfy.../exec'
+
+/* ============================================================
+   DATA
+   ============================================================ */
+const VENUES = {
+  dr:   { name:'Florentino Dining Room', icon:'🍽️', short:'Dining Room' },
+  cafe: { name:'Café Florentino',        icon:'☕', short:'Café' },
+  cb:   { name:'Cellar Bar',             icon:'🍷', short:'Cellar Bar' }
+};
+
+/* ---- SERVICE & SALES reading content per venue ---- */
+const SERVICE_READ = {
+  intro:`<p>The objective is not to sell more food and wine. It is to <strong>create a better experience</strong>. When a recommendation genuinely improves a guest's night, spending rises on its own. We never recommend something because it's expensive — we recommend it because it adds value.</p>
+  <p>Guests spend more when they trust the server, feel understood, feel the recommendation is personal, and see the server as an expert. People buy <strong>confidence</strong> more than products — and your confidence transfers to the guest.</p>`,
+
+  sequence:`<h3>The ten-stage service sequence</h3>
+  <p>Every stage is a chance to enhance the experience, not just take an order:</p>
+  <ul>
+    <li>Greeting</li><li>Water offer</li><li>Aperitif recommendation</li>
+    <li>Discovery questions</li><li>Food recommendations</li><li>Wine recommendations</li>
+    <li>Side recommendations</li><li>Dessert planting (before mains are finished)</li>
+    <li>Coffee, cheese & digestifs</li><li>Warm farewell</li>
+  </ul>`,
+
+  language:`<h3>Language that sells</h3>
+  <p>Two moves change everything: swap weak openers for consultative ones, and swap flat adjectives for vivid ones.</p>
+  <h4>The four magic phrases</h4>
+  <p>If you remember nothing else, remember these four:</p>
+  <ul class="phrase-list">
+    <li>"May I recommend…"</li>
+    <li>"Many guests enjoy…"</li>
+    <li>"This pairs beautifully with…"</li>
+    <li>"The kitchen is particularly proud of…"</li>
+  </ul>
+  <h4>Paint a picture</h4>
+  <p>Replace "nice" or "good" with <strong>divine, elegant, indulgent, beautifully crafted, silky, generous</strong>. "The pumpkin tart is absolutely divine" sells; "it's nice" does not.</p>
+  <h4>Social proof & authority</h4>
+  <ul class="phrase-list">
+    <li>"Many of our regulars enjoy this."</li>
+    <li>"One of our most requested dishes."</li>
+    <li>"Our sommelier loves this pairing."</li>
+  </ul>`,
+
+  objections:`<h3>Objections & guest types</h3>
+  <p>Never argue, always guide. Then read the table and adapt:</p>
+  <ul>
+    <li><strong>Celebration guests</strong> — lean into champagne, premium wines, dessert.</li>
+    <li><strong>Business guests</strong> — be efficient and concise.</li>
+    <li><strong>Food enthusiasts</strong> — tell stories about ingredients and producers.</li>
+    <li><strong>Regulars</strong> — personalise from what they ordered last time.</li>
+  </ul>
+  <div class="rule">The standing rule: <strong>make at least one genuine recommendation at every table.</strong> Confidence comes from repetition.</div>`,
+
+  venueNote:{
+    dr:`<div class="callout"><strong>In the Dining Room:</strong> this is fine dining — lead with the experience. Open with the oysters and a glass of Champagne, plant the soufflé before mains are cleared (20-min lead time), and pair to the food. La Fiorentina is your hero — built to be shared.</div>`,
+    cafe:`<div class="callout"><strong>In the Café:</strong> the energy is relaxed but the technique is identical. Pick tonight's hero dish before service. "Save room — the tiramisu goes fast." Suggest a side with every main, and offer a glass that pairs with the pasta.</div>`,
+    cb:`<div class="callout"><strong>In the Cellar Bar:</strong> lead with the wine. You're a curious, knowledgeable companion, not a salesperson. "Celebrating, or winding down?" Sell a bottle over two glasses by making the value visible. Anchor every visit with a snack pairing — "the Burrata with the Prosecco is magic."</div>`
+  }
+};
+
+/* SERVICE games config per venue */
+const SERVICE_GAMES = {
+  dr: ['philosophy','sequence','language','objection','pairing','revenue','final'],
+  cafe: ['philosophy','language','objection','pairing','final'],
+  cb: ['philosophy','language','objection','pairing','final']
+};
+
+/* ALLERGY games (shared list, all venues) */
+/* ALLERGY track: two reading phases + two quizzes (+ bonus) */
+const ALLERGY_CORE  = ['foundations','lightspeedsim'];   // the 2 quizzes required to be certified
+const ALLERGY_BONUS = ['detective'];                     // optional extra
+const ALLERGY_GAMES = [...ALLERGY_CORE, ...ALLERGY_BONUS];
+/* Phase reading guides — separate files shown in an iframe */
+const ALLERGY_GUIDE = {
+  dr:'allergy-training-dinning-room.html',
+  cafe:'allergy-training-cafe-florentino.html',
+  cb:'allergy-training-cellar-bar.html'
+};
+const LIGHTSPEED_GUIDE = 'lightspeed-allergy-order.html';
+/* Service & Sales reading guides (separate files shown in an iframe) */
+const SERVICE_GUIDE = {
+  dr:'service-upselling-dining-room.html',
+  cafe:'service-upselling-cafe.html',
+  cb:'service-upselling-cellar-bar.html'
+};
+function allergyCoreComplete(){return ALLERGY_CORE.every(m=>done(S.venue,'allergy',m));}
+
+/* venue-specific dish allergen data (the "Dish Detective") */
+const DISH_DATA = {
+  dr:[
+    {dish:"Wagyu, black garlic & truffle", q:"Why is this beef dish NOT safe for a fish allergy?", a:"The black-garlic purée contains anchovy", opts:["The black-garlic purée contains anchovy","It's grilled near the fish station","The truffle oil contains fish stock","It's marinated in Worcestershire sauce"]},
+    {dish:"Saffron spaghetti & Fregola al nero", q:"What hidden allergen do both contain?", a:"Fish stock", opts:["Fish stock","Peanut","Sesame","Soy"]},
+    {dish:"Spelt sourdough", q:"Is this safe for a coeliac or wheat allergy?", a:"No — spelt is a type of wheat, it contains gluten", opts:["No — spelt is a type of wheat, it contains gluten","Yes, spelt is gluten-free","Yes, if lightly toasted","Only for wheat allergy, not coeliac"]},
+    {dish:"Coral trout", q:"What hidden crustacean is in this dish?", a:"It's finished tableside with a prawn-and-crab bisque", opts:["It's finished tableside with a prawn-and-crab bisque","Oyster sauce in the glaze","Shrimp paste in the marinade","Crab stock in the rice"]},
+    {dish:"Banana semifreddo", q:"Which request must you check for here?", a:"Halal / pork — it's set with gelatine, often pork-derived", opts:["Halal / pork — it's set with gelatine, often pork-derived","Caffeine sensitivity","Sulphites","Lupin"]},
+    {dish:"Crudo (cured sea bream)", q:"What hidden allergen is in the crudo besides fish?", a:"Egg — the fennel-pollen mayonnaise", opts:["Egg — the fennel-pollen mayonnaise","Dairy from a cream dressing","Tree nut praline","Sesame oil"]}
+  ],
+  cafe:[
+    {dish:"Vitello tonnato", q:"Why is this sliced-veal dish NOT egg-free or fish-free?", a:"The tonnato sauce is an egg-based mayonnaise made with tuna", opts:["The tonnato sauce is an egg-based mayonnaise made with tuna","It's crumbed in breadcrumbs","It's cooked in fish stock","It contains anchovy garnish only"]},
+    {dish:"Salsa verde / Livornese sauce / fagioli vinaigrette", q:"What hidden fish allergen do these share?", a:"Anchovy", opts:["Anchovy","Crab","Oyster sauce","Squid ink"]},
+    {dish:"Wood-fired eggplant", q:"Which easy-to-miss tree nut is in this dish?", a:"Pine nut", opts:["Pine nut","Cashew","Walnut","Almond"]},
+    {dish:"Ravioli doppio", q:"Which allergens does this fresh pasta carry?", a:"Egg (dough), dairy (butter & pecorino) and hazelnut", opts:["Egg (dough), dairy (butter & pecorino) and hazelnut","Only wheat","Fish and shellfish","Sesame and soy"]},
+    {dish:"Suppli", q:"Which three allergens are in the suppli?", a:"Dairy (parmesan & pecorino), egg (crumb) and wheat (crumb)", opts:["Dairy (parmesan & pecorino), egg (crumb) and wheat (crumb)","Fish, egg, soy","Tree nut, sesame, dairy","Shellfish, wheat, egg"]},
+    {dish:"Jerusalem artichoke tart", q:"Which tree nut is in the filling?", a:"Cashew", opts:["Cashew","Pine nut","Almond","Macadamia"]}
+  ],
+  cb:[
+    {dish:"Peperoni Arrosto", q:"Why is this roasted-pepper dish NOT safe for a fish allergy?", a:"It's finished with Cantabrian (Olasagasti) anchovies", opts:["It's finished with Cantabrian (Olasagasti) anchovies","It's cooked in fish stock","It contains oyster sauce","It's grilled near the seafood"]},
+    {dish:"Burrata (olive, pistachio, basil)", q:"Which tree nut garnishes the Burrata?", a:"Pistachio", opts:["Pistachio","Almond","Walnut","Pine nut"]},
+    {dish:"Spaghetti alle Vongole", q:"Which allergen family do the Coffin Bay clams belong to?", a:"Molluscs (one half of 'shellfish')", opts:["Molluscs (one half of 'shellfish')","Crustaceans","Finned fish","None — clams are safe for shellfish allergy"]},
+    {dish:"Gnocchi (house-made)", q:"The pesto on the gnocchi is made with sunflower seed. Is it tree-nut-safe?", a:"Yes — sunflower seed is a seed, not a tree nut (but always confirm via the Matrix)", opts:["Yes — sunflower seed is a seed, not a tree nut (but always confirm via the Matrix)","No, sunflower is a tree nut","No, it contains pine nut","Only if the pecorino is removed"]},
+    {dish:"Peperoni Arrosto (again)", q:"Besides fish, which allergen does it contain?", a:"Dairy", opts:["Dairy","Sesame","Soy","Lupin"]},
+    {dish:"Calamari Fritti", q:"Which two allergen families apply to the beer-battered calamari?", a:"Molluscs (squid) and wheat/gluten (beer batter)", opts:["Molluscs (squid) and wheat/gluten (beer batter)","Crustaceans and egg","Fish and dairy","Sesame and soy"]}
+  ]
+};
+
+/* ============================================================
+   STATE
+   ============================================================ */
+const S = {
+  name: '',
+  progress: {},
+  venue:'', track:'', module:'', gs:{}
+};
+function pk(v,t,m){return v+'_'+t+'_'+m;}
+/* progress is stored per staff name, so a shared device keeps each person separate */
+function progKey(){return 'fa_progress_v2::'+((S.name||'_anon').trim().replace(/\s+/g,' ').toLowerCase());}
+function loadProgress(){ S.progress = JSON.parse(localStorage.getItem(progKey()) || '{}'); }
+function saveProgress(m,score){
+  S.progress[pk(S.venue,S.track,m)]={score,date:new Date().toLocaleDateString('en-AU')};
+  localStorage.setItem(progKey(),JSON.stringify(S.progress));
+  submitNetlify(m,score);
+}
+function done(v,t,m){return !!S.progress[pk(v,t,m)];}
+function scoreOf(v,t,m){return S.progress[pk(v,t,m)]?.score ?? 0;}
+
+/* ============================================================
+   NAVIGATION
+   ============================================================ */
+function goScreen(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0,0);
+}
+function setWho(){['who-1','who-2','who-3','who-4'].forEach(id=>{const e=document.getElementById(id);if(e)e.textContent=S.name;});}
+function startJourney(){
+  const n=getChosenName();
+  if(!n){alert('Please select or type your name.');return;}
+  S.name=n; localStorage.setItem('fa_name',n); setWho();
+  loadProgress();
+  maybeRegister(n);
+  renderVenues(); goScreen('screen-venue');
+}
+function maybeRegister(name){
+  const sel=document.getElementById('staff-select');
+  const fromRoster = sel && sel.style.display!=='none' && sel.value && sel.value!=='__other__';
+  if(fromRoster) return;            // already in the roster — nothing to add
+  const venue=[...document.querySelectorAll('#reg-venue input:checked')].map(e=>e.value).join(', ');
+  const role=(document.getElementById('reg-role')||{}).value||'';
+  registerStaff(name,venue,role);
+}
+function registerStaff(name,venue,role){
+  if(!TRACKING_URL) return;
+  try{ fetch(TRACKING_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({type:'register',staff:name,venue:venue,role:role})}); }catch(e){}
+}
+function getChosenName(){
+  const sel=document.getElementById('staff-select');
+  if(sel && sel.style.display!=='none'){
+    if(sel.value==='__other__') return document.getElementById('name-input').value.trim();
+    if(sel.value) return sel.value;
+    return '';
+  }
+  const ni=document.getElementById('name-input');
+  return ni ? ni.value.trim() : '';
+}
+function renderVenues(){
+  const g=document.getElementById('venue-grid'); g.innerHTML='';
+  Object.entries(VENUES).forEach(([k,v])=>{
+    const c=document.createElement('div'); c.className='choice-card';
+    const sDone=trackComplete(k,'service'), aDone=trackComplete(k,'allergy');
+    c.innerHTML=`<div class="icon">${v.icon}</div><h3>${v.name}</h3>
+      <p>Service & Sales · Allergy Training</p>
+      <span class="tag ${sDone&&aDone?'tag-done':'tag-todo'}">${sDone&&aDone?'✓ Complete':'2 tracks'}</span>`;
+    c.onclick=()=>openVenue(k);
+    g.appendChild(c);
+  });
+}
+function openVenue(v){
+  S.venue=v;
+  document.getElementById('section-venue-name').textContent=VENUES[v].name;
+  const g=document.getElementById('section-grid'); g.innerHTML='';
+  const tracks=[
+    {key:'service',icon:'✨',title:'Service & Sales',desc:'Hospitality, recommendations & the art of the upsell'},
+    {key:'allergy',icon:'🌿',title:'Allergy Training',desc:'Allergens, the Lightspeed procedure & keeping guests safe'}
+  ];
+  tracks.forEach(t=>{
+    const c=document.createElement('div'); c.className='choice-card';
+    const tc=trackComplete(v,t.key);
+    c.innerHTML=`<div class="icon">${t.icon}</div><h3>${t.title}</h3><p>${t.desc}</p>
+      <span class="tag ${tc?'tag-done':'tag-todo'}">${tc?'✓ Certified':'Start'}</span>`;
+    c.onclick=()=>openTrack(v,t.key);
+    g.appendChild(c);
+  });
+  goScreen('screen-section');
+}
+function trackComplete(v,t){
+  const list = t==='service'?SERVICE_GAMES[v]:ALLERGY_CORE;
+  return list.every(m=>done(v,t,m));
+}
+function openTrack(v,t){
+  S.venue=v; S.track=t;
+  renderReading(); goScreen('screen-read');
+}
+
+/* ============================================================
+   READING PAGES
+   ============================================================ */
+function renderReading(){
+  const v=S.venue, t=S.track;
+  const back=document.getElementById('read-back');
+  back.onclick=()=>{openVenue(v);};
+  const el=document.getElementById('read-content');
+  if(t==='service'){
+    el.innerHTML=serviceReadingHTML(v);
+  } else {
+    el.innerHTML=allergyPhasesHTML(v);
+  }
+}
+
+function phaseKey(p){return 'fa_phase_'+S.venue+'_'+p;}
+function phaseDone(p){return localStorage.getItem(phaseKey(p))==='1';}
+function markPhase(p){localStorage.setItem(phaseKey(p),'1');}
+function allergyPhasesHTML(v){
+  const p1=phaseDone('phase1'), p2=phaseDone('phase2');
+  return `
+    <h2>Allergy Training — ${VENUES[v].name}</h2>
+    <div class="lede">Two reading phases, then the quizzes. Read both before you play.</div>
+    <div class="phase-card" onclick="openGuide('${ALLERGY_GUIDE[v]}','phase1','Phase 1 · General Allergy Information')">
+      <div class="phase-no">1</div>
+      <div class="phase-body">
+        <h3>General Allergy Information${p1?' <span class="ok">✓ read</span>':''}</h3>
+        <p>Allergy vs intolerance, the Australian allergens, the confusing pairs and anaphylaxis — with real ${VENUES[v].short} dishes.</p>
+      </div>
+      <div class="phase-go">Open →</div>
+    </div>
+    <div class="phase-card" onclick="openGuide('${LIGHTSPEED_GUIDE}','phase2','Phase 2 · Entering an Allergy Order')">
+      <div class="phase-no">2</div>
+      <div class="phase-body">
+        <h3>Entering an Allergy Order — Lightspeed${p2?' <span class="ok">✓ read</span>':''}</h3>
+        <p>Common to every venue. The exact steps to take an allergy order into Lightspeed — from the first hello to the kitchen docket.</p>
+      </div>
+      <div class="phase-go">Open →</div>
+    </div>
+    <div class="read-actions">
+      <button class="btn btn-gold" onclick="openHub()">Start the quizzes →</button>
+    </div>`;
+}
+function serviceReadingHTML(v){
+  const rd=phaseDone('service');
+  return `
+    <h2>Service &amp; Sales — ${VENUES[v].name}</h2>
+    <div class="lede">Read the guide first — everything in the games comes from here.</div>
+    <div class="phase-card" onclick="openGuide('${SERVICE_GUIDE[v]}','service','Service Excellence &amp; Upselling — ${VENUES[v].short}')">
+      <div class="phase-no">★</div>
+      <div class="phase-body">
+        <h3>Service Excellence &amp; Upselling${rd?' <span class="ok">✓ read</span>':''}</h3>
+        <p>The philosophy, guest psychology, the 10-stage service sequence, language that sells, the upsell journey, objections and follow-up — with real ${VENUES[v].short} examples.</p>
+      </div>
+      <div class="phase-go">Open →</div>
+    </div>
+    <div class="read-actions">
+      <button class="btn btn-gold" onclick="openHub()">Start the games →</button>
+    </div>`;
+}
+function openGuide(src,phase,title){
+  markPhase(phase);
+  document.getElementById('guide-title').textContent=title;
+  document.getElementById('guide-frame').src=src;
+  document.getElementById('guide-back').onclick=()=>{renderReading();goScreen('screen-read');};
+  goScreen('screen-guide');
+}
+function allergyReadingHTML(v){
+  const ex = {
+    dr:`In the Dining Room: dairy is almost everywhere; egg hides in the crudo's mayo and the chocolatini; the Wagyu's black-garlic purée contains <strong>anchovy</strong> (a beef dish that is not fish-safe); the saffron spaghetti and fregola use <strong>fish stock</strong>; the coral trout is finished with a <strong>prawn-and-crab bisque</strong>; the spelt sourdough is still wheat.`,
+    cafe:`In the Café: dairy is in the suppli, rigatoni alla vodka and most pastas; the <strong>vitello tonnato</strong> sauce is an egg-based mayonnaise made with tuna (not egg- or fish-free); anchovy hides in the salsa verde, Livornese sauce and the fagioli vinaigrette; the wood-fired eggplant carries an easy-to-miss <strong>pine nut</strong>.`,
+    cb:`In the Cellar Bar: the <strong>Peperoni Arrosto</strong> is finished with Cantabrian anchovies (not fish-safe) and contains dairy; the Burrata is garnished with <strong>pistachio</strong>; the Spaghetti alle Vongole is <strong>molluscs</strong>; the Calamari Fritti is squid (mollusc) in a wheat beer batter.`
+  };
+  return `
+  <h2>Allergy Training — ${VENUES[v].name}</h2>
+  <div class="lede">The procedure is the same in every venue. Only the dishes change.</div>
+
+  <h3>Why this matters</h3>
+  <p>An allergen we can't see can still send a guest to hospital. 1 in 50 Australian adults live with a food allergy, and a <strong>trace</strong> — a shared fryer, a wiped-not-washed knife, a garnish — can be enough.</p>
+  <div class="callout">Under the Food Standards Code and PEAL rules, we must give accurate allergen information to a guest on request. <strong>"I'm not sure" is never an acceptable answer.</strong></div>
+
+  <h3>Allergy vs Intolerance</h3>
+  <table>
+    <tr><th></th><th>Food Allergy</th><th>Intolerance</th></tr>
+    <tr><td>What's involved</td><td>Immune system (IgE)</td><td>Digestion / chemistry</td></tr>
+    <tr><td>How much it takes</td><td>A trace can be enough</td><td>Usually depends on amount</td></tr>
+    <tr><td>Can it be deadly?</td><td><strong>Yes — anaphylaxis</strong></td><td>No</td></tr>
+    <tr><td>Our response</td><td>Zero tolerance — no traces</td><td>Reduce / accommodate</td></tr>
+  </table>
+  <p><strong>Coeliac disease</strong> is autoimmune (~1 in 70 Australians) — no anaphylaxis, but treat a coeliac "gluten free" with the same strictness as an allergy.</p>
+  <div class="rule">Golden rule: if you're unsure whether a guest means "allergy" or "preference" — <strong>treat it as an allergy until you know otherwise.</strong></div>
+
+  <h3>The confusing pairs</h3>
+  <ul>
+    <li><strong>Dairy allergy</strong> (protein — dangerous) vs <strong>lactose intolerance</strong> (sugar — comfort). "Lactose-free milk" is NOT safe for a dairy allergy.</li>
+    <li><strong>"No shellfish" always means BOTH</strong> crustaceans (prawn, crab, lobster) AND molluscs (oyster, mussel, squid, scallop). We never narrow it down.</li>
+    <li><strong>Fish ≠ shellfish</strong> — unrelated allergens. Anchovy is the classic hidden fish.</li>
+    <li><strong>Peanut</strong> (a legume) ≠ <strong>tree nuts</strong> — each tree nut must be named individually; "nut free" is too vague.</li>
+    <li><strong>Wheat allergy</strong> vs <strong>coeliac/gluten</strong> — always ask "allergy, coeliac, or preference?"</li>
+  </ul>
+
+  <h3>Hidden allergens on our menu</h3>
+  <div class="danger"><p>${ex[v]}</p></div>
+
+  <h3>Anaphylaxis — the emergency</h3>
+  <p>Severe signs: difficult/noisy breathing, swelling of the tongue or throat, hoarse voice, persistent cough, dizziness or collapse.</p>
+  <div class="danger"><strong>If you see ANY severe sign:</strong> lay the person flat, get a manager and the adrenaline auto-injector now, give adrenaline into the outer mid-thigh, call 000 and say "anaphylaxis". Adrenaline is the only treatment — and it's safe to give if you're unsure. Antihistamines and puffers do not stop anaphylaxis.</div>
+  <p>The moment a guest says they are anaphylactic: <strong>log it on Lightspeed immediately and tell the manager</strong> — before anything else.</p>
+
+  <h3>The Lightspeed procedure</h3>
+  <p>Every allergy order touches the same three places on the screen:</p>
+  <ul>
+    <li><strong>1 · The table name</strong> (top) — a flag the whole team sees. 1–2 allergies → allergy + seat (e.g. "SHELLFISH S1"). 3+ → just "ALLERGY". Any anaphylaxis → "ANAPHYLACTIC" (always takes priority).</li>
+    <li><strong>2 · The purple ALLERGY button</strong> — adds an ALLERGY line where you enter each allergy against its seat number (e.g. ANAPHYLAXIS, SHELLFISH, Seat 1).</li>
+    <li><strong>3 · Each affected dish</strong> — open its "&lt;Dish&gt; MOD" group, check the CONTAINS buttons, and add a "No ___ – sub ___" substitution with the seat.</li>
+  </ul>
+  <div class="rule">Under every dish an allergic guest is having there <strong>must</strong> be a substitution (e.g. "No seafood – sub tomato"). If no substitution is possible, the guest cannot have that dish — guide them to another.</div>
+  <h4>The whole flow, in order</h4>
+  <ul>
+    <li>Before the menu: ask about allergies / confirm any SevenRooms note out loud.</li>
+    <li>Tag the table name (allergy+seat / ALLERGY / ANAPHYLACTIC).</li>
+    <li>Anaphylactic? Log it on Lightspeed + tell the manager — straight away.</li>
+    <li>Press ALLERGY and enter every allergy against its seat.</li>
+    <li>Each dish via its "MOD": add the substitution + seat.</li>
+    <li>Split quantities so each allergy plate is its own line (e.g. 4 normal + 1 No Pine Nut).</li>
+    <li>Unsure? Check the Allergy Matrix → if not listed, ask the chef. Never guess.</li>
+  </ul>`;
+}
+
+/* ============================================================
+   GAME HUB
+   ============================================================ */
+const GAME_INFO={
+  philosophy:{icon:'🎯',title:'The Philosophy',sub:'Why we recommend — the mindset'},
+  sequence:{icon:'🔀',title:'Sequence Scramble',sub:'Drag the 10 service stages in order'},
+  language:{icon:'⚡',title:'Language Duel',sub:'60s — upgrade weak phrases'},
+  objection:{icon:'🥊',title:'Objection Arena',sub:'3 lives — handle every pushback'},
+  pairing:{icon:'🍷',title:'Pairing & Product',sub:'Match dish to the right drink'},
+  revenue:{icon:'💰',title:'Revenue Rush',sub:'Build the perfect table check'},
+  final:{icon:'🏆',title:'Final Test',sub:'Pass 80% to be certified'},
+  foundations:{icon:'🧠',title:'Quiz 1 · Allergy Foundations',sub:'General allergy knowledge — 80% to pass'},
+  lightspeedsim:{icon:'💻',title:'Quiz 2 · Lightspeed Order',sub:'Build a real allergy order — the exam'},
+  lightspeed:{icon:'💻',title:'Lightspeed Order Quiz',sub:'Entering an allergy correctly'},
+  detective:{icon:'🔎',title:'Bonus · Dish Detective',sub:'Spot the hidden allergen'},
+  allergyfinal:{icon:'🏆',title:'Allergy Final Test',sub:'Pass 80% to be certified'}
+};
+function openHub(){
+  const v=S.venue,t=S.track;
+  document.getElementById('hub-back').onclick=()=>{openTrack(v,t);};
+  const list=t==='service'?SERVICE_GAMES[v]:ALLERGY_GAMES;
+  const certList=t==='service'?SERVICE_GAMES[v]:ALLERGY_CORE;
+  document.getElementById('hub-title').textContent=(t==='service'?'Service & Sales':'Allergy Training');
+  document.getElementById('hub-desc').textContent = t==='allergy'
+    ? VENUES[v].name+' · pass the 2 quizzes to be certified — Dish Detective is a bonus'
+    : VENUES[v].name+' · complete all '+list.length+' modules to be certified';
+  const dn=certList.filter(m=>done(v,t,m)).length;
+  document.getElementById('hub-progress').style.width=Math.round(dn/certList.length*100)+'%';
+  document.getElementById('hub-progress-text').textContent=dn+' / '+certList.length+(t==='allergy'?' quizzes passed':' modules completed');
+  const grid=document.getElementById('hub-modules'); grid.innerHTML='';
+  list.forEach(m=>{
+    const info=GAME_INFO[m]; const c=document.createElement('div');
+    const cp=done(v,t,m);
+    c.className='module-card'+(cp?' completed':'');
+    c.innerHTML=`<span class="badge ${cp?'badge-done':'badge-play'}">${cp?'✓ Done':'Play'}</span>
+      <div class="m-icon">${info.icon}</div><h3>${info.title}</h3><p>${info.sub}</p>
+      ${cp?`<div class="score-line">Score: ${scoreOf(v,t,m)}%</div>`:''}`;
+    c.onclick=()=>launchGame(m);
+    grid.appendChild(c);
+  });
+  goScreen('screen-hub');
+}
+function exitGame(){clearInterval(S.gs.timer);openHub();}
+
+/* ============================================================
+   SHARED HELPERS
+   ============================================================ */
+function setMeta(h){document.getElementById('game-meta').innerHTML=h;}
+function setArea(h){document.getElementById('game-area').innerHTML=h;}
+function shuffle(a){return [...a].sort(()=>Math.random()-.5);}
+function launchGame(m){
+  S.module=m; clearInterval(S.gs.timer); S.gs={};
+  const info=GAME_INFO[m];
+  document.getElementById('game-title').textContent=info.title;
+  document.getElementById('game-sub').textContent=VENUES[S.venue].short+' · '+info.sub;
+  setMeta(''); setArea('<p style="text-align:center;color:#999">Loading…</p>');
+  goScreen('screen-game');
+  setTimeout(()=>GAMES[m](),80);
+}
+function showResult(score,total,m,extra,isFinal){
+  const pct=Math.round(score/total*100), pass=pct>=80;
+  saveProgress(m,pct);
+  const certEligible = (S.track==='allergy') ? (pass && allergyCoreComplete()) : (isFinal&&pass);
+  setArea(`<div class="result-card">
+    <div class="result-score">${pct}%</div>
+    <div class="result-label">${score} / ${total} correct</div>
+    <div class="result-msg">${pass?'🎉 Excellent work — you nailed it.':'📚 Keep practising — aim for 80%+.'}</div>
+    ${extra||''}
+    <div class="result-actions">
+      <button class="btn btn-outline" onclick="launchGame('${m}')">🔄 Retry</button>
+      ${certEligible?`<button class="btn btn-gold" onclick="showCert()">🏆 Get Certificate</button>`
+        :`<button class="btn btn-green" onclick="exitGame()">← Back to modules</button>`}
+    </div></div>`);
+  setMeta(`<span class="pill ${pass?'green':'red'}">${pct}%</span>`);
+}
+/* generic MCQ engine: questions=[{q,options:[correct,...wrong],explanation}] */
+function runMCQ(m,questions,opts={}){
+  let i=0,score=0; const qs=shuffle(questions).slice(0,opts.limit||questions.length);
+  const isFinal=opts.isFinal;
+  function render(){
+    if(i>=qs.length){showResult(score,qs.length,m,'',isFinal);return;}
+    const q=qs[i];
+    const o=shuffle(q.options.map((t,idx)=>({t,c:idx===0})));
+    setMeta(`<span class="pill">${i+1}/${qs.length}</span>`+(isFinal?`<span class="pill gold">${score} pts</span>`:''));
+    setArea(`<div class="q-progress">Question ${i+1} of ${qs.length}${isFinal?' — need 80% to pass':''}</div>
+      <div class="question-text">${q.q}</div>
+      <div class="options">${o.map(x=>`<div class="option" data-c="${x.c}" onclick="window._pick(this)">${x.t}</div>`).join('')}</div>
+      <div class="feedback" id="fb">${q.explanation||''}</div>`);
+  }
+  window._pick=function(el){
+    if(el.classList.contains('correct')||el.classList.contains('wrong'))return;
+    const c=el.dataset.c==='true';
+    document.querySelectorAll('.option').forEach(x=>{if(x.dataset.c==='true')x.classList.add('correct');});
+    if(!c)el.classList.add('wrong');else score++;
+    const fb=document.getElementById('fb');
+    if(fb.textContent.trim())fb.classList.add('show',c?'good':'bad');
+    setTimeout(()=>{i++;render();},fb.textContent.trim()?1450:700);
+  };
+  render();
+}
+
+/* ============================================================
+   SERVICE GAMES
+   ============================================================ */
+const PHIL_Q=[
+  {q:"What is the real objective of upselling at Florentino?",options:["To create a better experience — spending rises on its own","To increase the average bill by any means","To sell the most expensive item every time","To mention every dish before the order"],explanation:"We recommend because it adds value — never because it's expensive."},
+  {q:"Guests spend more above all when they:",options:["Trust the server and see them as an expert","Are given the longest menu","Are left alone to decide","Feel rushed to order"],explanation:"People buy confidence more than products."},
+  {q:"Which word paints the better picture?",options:["'Divine' instead of 'nice'","'Good' instead of 'fine'","'Available' instead of 'on the menu'","'Cheap' instead of 'affordable'"],explanation:"Vivid adjectives let guests taste the dish before it arrives."},
+  {q:"The standing floor rule is:",options:["Make at least one genuine recommendation at every table","Always suggest the priciest wine","Never recommend unless asked","Describe the whole menu to everyone"],explanation:"Confidence comes from repetition — one real recommendation, every table."},
+  {q:"When should dessert be planted?",options:["Before the mains are finished","Only after the plates are cleared","Only if the guest asks","At the very start of the meal"],explanation:"Decisions on a full stomach skew to 'no' — plant early."},
+  {q:"A guest objects. You should:",options:["Never argue — guide them to an alternative","Insist the recommendation is correct","Drop the recommendation entirely","Tell them most guests disagree"],explanation:"Never argue, always guide."}
+];
+const PHIL_VENUE={
+  dr:{q:"In the Dining Room, your hero dish to build a table around is:",options:["La Fiorentina — the shared 1kg T-bone","A single espresso","The bread basket","A glass of tap water"],explanation:"La Fiorentina is built to be shared — anchor the experience to it."},
+  cafe:{q:"A great Café dessert-planting line is:",options:["'Save room — the tiramisu goes fast.'","'Do you want dessert?'","'We have desserts if you're interested.'","'The menu is on the table.'"],explanation:"Plant it early and make it vivid."},
+  cb:{q:"In the Cellar Bar, the upselling approach is to:",options:["Lead with the wine and anchor a snack pairing","Push the most expensive bottle","Wait for the guest to order","Recite the full wine list"],explanation:"You're a knowledgeable companion — 'the Burrata with the Prosecco is magic.'"}
+};
+
+const GAMES={
+  /* ---------- PHILOSOPHY ---------- */
+  philosophy(){ runMCQ('philosophy',[...PHIL_Q,PHIL_VENUE[S.venue]]); },
+
+  /* ---------- SEQUENCE (DR) ---------- */
+  sequence(){
+    const seq=["Greeting","Water offer","Aperitif recommendation","Discovery questions","Food recommendations","Wine recommendations","Side recommendations","Dessert planting (before mains finish)","Coffee, cheese & digestifs","Warm farewell"];
+    S.gs.items=shuffle(seq.map((s,i)=>({t:s,o:i}))); S.gs.src=null;
+    function render(){
+      setMeta('');
+      setArea(`<p style="color:#666;font-size:.88rem;margin-bottom:14px">Put the 10 stages in the correct service order — use the ▲▼ buttons (or drag on a computer):</p>
+        <div class="drag-list" id="dl">${S.gs.items.map((it,i)=>`
+          <div class="drag-item" draggable="true" data-i="${i}"
+            ondragstart="_ds(event,${i})" ondragover="_do(event,${i})" ondrop="_dp(event,${i})" ondragleave="_dl(event)">
+            <span class="h">⠿</span><span style="flex:1">${it.t}</span>
+            <span style="display:flex;flex-direction:column;gap:3px">
+              <button onclick="_mv(${i},-1)" ${i===0?'disabled':''} style="border:none;background:rgba(31,58,95,.08);color:var(--navy);width:34px;height:22px;border-radius:6px;cursor:pointer;font-size:.7rem;line-height:1">▲</button>
+              <button onclick="_mv(${i},1)" ${i===S.gs.items.length-1?'disabled':''} style="border:none;background:rgba(31,58,95,.08);color:var(--navy);width:34px;height:22px;border-radius:6px;cursor:pointer;font-size:.7rem;line-height:1">▼</button>
+            </span></div>`).join('')}</div>
+        <div style="margin-top:18px;text-align:center"><button class="btn btn-gold" onclick="_checkSeq()">Check order ✓</button></div>`);
+    }
+    window._ds=(e,i)=>{S.gs.src=i;e.currentTarget.classList.add('dragging');e.dataTransfer.effectAllowed='move';};
+    window._do=(e,i)=>{e.preventDefault();if(i!==S.gs.src)e.currentTarget.classList.add('over');};
+    window._dl=(e)=>e.currentTarget.classList.remove('over');
+    window._dp=(e,i)=>{e.preventDefault();e.currentTarget.classList.remove('over');
+      if(S.gs.src===null||S.gs.src===i)return;
+      const a=S.gs.items,t=a[S.gs.src];a.splice(S.gs.src,1);a.splice(i,0,t);S.gs.src=null;render();};
+    window._mv=(i,d)=>{const a=S.gs.items,j=i+d;if(j<0||j>=a.length)return;const t=a[i];a[i]=a[j];a[j]=t;render();};
+    window._checkSeq=()=>{
+      let c=0;const items=document.querySelectorAll('.drag-item');
+      S.gs.items.forEach((it,i)=>{if(it.o===i){c++;items[i].classList.add('correct-pos');}else items[i].classList.add('wrong-pos');});
+      setTimeout(()=>showResult(c,10,'sequence','<p style="color:#666;font-size:.9rem">Tip: one step out of order can break the experience.</p>'),1400);
+    };
+    render();
+  },
+
+  /* ---------- LANGUAGE DUEL ---------- */
+  language(){
+    const base=[
+      {weak:"Do you want anything to drink?",strong:"May I recommend a glass of Champagne to start — it's beautiful tonight?"},
+      {weak:"Do you want dessert?",strong:"The kitchen is particularly proud of the dessert — may I plant one for you now?"},
+      {weak:"The wine is good.",strong:"This pairs beautifully with your selection — our sommelier loves it."},
+      {weak:"Do you want a starter?",strong:"A described starter is a beautiful way to begin the evening — many guests enjoy it with an aperitif."},
+      {weak:"It's nice.",strong:"It's absolutely divine — silky, elegant, beautifully crafted."}
+    ];
+    const venueP={
+      dr:[{weak:"We have oysters.",strong:"The oysters with salted mandarin are a beautiful way to begin — especially with a glass of Champagne."},
+          {weak:"The steak is big.",strong:"La Fiorentina is built to be shared — a spectacular centrepiece for the table."},
+          {weak:"We have a soufflé.",strong:"Our soufflé needs a little preparation — if it appeals, I can have the kitchen begin one now."},
+          {weak:"The Wagyu is expensive.",strong:"The Wagyu is Rangers Valley full-blood, marble score 9+ — an experience, not just a steak."},
+          {weak:"Do you want wine?",strong:"May I recommend something that pairs beautifully with your selection?"}],
+      cafe:[{weak:"We have pasta.",strong:"The ravioli doppio is house-made and absolutely divine — one of our most requested dishes."},
+            {weak:"Do you want a side?",strong:"The Wagyu pairs beautifully with our roasted potatoes — may I add them?"},
+            {weak:"We have tiramisu.",strong:"Save room — the tiramisu goes fast, and it's beautifully made."},
+            {weak:"Do you want a coffee?",strong:"May I tempt you with an affogato to finish — espresso over gelato?"},
+            {weak:"The fish is good.",strong:"Tonight's market fish is elegant and generous — the kitchen is particularly proud of it."}],
+      cb:[{weak:"Do you want wine?",strong:"Celebrating, or winding down? Let me find the perfect glass for you."},
+          {weak:"We have burrata.",strong:"Start with the Burrata to share — it's magic with a glass of Prosecco while you decide."},
+          {weak:"Do you want another glass?",strong:"You're on your second glass — a bottle works out to four pours and saves you money. Shall I open one?"},
+          {weak:"We have clams.",strong:"The Spaghetti alle Vongole with Coffin Bay clams is beautiful with the Vernaccia."},
+          {weak:"The wine is nice.",strong:"This Heathcote Shiraz is special — the founder actually worked here at Florentino."}]
+    };
+    const phrases=shuffle([...base,...venueP[S.venue]]);
+    const T=60; let left=T,i=0,score=0,streak=0,best=0;
+    function gen(cur){return shuffle(phrases.filter(p=>p!==cur)).slice(0,2).map(p=>({t:p.strong,c:false}));}
+    function render(){
+      if(i>=phrases.length){finish();return;}
+      const p=phrases[i];
+      setArea(`<div class="timer-wrap"><div class="timer-bar" id="tb" style="width:100%"></div></div>
+        <div class="streak">🔥 Streak: ${streak}x</div>
+        <div class="q-progress">Phrase ${i+1} of ${phrases.length}</div>
+        <div class="question-text">A colleague says: <em>"${p.weak}"</em><br><br>Pick the response that upgrades it to Florentino language:</div>
+        <div class="options">${shuffle([{t:p.strong,c:true},...gen(p)]).map(x=>`<div class="option" data-c="${x.c}" onclick="window._pd(this)">${x.t}</div>`).join('')}</div>
+        <div class="feedback" id="fb"></div>`);
+    }
+    window._pd=function(el){
+      const c=el.dataset.c==='true';
+      document.querySelectorAll('.option').forEach(x=>{if(x.dataset.c==='true')x.classList.add('correct');});
+      if(!c){el.classList.add('wrong');streak=0;}else{score++;streak++;best=Math.max(best,streak);}
+      const fb=document.getElementById('fb');fb.textContent=c?`✅ Perfect! Streak ${streak}x`:'❌ Language is your first upsell tool.';
+      fb.classList.add('show',c?'good':'bad');
+      setTimeout(()=>{i++;render();},1100);
+    };
+    function finish(){clearInterval(S.gs.timer);showResult(score,phrases.length,'language',`<p style="color:var(--gold);margin-top:6px">Best streak: ${best}x</p>`);}
+    S.gs.timer=setInterval(()=>{
+      left--;const pct=left/T*100;const b=document.getElementById('tb');
+      if(b){b.style.width=pct+'%';if(pct<30)b.classList.add('urgent');}
+      setMeta(`<span class="pill ${left<20?'red':''}">${left}s</span>`);
+      if(left<=0){clearInterval(S.gs.timer);finish();}
+    },1000);
+    setMeta(`<span class="pill">${T}s</span>`);render();
+  },
+
+  /* ---------- OBJECTION ARENA ---------- */
+  objection(){
+    const venueObj={
+      dr:[
+        {obj:"\"We're not really wine drinkers.\"",r:[{t:"Perfect — let me suggest something approachable. Our Grosjean Gamay is light, juicy, no tannin.",rt:"PERFECT"},{t:"We also have cocktails and mocktails.",rt:"GOOD"},{t:"That's fine, some water then?",rt:"WEAK"},{t:"You might like it if you tried it.",rt:"NEVER"}]},
+        {obj:"\"Everything looks expensive.\"",r:[{t:"The pasta section is incredible value — the Cappelletti d'anatra is one of the best things on the menu.",rt:"PERFECT"},{t:"We have a set menu that may suit you.",rt:"GOOD"},{t:"The quality justifies the price.",rt:"WEAK"},{t:"Yes, we are fine dining.",rt:"NEVER"}]},
+        {obj:"\"We'll skip dessert, we're full.\"",r:[{t:"The soufflé is barely there — mostly air. Or a digestif to close the evening?",rt:"PERFECT"},{t:"We could share one between the table?",rt:"GOOD"},{t:"Of course, the bill?",rt:"WEAK"},{t:"Are you sure? It's our best dish.",rt:"NEVER"}]},
+        {obj:"\"We have tickets at 9 — we can't be long.\"",r:[{t:"I'll pace your meal precisely. If you'd like the soufflé I'll start it now so it's timed perfectly.",rt:"PERFECT"},{t:"We're usually quite fast.",rt:"GOOD"},{t:"I'll try to be quick.",rt:"WEAK"},{t:"Maybe just pasta then.",rt:"WEAK"}]}
+      ],
+      cafe:[
+        {obj:"\"We just want something quick.\"",r:[{t:"Of course — the pasta comes out fast and the ravioli doppio is a guest favourite. A glass to go with it?",rt:"PERFECT"},{t:"We have quick options on the menu.",rt:"GOOD"},{t:"Okay, I'll be fast.",rt:"WEAK"},{t:"Everything takes a while here.",rt:"NEVER"}]},
+        {obj:"\"We're not having starters.\"",r:[{t:"No problem — the suppli take two minutes and are perfect to share while you decide.",rt:"PERFECT"},{t:"The kitchen recommends a small start.",rt:"GOOD"},{t:"That's fine.",rt:"WEAK"},{t:"Are you sure? They're great.",rt:"NEVER"}]},
+        {obj:"\"No dessert for us today.\"",r:[{t:"Understood — but save room, the tiramisu goes fast. Or an affogato to finish?",rt:"PERFECT"},{t:"Maybe share one?",rt:"GOOD"},{t:"Sure, the bill then.",rt:"WEAK"},{t:"You should really try it.",rt:"NEVER"}]},
+        {obj:"\"Just water for us.\"",r:[{t:"Of course. Still or sparkling? And a glass of something with the pasta if you fancy it later.",rt:"PERFECT"},{t:"We have wine by the glass too.",rt:"GOOD"},{t:"Okay, tap water.",rt:"WEAK"},{t:"No wine at all?",rt:"NEVER"}]}
+      ],
+      cb:[
+        {obj:"\"We don't know much about wine.\"",r:[{t:"That's the fun part — tell me what you usually enjoy and I'll find something you'll love.",rt:"PERFECT"},{t:"We have a by-the-glass list to explore.",rt:"GOOD"},{t:"That's fine, here's the list.",rt:"WEAK"},{t:"Most people just pick anything.",rt:"NEVER"}]},
+        {obj:"\"Just one glass each, thanks.\"",r:[{t:"Lovely — and if you enjoy it, a bottle is four pours and better value. The Chianti suits what you're eating.",rt:"PERFECT"},{t:"Sure — would you like a bottle instead?",rt:"GOOD"},{t:"Okay, two glasses.",rt:"WEAK"},{t:"A bottle is always better.",rt:"NEVER"}]},
+        {obj:"\"We're just here for a quick drink.\"",r:[{t:"Perfect — a glass of Prosecco and the olives or focaccia come out fast if you'd like a bite.",rt:"PERFECT"},{t:"We have snacks too.",rt:"GOOD"},{t:"Okay, what would you like?",rt:"WEAK"},{t:"You should eat something.",rt:"NEVER"}]},
+        {obj:"\"I don't like Champagne.\"",r:[{t:"No problem — something crisp and dry, or with a bit of weight? I'll find your perfect glass.",rt:"PERFECT"},{t:"We have Prosecco or still wines.",rt:"GOOD"},{t:"Okay, some water?",rt:"WEAK"},{t:"Most people like it with food.",rt:"NEVER"}]}
+      ]
+    };
+    const objs=shuffle(venueObj[S.venue]);
+    let i=0,lives=3,score=0;
+    function render(){
+      if(lives<=0){showResult(score,objs.length,'objection','<p style="color:var(--red)">Out of lives! A Florentino server never loses the guest.</p>');return;}
+      if(i>=objs.length){showResult(score,objs.length,'objection');return;}
+      const ob=objs[i];
+      setMeta(`<span class="pill red">${'❤️'.repeat(lives)}</span><span class="pill gold">${score}/${objs.length}</span>`);
+      setArea(`<div class="lives">${'❤️'.repeat(lives)}${'🖤'.repeat(3-lives)}</div>
+        <div class="q-progress">Objection ${i+1} of ${objs.length}</div>
+        <div class="obj-phrase">${ob.obj}</div>
+        <div class="options">${shuffle(ob.r).map(x=>`<div class="option" data-rt="${x.rt}" onclick="window._po(this)">${x.t}</div>`).join('')}</div>
+        <div class="feedback" id="fb"></div>`);
+    }
+    window._po=function(el){
+      if(el.classList.contains('correct')||el.classList.contains('wrong'))return;
+      const rt=el.dataset.rt,c=rt==='PERFECT',lose=rt==='NEVER';
+      if(c){el.classList.add('correct');score++;}else{el.classList.add('wrong');if(lose)lives--;}
+      document.querySelectorAll('.option').forEach(x=>{x.innerHTML=x.textContent+` <span class="rating-badge rating-${x.dataset.rt}">${x.dataset.rt}</span>`;});
+      const fb=document.getElementById('fb');
+      const msg={PERFECT:'🎯 PERFECT — Florentino-level handling.',GOOD:'👍 GOOD — it works, but there\'s a sharper line.',WEAK:'⚠️ WEAK — you let the moment slip.',NEVER:'🚫 NEVER say that. −1 life.'};
+      fb.textContent=msg[rt];fb.classList.add('show',c?'good':(lose?'bad':''));
+      if(!c)fb.style.background=lose?'rgba(181,68,58,.1)':'rgba(255,193,7,.12)';
+      setTimeout(()=>{i++;render();},1700);
+    };
+    render();
+  },
+
+  /* ---------- PAIRING & PRODUCT ---------- */
+  pairing(){
+    const venuePairs={
+      dr:[
+        {dish:"Oysters, salted mandarin",wine:"NV Louis Roederer Champagne",wrong:["Demi Shiraz","Braida Moscato","Nebbiolo"]},
+        {dish:"Duck Liver Parfait",wine:"La Palazzina Nebbiolo",wrong:["Prosecco","Vernaccia","Moscato"]},
+        {dish:"Wagyu striploin",wine:"Demi by Syrahmi Shiraz",wrong:["Chardonnay","Rosato","Gamay"]},
+        {dish:"Crudo sea bream",wine:"Fontaleoni Vernaccia",wrong:["Grenache","Moscato","Nebbiolo"]},
+        {dish:"Soufflé al cioccolato",wine:"Braida Moscato d'Asti",wrong:["Demi Shiraz","Vernaccia","Riesling"]}
+      ],
+      cafe:[
+        {dish:"Rigatoni alla vodka",wine:"Fratelli d'Anna Chianti",wrong:["Moscato","Champagne","Riesling"]},
+        {dish:"Vitello tonnato",wine:"Pinot Grigio",wrong:["Demi Shiraz","Nebbiolo","Moscato"]},
+        {dish:"Cotoletta (crumbed veal)",wine:"Ngeringa Chardonnay",wrong:["Moscato","Gamay","Prosecco"]},
+        {dish:"Chocolate tart",wine:"Braida Moscato d'Asti",wrong:["Vernaccia","Chianti","Champagne"]},
+        {dish:"Market fish, salsa verde",wine:"Fontaleoni Vernaccia",wrong:["Demi Shiraz","Nebbiolo","Chianti"]}
+      ],
+      cb:[
+        {dish:"Burrata (olive, pistachio, basil)",wine:"NV Riva dei Frati Prosecco",wrong:["Demi Shiraz","Nebbiolo","Moscato"]},
+        {dish:"Spaghetti alle Vongole",wine:"Fontaleoni Vernaccia",wrong:["Chianti","Grenache","Moscato"]},
+        {dish:"Fettuccine al Ragù Bolognese",wine:"Fratelli d'Anna Chianti",wrong:["Chardonnay","Riesling","Moscato"]},
+        {dish:"Cotoletta Milanese",wine:"Ngeringa 'Sheoak' Chardonnay",wrong:["Demi Shiraz","Nebbiolo","Gamay"]},
+        {dish:"Affogato (tiramisu gelato)",wine:"Liqueur: Amaretto / Frangelico / Kahlúa",wrong:["Champagne","Nebbiolo","Rosato"]}
+      ]
+    };
+    const pairs=shuffle(venuePairs[S.venue]);
+    const T=80;let left=T,i=0,score=0;
+    function render(){
+      if(i>=pairs.length){clearInterval(S.gs.timer);showResult(score,pairs.length,'pairing');return;}
+      const p=pairs[i];
+      setArea(`<div class="timer-wrap"><div class="timer-bar" id="tb" style="width:100%"></div></div>
+        <div class="q-progress">Pairing ${i+1} of ${pairs.length}</div>
+        <div class="question-text">Best pairing for:<br><strong>${p.dish}</strong></div>
+        <div class="options">${shuffle([{t:p.wine,c:true},...p.wrong.slice(0,3).map(w=>({t:w,c:false}))]).map(x=>`<div class="option" data-c="${x.c}" onclick="window._pp(this)">${x.t}</div>`).join('')}</div>`);
+    }
+    window._pp=function(el){
+      const c=el.dataset.c==='true';
+      document.querySelectorAll('.option').forEach(x=>{if(x.dataset.c==='true')x.classList.add('correct');});
+      if(!c)el.classList.add('wrong');else score++;
+      setTimeout(()=>{i++;render();},950);
+    };
+    S.gs.timer=setInterval(()=>{left--;const pct=left/T*100;const b=document.getElementById('tb');
+      if(b){b.style.width=pct+'%';if(pct<30)b.classList.add('urgent');}
+      setMeta(`<span class="pill ${left<20?'red':''}">${left}s</span>`);
+      if(left<=0){clearInterval(S.gs.timer);showResult(score,pairs.length,'pairing');}},1000);
+    setMeta(`<span class="pill">${T}s</span>`);render();
+  },
+
+  /* ---------- REVENUE RUSH (DR) ---------- */
+  revenue(){
+    const D=[
+      {c:"Table of 2 orders still water. Next table has Champagne. Your move?",o:[{t:"'May I suggest a glass of Louis Roederer to start? It's beautiful tonight.'",v:30,l:'best',tag:'+$30'},{t:"Bring water, mention the aperitif list is available.",v:15,l:'good',tag:'+$15'},{t:"Serve the water and move on.",v:0,l:'miss',tag:'+$0'}]},
+      {c:"They're reading the entrée section. You approach.",o:[{t:"Highlight the oysters with mandarin granita, then the parfait as a contrast.",v:40,l:'best',tag:'+$40'},{t:"Ask if they have questions about the entrées.",v:10,l:'good',tag:'+$10'},{t:"Give them more time.",v:0,l:'miss',tag:'+$0'}]},
+      {c:"Mains ordered — one Wagyu, one pasta. Wine?",o:[{t:"Pair confidently: Shiraz with the Wagyu, Nebbiolo with the pasta — by the glass.",v:70,l:'best',tag:'+$70'},{t:"Offer the wine list.",v:30,l:'good',tag:'+$30'},{t:"Bring water, let them ask.",v:0,l:'miss',tag:'+$0'}]},
+      {c:"First glass nearly empty mid-meal.",o:[{t:"'Another glass, or a second wine for your remaining food?'",v:40,l:'best',tag:'+$40'},{t:"Wait until it's empty to ask.",v:10,l:'good',tag:'+$10'},{t:"Leave them — they'll ask.",v:0,l:'miss',tag:'+$0'}]},
+      {c:"Mains cleared, 8:30pm, relaxed and engaged.",o:[{t:"Plant the soufflé: 'It takes 20 min — order now and it's perfectly timed. Or a cheese course?'",v:55,l:'best',tag:'+$55'},{t:"Offer the dessert menu.",v:20,l:'good',tag:'+$20'},{t:"Present the bill.",v:0,l:'miss',tag:'+$0'}]},
+      {c:"Soufflé ordered. Closing the meal.",o:[{t:"'A digestif while it arrives — Amaro, Grappa, or a coffee to finish?'",v:35,l:'best',tag:'+$35'},{t:"Offer a coffee.",v:15,l:'good',tag:'+$15'},{t:"Bring the soufflé, wait for the bill.",v:0,l:'miss',tag:'+$0'}]}
+    ];
+    let total=140,i=0;const MAX=410,BENCH=350;
+    function render(){
+      if(i>=D.length){finish();return;}
+      const d=D[i];
+      setMeta(`<span class="pill gold">$${total}</span>`);
+      setArea(`<div class="rev-display"><div class="rev-amt">$${total}</div><div class="rev-lbl">Table check so far</div></div>
+        <div style="background:#eee;border-radius:4px;height:8px;margin-bottom:18px;overflow:hidden"><div style="width:${Math.min(100,total/MAX*100)}%;height:100%;background:var(--gold);border-radius:4px;transition:width .4s"></div></div>
+        <div class="decision-text">${d.c}</div>
+        ${d.o.map(o=>`<div class="dopt" data-v="${o.v}" data-l="${o.l}" data-tag="${o.tag}" onclick="window._pr(this)">${o.t}</div>`).join('')}`);
+    }
+    window._pr=function(el){
+      if(el.classList.contains('best')||el.classList.contains('good')||el.classList.contains('miss'))return;
+      el.classList.add(el.dataset.l);el.innerHTML+=` <strong style="color:var(--green)">${el.dataset.tag}</strong>`;
+      document.querySelectorAll('.dopt').forEach(o=>{o.onclick=null;o.style.cursor='default';});
+      total+=parseInt(el.dataset.v);setTimeout(()=>{i++;render();},1150);
+    };
+    function finish(){
+      const pct=Math.round((total-140)/(MAX-140)*100),pass=total>=BENCH;
+      saveProgress('revenue',pct);
+      const msg=total>=MAX-20?'🏆 Exceptional — you maximised every opportunity.':total>=BENCH?'✅ Above the Florentino Standard.':total>=250?'📈 Getting there — a few missed moments.':'📚 Every missed moment costs revenue.';
+      setArea(`<div class="result-card"><div class="result-score">$${total}</div><div class="result-label">Final table check</div>
+        <div style="margin:14px 0;font-size:.9rem;color:#666">Florentino Standard: <strong style="color:var(--navy)">$${BENCH}+</strong> · Max possible: <strong style="color:var(--gold)">$${MAX}</strong></div>
+        <div class="result-msg">${msg}</div>
+        <div class="result-actions"><button class="btn btn-outline" onclick="launchGame('revenue')">🔄 Retry</button><button class="btn btn-green" onclick="exitGame()">← Back to modules</button></div></div>`);
+      setMeta(`<span class="pill ${pass?'green':'red'}">$${total}</span>`);
+    }
+    render();
+  },
+
+  /* ---------- SERVICE FINAL ---------- */
+  final(){
+    const venueFinal={
+      dr:[
+        {q:"La Fiorentina is:",options:["A 1kg bone-in T-bone meant to be shared","A 500g fillet","A rack of lamb","A short rib"],explanation:"Gippsland T-bone, carved tableside — the signature."},
+        {q:"The soufflé must be ordered:",options:["Before the main — 20 min lead time","After mains are cleared","Any time","Only for 4+ guests"],explanation:"Always plant it early."},
+        {q:"Best wine with the Wagyu:",options:["Demi by Syrahmi Shiraz","Braida Moscato","Prosecco","Vernaccia"],explanation:"Heathcote Shiraz — the founder worked at Florentino."}
+      ],
+      cafe:[
+        {q:"A great Café dessert line is:",options:["'Save room — the tiramisu goes fast.'","'Do you want dessert?'","'We have desserts.'","'Here's the menu.'"],explanation:"Plant early, paint a picture."},
+        {q:"Every main at the Café should get:",options:["A recommended side","Nothing extra","A second main","Only water"],explanation:"Sides lift the check and complete the dish."},
+        {q:"Best pairing with the chocolate tart:",options:["Braida Moscato d'Asti","Demi Shiraz","Vernaccia","Chianti"],explanation:"Sweet Moscato with chocolate."}
+      ],
+      cb:[
+        {q:"In the Cellar Bar you lead with:",options:["The wine","The dessert menu","Water","Nothing — wait for the guest"],explanation:"CB is wine-led."},
+        {q:"To sell a bottle over two glasses:",options:["Make the value visible — '4 pours, better value'","Insist it's better","Never suggest it","Say everyone does"],explanation:"Make it easy and concrete."},
+        {q:"The Burrata is magic with:",options:["A glass of Prosecco","Tap water","Espresso","Nothing"],explanation:"Anchor the snack pairing."}
+      ]
+    };
+    runMCQ('final',[...PHIL_Q,...venueFinal[S.venue],PHIL_VENUE[S.venue]],{isFinal:true,limit:10});
+  },
+
+  /* ============================================================
+     ALLERGY GAMES
+     ============================================================ */
+  /* ---------- LIGHTSPEED ORDER SIM (Quiz 2 · common) ---------- */
+  lightspeedsim(){
+    const SC=[
+      {ctx:"<b>Table 14 · 2 guests.</b> As you greet them, <b>Seat 1</b> tells you they have a <b>shellfish</b> allergy.",
+       steps:[
+        {p:"How do you tag the table NAME?",add:{type:'name',val:'SHELLFISH S1'},
+         opts:["SHELLFISH S1","ANAPHYLACTIC","ALLERGY","Nothing — note it on the dish only"],
+         fb:"1–2 allergies → allergy + seat on the name (SHELLFISH S1)."},
+        {p:"You press the purple ALLERGY button. What goes on the ALLERGY line?",add:{type:'allergy',val:'Shellfish · Seat 1'},
+         opts:["Shellfish, Seat 1","Shellfish (no seat)","ALLERGY for the whole table","Nothing — the name is enough"],
+         fb:"Every allergy goes in with the seat it belongs to."},
+        {p:"Seat 1 orders a pasta finished with a seafood bisque. Under that dish you add:",add:{type:'dish',val:'No shellfish – sub tomato · Seat 1'},
+         opts:["No shellfish – sub tomato, Seat 1","Serve it, tell the kitchen verbally","Scrape the bisque off at the pass","Nothing — the ALLERGY line covers it"],
+         fb:"Every affected dish needs a 'No ___ – sub ___' + seat via its MOD group."}
+       ]},
+      {ctx:"<b>Table 8 · 5 guests.</b> Seat 2 is <b>dairy</b>, Seat 3 is <b>gluten</b>, Seat 5 is <b>pine nut</b>.",
+       steps:[
+        {p:"Three allergies at one table — how do you tag the NAME?",add:{type:'name',val:'ALLERGY'},
+         opts:["ALLERGY","DAIRY S2 / GLUTEN S3 / PINENUT S5","ANAPHYLACTIC","Nothing"],
+         fb:"3+ allergies → just 'ALLERGY'; the detail goes on the ALLERGY line."},
+        {p:"On the ALLERGY line you enter:",add:{type:'allergy',val:'Dairy S2 · Gluten S3 · Pine Nut S5'},
+         opts:["Each allergy against its seat (Dairy S2, Gluten S3, Pine Nut S5)","Just 'ALLERGY'","Only the most dangerous one","All three on Seat 1"],
+         fb:"Each allergy with its own seat, so the kitchen knows who is who."},
+        {p:"The table orders 5 souffles; one must be no pine nut. You ring it as:",add:{type:'dish',val:'4x Souffle + 1x No Pine Nut · Seat 5'},
+         opts:["4 × Souffle on one line + 1 × Souffle – No Pine Nut on its own line","5 × Souffle with a note 'one no nut'","5 × Souffle on one line","2 lines of mixed quantities"],
+         fb:"Split the quantity — the allergy plate always stands on its own line."}
+       ]},
+      {ctx:"<b>Table 333.</b> Seat 1 says they are <b>anaphylactic</b> to peanut.",
+       steps:[
+        {p:"Your first two actions are:",add:{type:'ana',val:'Logged on Lightspeed + manager told'},
+         opts:["Tag ANAPHYLACTIC, log it on Lightspeed & tell the manager — first","Take the whole order, then mention it to the kitchen","Offer water and carry on","Write it on a napkin for the chef"],
+         fb:"Anaphylaxis: log on Lightspeed + tell the manager before anything else."},
+        {p:"The table NAME should read:",add:{type:'name',val:'ANAPHYLACTIC'},
+         opts:["ANAPHYLACTIC","PEANUT S1","ALLERGY","Leave the name unchanged"],
+         fb:"Anaphylaxis always takes priority on the name tag."},
+        {p:"A dish you need isn't listed in the Allergy Matrix. You:",add:{type:'dish',val:'Asked the chef (not in Matrix)'},
+         opts:["Go and ask the chef — never guess","Assume it's safe","Assume it contains peanut","Serve it and watch the guest"],
+         fb:"Matrix first → if it is not listed, ask the chef. Never guess."}
+       ]}
+    ];
+    const flat=[]; SC.forEach((s,si)=>s.steps.forEach((st,sti)=>flat.push(Object.assign({si,first:sti===0,ctx:s.ctx},st))));
+    const total=flat.length;
+    let i=0,score=0; const built={name:'',ana:'',lines:[],dishes:[]};
+    function panel(){
+      return `<div class="sim-panel">
+        <div class="sp-h">🧾 The order you're building</div>
+        <div class="sim-row"><span class="lbl">Table name</span>${built.name?`<span class="sim-tag ${built.name==='ANAPHYLACTIC'?'ana':''}">${built.name}</span>`:'<span class="sim-empty">—</span>'}${built.ana?`<span class="sim-tag ana">${built.ana}</span>`:''}</div>
+        <div class="sim-row"><span class="lbl">ALLERGY line</span>${built.lines.length?built.lines.map(l=>`<span class="sim-tag allergy">${l}</span>`).join(''):'<span class="sim-empty">—</span>'}</div>
+        <div class="sim-row"><span class="lbl">Dishes</span>${built.dishes.length?built.dishes.map(d=>`<span class="sim-tag dish">${d}</span>`).join(''):'<span class="sim-empty">—</span>'}</div>
+      </div>`;
+    }
+    function apply(add){
+      if(add.type==='name')built.name=add.val;
+      else if(add.type==='ana')built.ana=add.val;
+      else if(add.type==='allergy')built.lines.push(add.val);
+      else if(add.type==='dish')built.dishes.push(add.val);
+    }
+    function render(){
+      if(i>=total){showResult(score,total,'lightspeedsim','<p style="color:#666;font-size:.9rem">A clean order keeps the guest safe and the kitchen confident.</p>',true);return;}
+      const q=flat[i];
+      if(q.first){built.name='';built.ana='';built.lines=[];built.dishes=[];}
+      setMeta(`<span class="pill">${i+1}/${total}</span><span class="pill gold">${score} pts</span>`);
+      setArea(panel()
+        +(q.first?`<div class="sim-context">${q.ctx}</div>`:'')
+        +`<div class="sim-step">Scenario ${q.si+1} of ${SC.length} — need 80% to be certified</div>
+        <div class="question-text">${q.p}</div>
+        <div class="options">${shuffle(q.opts.map((t,idx)=>({t,c:idx===0}))).map(x=>`<div class="option" data-c="${x.c}" onclick="window._ls(this)">${x.t}</div>`).join('')}</div>
+        <div class="feedback" id="fb">${q.fb}</div>`);
+    }
+    window._ls=function(el){
+      if(el.classList.contains('correct')||el.classList.contains('wrong'))return;
+      const c=el.dataset.c==='true';
+      document.querySelectorAll('.option').forEach(x=>{if(x.dataset.c==='true')x.classList.add('correct');});
+      if(!c)el.classList.add('wrong');else score++;
+      apply(flat[i].add);
+      const fb=document.getElementById('fb');fb.classList.add('show',c?'good':'bad');
+      setTimeout(()=>{i++;render();},1450);
+    };
+    render();
+  },
+
+  foundations(){
+    runMCQ('foundations',[
+      {q:"What's the key difference between a food allergy and an intolerance?",options:["An allergy involves the immune system and can be deadly; an intolerance involves digestion and is not life-threatening","An intolerance is always worse","They are the same thing","An allergy only causes a rash"],explanation:"Allergy = immune (IgE), can cause anaphylaxis. Intolerance = digestion, dose-dependent, not deadly."},
+      {q:"A guest says 'lactose intolerant.' Is lactose-free milk a safe solution?",options:["Yes — it solves a lactose intolerance (comfort, not safety)","No — it still has the milk proteins","Only for adults","Never offer dairy at all"],explanation:"Lactose-free milk solves intolerance. But for a DAIRY ALLERGY it's NOT safe — it still contains the proteins."},
+      {q:"A guest says 'no shellfish.' What does that mean for us?",options:["Both crustaceans AND molluscs — we never narrow it down","Just prawns","Just oysters","Only what they name"],explanation:"'No shellfish' always means both families — crustaceans and molluscs."},
+      {q:"Is a peanut a tree nut?",options:["No — it's a legume, unrelated to tree nuts","Yes","Only botanically","It depends on the dish"],explanation:"Peanut is a legume. Peanut allergy ≠ tree-nut allergy — but each tree nut must be named."},
+      {q:"How should you treat a coeliac 'gluten free' request?",options:["With the same strictness as an allergy — separate prep, no cross-contact","As a lifestyle preference","Only if they seem serious","Less strictly than an allergy"],explanation:"Coeliac is autoimmune (~1 in 70). No anaphylaxis, but the damage is real — strict avoidance."},
+      {q:"If you're unsure whether a guest means 'allergy' or 'preference':",options:["Treat it as an allergy until you know otherwise","Assume it's a preference","Guess based on the dish","Ignore it"],explanation:"Over-caution costs nothing. Under-caution can cost a life."},
+      {q:"Which is the classic HIDDEN fish that catches people out?",options:["Anchovy","Salmon","Tuna steak","Snapper"],explanation:"Anchovy hides in Caesar dressing, salsa verde, puttanesca and many bases."},
+      {q:"A guest is anaphylactic. What are the FIRST two things you do?",options:["Log it on Lightspeed immediately and tell the manager","Bring the menu and take the order","Offer them water","Ask them to confirm by writing it down"],explanation:"Log on Lightspeed + tell the manager — before anything else, so everyone who touches the order knows."},
+      {q:"What is the only treatment for anaphylaxis?",options:["Adrenaline (auto-injector) into the outer mid-thigh","An antihistamine","An asthma puffer","Water and rest"],explanation:"Adrenaline first, always — and it's safe to give if you're unsure. Then call 000."},
+      {q:"Under PEAL, how must tree nuts be declared?",options:["Each nut named individually (almond, cashew, etc.)","As 'nuts'","Only if peanuts are present","They don't need declaring"],explanation:"'Nut free' is too vague — always ask which nuts."}
+    ]);
+  },
+
+  lightspeed(){
+    runMCQ('lightspeed',[
+      {q:"When do you ask about allergies?",options:["As you greet the table — before talking through the menu","After they've ordered","Only if they mention it","When the food arrives"],explanation:"Ask first so you can guide them to what they can and can't have."},
+      {q:"The booking has an allergy noted in SevenRooms. You should:",options:["Confirm it out loud with the guest rather than assuming","Trust the note and say nothing","Ignore it","Only check if it's anaphylaxis"],explanation:"Always confirm SevenRooms notes verbally with the guest."},
+      {q:"A table has 1 guest with a shellfish allergy. How do you tag the table name?",options:["Allergy + seat, e.g. 'SHELLFISH S1'","Just 'ALLERGY'","Nothing on the name","Only on the dish"],explanation:"1–2 allergies → allergy + seat on the table name."},
+      {q:"A table has 4 different allergies. How do you tag the name?",options:["Just 'ALLERGY' — detail goes on the ALLERGY line","List all four on the name","Tag only the worst one","Leave it blank"],explanation:"3+ allergies → tag 'ALLERGY'; the detail goes on the ALLERGY line by seat."},
+      {q:"A guest is anaphylactic. The table name should read:",options:["'ANAPHYLACTIC' — it always takes priority","'ALLERGY'","The allergen only","Nothing special"],explanation:"Anaphylaxis always takes priority on the name tag — then log it and tell the manager."},
+      {q:"What does the purple ALLERGY button do?",options:["Adds an ALLERGY line to enter each allergy against its seat","Prints the bill","Voids the order","Calls the manager"],explanation:"It adds the ALLERGY line — enter each allergy with the seat (e.g. SHELLFISH, Seat 1)."},
+      {q:"What must sit under every dish an allergic guest is having?",options:["A 'No ___ – sub ___' substitution with the seat","Nothing","Just the seat number","A price adjustment"],explanation:"Every affected dish needs a substitution + seat via its 'MOD' group."},
+      {q:"If no substitution is possible for a dish:",options:["The guest cannot have it — guide them to another","Serve it anyway with a warning","Remove the allergen at the table","Ask them to sign a waiver"],explanation:"No safe sub = the guest can't have that dish. Guide them elsewhere."},
+      {q:"A table orders 5 soufflés, one must be no pine nut. You ring it as:",options:["4 × Soufflé on one line, 1 × Soufflé – No Pine Nut on its own line","5 × Soufflé with a note","5 on one line","2 lines of mixed quantities"],explanation:"Split the quantity — the allergy plate must always stand on its own line."},
+      {q:"A dish's allergen isn't listed in the Allergy Matrix. You:",options:["Go and ask the chef directly — never guess","Assume it's safe","Tell the guest it probably contains it","Serve it and watch the guest"],explanation:"Matrix first → if not listed, the chef. Never guess."}
+    ]);
+  },
+
+  detective(){
+    const data=shuffle(DISH_DATA[S.venue]);
+    let i=0,score=0;
+    function render(){
+      if(i>=data.length){showResult(score,data.length,'detective');return;}
+      const d=data[i];
+      setMeta(`<span class="pill">${i+1}/${data.length}</span>`);
+      setArea(`<div class="q-progress">Dish ${i+1} of ${data.length}</div>
+        <div style="background:rgba(156,107,46,.1);border-radius:8px;padding:12px 16px;margin-bottom:14px;color:var(--gold);font-weight:bold">🍽️ ${d.dish}</div>
+        <div class="question-text">${d.q}</div>
+        <div class="options">${shuffle(d.opts.map(o=>({t:o,c:o===d.a}))).map(x=>`<div class="option" data-c="${x.c}" onclick="window._dd(this)">${x.t}</div>`).join('')}</div>
+        <div class="feedback" id="fb"></div>`);
+    }
+    window._dd=function(el){
+      const c=el.dataset.c==='true';
+      document.querySelectorAll('.option').forEach(x=>{if(x.dataset.c==='true')x.classList.add('correct');});
+      if(!c)el.classList.add('wrong');else score++;
+      const fb=document.getElementById('fb');fb.textContent=c?'✅ Correct — always confirm against the Matrix.':'❌ Check the Matrix — the allergen isn\'t always in the obvious ingredient.';
+      fb.classList.add('show',c?'good':'bad');
+      setTimeout(()=>{i++;render();},1500);
+    };
+    render();
+  },
+
+  allergyfinal(){
+    const dishQ=DISH_DATA[S.venue].slice(0,3).map(d=>({q:`${d.dish}: ${d.q}`,options:[d.a,...d.opts.filter(o=>o!==d.a).slice(0,3)],explanation:''}));
+    runMCQ('allergyfinal',[
+      {q:"'No shellfish' means:",options:["Both crustaceans and molluscs","Just prawns","Just oysters","Whatever the guest names"],explanation:"Always both families."},
+      {q:"The only treatment for anaphylaxis:",options:["Adrenaline into the outer mid-thigh","Antihistamine","Asthma puffer","Water"],explanation:"Adrenaline first, then call 000."},
+      {q:"A guest is anaphylactic — first two actions:",options:["Log on Lightspeed + tell the manager","Take the order then tell someone","Offer water","Write it on a napkin"],explanation:"Before anything else."},
+      {q:"Coeliac 'gluten free' should be treated:",options:["As strictly as an allergy","As a preference","Loosely","Only if severe"],explanation:"Autoimmune — strict, no cross-contact."},
+      {q:"Lactose-free milk for a DAIRY ALLERGY is:",options:["NOT safe — it still has the proteins","Safe","Safe in small amounts","Safe if heated"],explanation:"Allergy = protein. Lactose-free still has it."},
+      {q:"Each affected dish in Lightspeed needs:",options:["A 'No ___ – sub ___' substitution + seat","Just a note","Nothing","A price change"],explanation:"Via the dish's MOD group."},
+      {q:"Allergen not in the Matrix? You:",options:["Ask the chef — never guess","Assume safe","Assume unsafe","Serve and watch"],explanation:"Matrix → chef. Never guess."},
+      ...dishQ
+    ],{isFinal:true,limit:10});
+  }
+};
+
+/* ============================================================
+   CERTIFICATE
+   ============================================================ */
+function showCert(){
+  const v=S.venue,t=S.track;
+  const trackName=(t==='service'?'Service & Sales':'Allergy Training');
+  document.getElementById('cert-track').textContent=trackName+' — '+VENUES[v].name;
+  document.getElementById('cert-name').textContent=S.name||'Staff Member';
+  document.getElementById('cert-detail').textContent='has successfully completed the '+trackName+' track at '+VENUES[v].name;
+  document.getElementById('cert-date').textContent='Melbourne, '+new Date().toLocaleDateString('en-AU',{year:'numeric',month:'long',day:'numeric'});
+  launchConfetti();goScreen('screen-cert');
+}
+function launchConfetti(){
+  const cols=['#9C6B2E','#C79A5B','#1F3A5F','#3E7C53','#B5443A'];
+  for(let i=0;i<80;i++){const e=document.createElement('div');e.className='confetti-piece';
+    e.style.cssText=`left:${Math.random()*100}vw;background:${cols[i%cols.length]};width:${6+Math.random()*8}px;height:${6+Math.random()*8}px;animation-duration:${2+Math.random()*2}s;animation-delay:${Math.random()*.8}s`;
+    document.body.appendChild(e);e.addEventListener('animationend',()=>e.remove());}
+}
+
+/* ============================================================
+   NETLIFY
+   ============================================================ */
+/* ---- TRACKING (Google Sheet via Apps Script) ---- */
+function submitNetlify(m,score){ postCompletion(m,score); } // kept for compatibility
+function postCompletion(m,score){
+  if(!TRACKING_URL) return;
+  const payload={
+    staff:S.name||'Unknown',
+    venue:S.venue,                 // dr / cafe / cb
+    track:S.track,                 // service / allergy
+    module:m,
+    score:score
+  };
+  try{
+    fetch(TRACKING_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(payload)});
+  }catch(e){}
+}
+function jsonp(url,ok,err){
+  const cb='__cb'+Math.random().toString(36).slice(2);
+  let s=document.createElement('script');
+  const t=setTimeout(()=>{cleanup();err&&err();},9000);
+  function cleanup(){clearTimeout(t);try{delete window[cb];}catch(e){}if(s&&s.parentNode)s.parentNode.removeChild(s);}
+  window[cb]=(d)=>{cleanup();ok&&ok(d);};
+  s.onerror=()=>{cleanup();err&&err();};
+  s.src=url+(url.includes('?')?'&':'?')+'callback='+cb;
+  document.body.appendChild(s);
+}
+function escH(x){return String(x).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
+function showNameFallback(){
+  const sel=document.getElementById('staff-select'); if(sel)sel.style.display='none';
+  const ni=document.getElementById('name-input'); if(ni){ni.style.display='block'; ni.value='';} // blank each time
+  if(TRACKING_URL){ const rv=document.getElementById('reg-venue'); if(rv)rv.style.display='flex'; const rr=document.getElementById('reg-role'); if(rr)rr.style.display='block'; }
+}
+function loadRoster(){
+  // Privacy: we never display other staff names — everyone types their own name.
+  showNameFallback();
+}
+
+/* INIT */
+document.addEventListener('DOMContentLoaded',()=>{
+  loadRoster();
+});
+</script>
+</body>
+</html>

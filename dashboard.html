@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Florentino Academy — Manager Dashboard</title>
+<style>
+:root{
+  --navy:#1F3A5F; --gold:#9C6B2E; --gold-l:#C79A5B; --cream:#F7F2E9;
+  --green:#3E7C53; --red:#B5443A; --white:#fff; --ink:#2a2a2a; --line:rgba(31,58,95,.14);
+  --radius:14px; --shadow:0 6px 24px rgba(0,0,0,.10);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Georgia,'Times New Roman',serif;background:var(--cream);color:var(--navy);min-height:100vh;line-height:1.5}
+.bar{display:flex;align-items:center;gap:16px;background:var(--navy);color:#fff;padding:14px 22px;flex-wrap:wrap}
+.bar h1{font-size:1.15rem;font-weight:normal;letter-spacing:2px;text-transform:uppercase;color:var(--gold-l)}
+.bar .sp{flex:1}
+.bar button{background:rgba(255,255,255,.12);color:#fff;border:none;border-radius:8px;padding:9px 15px;font-family:inherit;font-size:.88rem;cursor:pointer}
+.bar button:hover{background:rgba(255,255,255,.22)}
+.wrap{max-width:1080px;margin:0 auto;padding:24px 18px 60px}
+
+/* GATE */
+#gate{min-height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(160deg,#1F3A5F,#16293f);padding:20px}
+.gate-card{background:rgba(255,255,255,.06);border:1px solid var(--gold);border-radius:var(--radius);padding:38px 32px;width:100%;max-width:400px;text-align:center}
+.gate-card h2{color:var(--gold-l);font-weight:normal;margin-bottom:8px}
+.gate-card p{color:rgba(255,255,255,.6);font-size:.85rem;margin-bottom:22px}
+.gate-card input{width:100%;padding:13px 16px;border:1px solid var(--gold);background:rgba(255,255,255,.08);color:#fff;border-radius:9px;font-size:1.05rem;font-family:inherit;outline:none;margin-bottom:16px;text-align:center;letter-spacing:2px}
+.btn{display:inline-block;padding:13px 24px;border:none;border-radius:9px;font-family:inherit;font-size:1rem;cursor:pointer;background:var(--gold);color:#fff}
+.btn:hover{background:var(--gold-l)}
+.btn-sm{padding:8px 14px;font-size:.85rem}
+.gate-err{color:#ffb4ab;font-size:.85rem;min-height:1.2em;margin-top:6px}
+
+/* CARDS */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin:18px 0 22px}
+.card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:18px 20px;box-shadow:var(--shadow)}
+.card .n{font-size:2rem;color:var(--gold);font-weight:bold;line-height:1}
+.card .l{font-size:.8rem;color:#777;margin-top:6px}
+
+/* FILTERS */
+.filters{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-bottom:16px}
+.filters label{font-size:.8rem;color:#777;display:block;margin-bottom:4px;font-family:sans-serif;letter-spacing:.5px}
+.filters select{padding:9px 12px;border:1px solid var(--line);border-radius:8px;font-family:inherit;font-size:.95rem;background:#fff;color:var(--navy)}
+
+/* TABLE */
+.tbl-wrap{background:#fff;border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);overflow:auto;margin-bottom:26px}
+table{width:100%;border-collapse:collapse;font-size:.86rem}
+th,td{padding:10px 12px;text-align:center;border-bottom:1px solid var(--line);white-space:nowrap}
+th{background:var(--navy);color:var(--cream);font-weight:normal;font-family:sans-serif;font-size:.76rem;letter-spacing:.4px;position:sticky;top:0}
+td.name,th.name{text-align:left;font-weight:bold}
+tr:nth-child(even) td{background:rgba(31,58,95,.025)}
+.cell-pass{color:var(--green);font-weight:bold}
+.cell-fail{color:var(--red);font-weight:bold}
+.cell-none{color:#ccc}
+.cell-date{display:block;font-size:.68rem;color:#999;font-family:sans-serif;font-weight:normal}
+.cert{font-size:.7rem;font-family:sans-serif;padding:3px 10px;border-radius:20px;font-weight:700}
+.cert-yes{background:var(--green);color:#fff}
+.cert-no{background:#eee;color:#999}
+.cert-part{background:rgba(156,107,46,.15);color:var(--gold)}
+.sec-title{font-size:1.15rem;color:var(--navy);font-weight:normal;margin:8px 0 12px;border-bottom:1px solid var(--line);padding-bottom:6px}
+.muted{color:#999;font-size:.8rem;font-family:sans-serif}
+.legend{font-size:.74rem;color:#999;font-family:sans-serif;margin:-14px 0 18px}
+.notroster{color:#b08; font-size:.7rem;font-family:sans-serif}
+.loading{text-align:center;color:#999;padding:50px;font-style:italic}
+.config-warn{background:#fff3cd;border:1px solid #ffe08a;color:#856404;border-radius:10px;padding:14px 16px;margin:16px 0;font-size:.9rem;font-family:sans-serif}
+</style>
+</head>
+<body>
+
+<!-- ============ PASSCODE GATE ============ -->
+<div id="gate">
+  <div class="gate-card">
+    <h2>Manager Dashboard</h2>
+    <p>Florentino Academy — training results</p>
+    <input type="password" id="pass-input" placeholder="Passcode" onkeydown="if(event.key==='Enter')enterDash()">
+    <button class="btn" style="width:100%" onclick="enterDash()">View results →</button>
+    <div class="gate-err" id="gate-err"></div>
+  </div>
+</div>
+
+<!-- ============ DASHBOARD ============ -->
+<div id="dash" style="display:none">
+  <div class="bar">
+    <h1>✦ Florentino Academy</h1>
+    <span style="font-family:sans-serif;font-size:.85rem;color:rgba(255,255,255,.6)">Manager Dashboard</span>
+    <span class="sp"></span>
+    <button onclick="loadData()">↻ Reload</button>
+    <button onclick="exportCSV()">⬇ Export CSV</button>
+    <button onclick="logout()">Sign out</button>
+  </div>
+  <div class="wrap">
+    <div id="config-warn"></div>
+    <div class="cards" id="cards"></div>
+
+    <div class="filters">
+      <div>
+        <label>Venue</label>
+        <select id="f-venue" onchange="render()">
+          <option value="cb">Cellar Bar</option>
+          <option value="dr">Dining Room</option>
+          <option value="cafe">Café</option>
+        </select>
+      </div>
+      <div>
+        <label>Track</label>
+        <select id="f-track" onchange="render()">
+          <option value="allergy">Allergy Training</option>
+          <option value="service">Service &amp; Sales</option>
+        </select>
+      </div>
+    </div>
+
+    <div id="matrix"></div>
+
+    <div class="sec-title">Full activity log</div>
+    <div class="legend">Most recent first · every module completion recorded.</div>
+    <div class="tbl-wrap" id="log"></div>
+  </div>
+</div>
+
+<script>
+/* ============================================================
+   CONFIG — paste the SAME Apps Script Web App URL as the platform.
+   ============================================================ */
+const TRACKING_URL = 'https://script.google.com/macros/s/AKfycbwZg0tpwkl1DXt6Y3CT81IA9K39TqqnU0xHUR8Nv30rrrNzXaR28RM12QpzB2vrdedc/exec'; // e.g. 'https://script.google.com/macros/s/AKfy.../exec'
+
+/* ---- reference data (must mirror the platform) ---- */
+const VEN={dr:'Dining Room',cafe:'Café',cb:'Cellar Bar'};
+const TRK={service:'Service & Sales',allergy:'Allergy Training'};
+const SERVICE_GAMES={
+  dr:['philosophy','sequence','language','objection','pairing','revenue','final'],
+  cafe:['philosophy','language','objection','pairing','final'],
+  cb:['philosophy','language','objection','pairing','final']
+};
+const ALLERGY_CORE=['foundations','lightspeedsim'];
+const ALLERGY_BONUS=['detective'];
+const ALLERGY_GAMES=[...ALLERGY_CORE,...ALLERGY_BONUS];
+const LBL={
+  philosophy:'Philosophy',sequence:'Sequence',language:'Language',objection:'Objection',
+  pairing:'Pairing',revenue:'Revenue',final:'Final Test',
+  foundations:'Quiz 1 · Foundations',lightspeedsim:'Quiz 2 · Lightspeed',detective:'Bonus · Detective'
+};
+function modulesFor(v,t){ return t==='service' ? SERVICE_GAMES[v] : ALLERGY_GAMES; }
+function certModules(v,t){ return t==='service' ? SERVICE_GAMES[v] : ALLERGY_CORE; }
+
+let STATE={results:[],staff:[]};
+
+/* ---- JSONP ---- */
+function jsonp(url,ok,err){
+  const cb='__cb'+Math.random().toString(36).slice(2);
+  let s=document.createElement('script');
+  const t=setTimeout(()=>{cleanup();err&&err('timeout');},10000);
+  function cleanup(){clearTimeout(t);try{delete window[cb];}catch(e){}if(s&&s.parentNode)s.parentNode.removeChild(s);}
+  window[cb]=(d)=>{cleanup();ok&&ok(d);};
+  s.onerror=()=>{cleanup();err&&err('network');};
+  s.src=url+(url.includes('?')?'&':'?')+'callback='+cb;
+  document.body.appendChild(s);
+}
+function esc(x){return String(x==null?'':x).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
+function fmtDate(d){ if(!d) return ''; const t=new Date(d); return isNaN(t)?'':t.toLocaleDateString('en-AU'); }
+
+/* ---- gate ---- */
+function enterDash(){
+  const pass=document.getElementById('pass-input').value.trim();
+  if(!pass){document.getElementById('gate-err').textContent='Enter the passcode.';return;}
+  sessionStorage.setItem('fa_dash_key',pass);
+  document.getElementById('gate-err').textContent='Checking…';
+  loadData(()=>{
+    document.getElementById('gate').style.display='none';
+    document.getElementById('dash').style.display='block';
+  },(msg)=>{
+    document.getElementById('gate-err').textContent = msg==='unauthorized' ? 'Wrong passcode.' : 'Could not reach the data ('+msg+').';
+    sessionStorage.removeItem('fa_dash_key');
+  });
+}
+function logout(){ sessionStorage.removeItem('fa_dash_key'); location.reload(); }
+
+/* ---- data ---- */
+function loadData(onOk,onErr){
+  if(!TRACKING_URL){
+    // allow viewing the empty shell with a clear warning
+    STATE={results:[],staff:[]};
+    if(onOk)onOk(); renderAll();
+    document.getElementById('config-warn').innerHTML='<div class="config-warn">⚠ <b>TRACKING_URL is empty.</b> Paste your Apps Script Web App URL at the top of dashboard.html to load live data.</div>';
+    return;
+  }
+  const key=sessionStorage.getItem('fa_dash_key')||'';
+  const m=document.getElementById('matrix'); if(m)m.innerHTML='<div class="loading">Loading…</div>';
+  jsonp(TRACKING_URL+'?action=results&key='+encodeURIComponent(key), function(data){
+    if(data && data.error){ if(onErr)onErr(data.error); return; }
+    STATE.results=(data&&data.results)||[];
+    STATE.staff=(data&&data.staff)||[];
+    if(onOk)onOk(); renderAll();
+  }, function(msg){ if(onErr)onErr(msg); });
+}
+
+/* ---- best score per staff/venue/track/module ---- */
+function norm(s){return String(s==null?'':s).trim().replace(/\s+/g,' ').toLowerCase();}
+function bestMap(){
+  const map={}; // key normName||venue||track||module -> {score,date}  (case/space-insensitive)
+  STATE.results.forEach(r=>{
+    const k=norm(r.staff)+'||'+r.venue+'||'+r.track+'||'+r.module;
+    if(!map[k] || r.score>map[k].score || (r.score===map[k].score && new Date(r.date)>new Date(map[k].date)))
+      map[k]={score:r.score,date:r.date};
+  });
+  return map;
+}
+function rosterRows(){
+  const by={};
+  function ensure(k){ if(!by[k]) by[k]={key:k,name:'',venue:'',role:'',inRoster:false,_ts:-1}; return by[k]; }
+  STATE.staff.forEach(p=>{ const k=norm(p.name); if(!k) return; const o=ensure(k); o.inRoster=true; o.name=p.name; if(!o.venue)o.venue=p.venue; if(!o.role)o.role=p.role; });
+  STATE.results.forEach(r=>{ const k=norm(r.staff); if(!k) return; const o=ensure(k); const ts=new Date(r.date).getTime()||0; if(!o.inRoster && ts>=o._ts){ o.name=r.staff; o._ts=ts; } });
+  return Object.values(by).sort((a,b)=>a.name.localeCompare(b.name));
+}
+
+function renderAll(){ renderCards(); render(); renderLog(); }
+
+function renderCards(){
+  const v=document.getElementById('f-venue').value, t=document.getElementById('f-track').value;
+  const map=bestMap(), rows=rosterRows(), cmods=certModules(v,t);
+  let certified=0, started=0;
+  rows.forEach(p=>{
+    const done=cmods.filter(m=>{const c=map[p.key+'||'+v+'||'+t+'||'+m];return c&&c.score>=80;}).length;
+    if(done===cmods.length) certified++;
+    else if(done>0) started++;
+  });
+  const cards=[
+    {n:STATE.staff.length||rows.length, l:'Staff in roster'},
+    {n:STATE.results.length, l:'Modules completed (all venues)'},
+    {n:certified, l:'Certified · '+VEN[v]+' / '+(t==='service'?'Service':'Allergy')},
+    {n:started, l:'In progress (this view)'}
+  ];
+  document.getElementById('cards').innerHTML=cards.map(c=>`<div class="card"><div class="n">${c.n}</div><div class="l">${esc(c.l)}</div></div>`).join('');
+}
+
+function render(){
+  const v=document.getElementById('f-venue').value, t=document.getElementById('f-track').value;
+  const mods=modulesFor(v,t), cmods=certModules(v,t), map=bestMap(), rows=rosterRows();
+  renderCards();
+  let head='<tr><th class="name">Staff</th>'+mods.map(m=>`<th>${esc(LBL[m]||m)}</th>`).join('')+'<th>Certified</th></tr>';
+  let body=rows.map(p=>{
+    let cells=mods.map(m=>{
+      const c=map[p.key+'||'+v+'||'+t+'||'+m];
+      if(!c) return '<td class="cell-none">—</td>';
+      const cls=c.score>=80?'cell-pass':'cell-fail';
+      return `<td class="${cls}">${c.score}%<span class="cell-date">${fmtDate(c.date)}</span></td>`;
+    }).join('');
+    const doneCore=cmods.filter(m=>{const c=map[p.key+'||'+v+'||'+t+'||'+m];return c&&c.score>=80;}).length;
+    let badge = doneCore===cmods.length ? '<span class="cert cert-yes">✓ Certified</span>'
+              : doneCore>0 ? `<span class="cert cert-part">${doneCore}/${cmods.length}</span>`
+              : '<span class="cert cert-no">—</span>';
+    const tag=p.inRoster?'':' <span class="notroster">(not in roster)</span>';
+    return `<tr><td class="name">${esc(p.name)}${tag}</td>${cells}<td>${badge}</td></tr>`;
+  }).join('');
+  if(!rows.length) body='<tr><td colspan="'+(mods.length+2)+'" class="loading">No staff or results yet.</td></tr>';
+  document.getElementById('matrix').innerHTML=
+    `<div class="sec-title">${VEN[v]} — ${TRK[t]}</div>
+     <div class="legend">Cell = best score. Certified = all required modules passed (≥80%). ${t==='allergy'?'Dish Detective is a bonus, not required.':''}</div>
+     <div class="tbl-wrap"><table><thead>${head}</thead><tbody>${body}</tbody></table></div>`;
+}
+
+function renderLog(){
+  const rows=[...STATE.results].sort((a,b)=>new Date(b.date)-new Date(a.date));
+  let head='<tr><th>Date</th><th class="name">Staff</th><th>Venue</th><th>Track</th><th>Module</th><th>Score</th></tr>';
+  let body=rows.map(r=>`<tr>
+    <td>${fmtDate(r.date)}</td>
+    <td class="name">${esc(r.staff)}</td>
+    <td>${esc(VEN[r.venue]||r.venue)}</td>
+    <td>${esc(TRK[r.track]||r.track)}</td>
+    <td>${esc(LBL[r.module]||r.module)}</td>
+    <td class="${r.score>=80?'cell-pass':'cell-fail'}">${r.score}%</td>
+  </tr>`).join('');
+  if(!rows.length) body='<tr><td colspan="6" class="loading">No completions recorded yet.</td></tr>';
+  document.getElementById('log').innerHTML=`<table><thead>${head}</thead><tbody>${body}</tbody></table>`;
+}
+
+function exportCSV(){
+  const rows=[...STATE.results].sort((a,b)=>new Date(b.date)-new Date(a.date));
+  const head=['Date','Staff','Venue','Track','Module','Score','Result'];
+  const lines=[head.join(',')].concat(rows.map(r=>[
+    fmtDate(r.date), r.staff, VEN[r.venue]||r.venue, TRK[r.track]||r.track, LBL[r.module]||r.module, r.score, r.score>=80?'PASS':'FAIL'
+  ].map(x=>'"'+String(x).replace(/"/g,'""')+'"').join(',')));
+  const blob=new Blob([lines.join('\n')],{type:'text/csv'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download='florentino_academy_results.csv';
+  a.click();
+}
+
+/* auto-enter if key already in session */
+document.addEventListener('DOMContentLoaded',()=>{
+  if(sessionStorage.getItem('fa_dash_key')){
+    loadData(()=>{
+      document.getElementById('gate').style.display='none';
+      document.getElementById('dash').style.display='block';
+    },()=>{ /* stay on gate */ });
+  }
+});
+</script>
+</body>
+</html>
