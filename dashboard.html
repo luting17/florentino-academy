@@ -125,7 +125,7 @@ const TRACKING_URL = 'https://script.google.com/macros/s/AKfycbyr-A-cfq6xCd1V5pK
 
 /* ---- reference data (must mirror the platform) ---- */
 const VEN={dr:'Dining Room',cafe:'Café',cb:'Cellar Bar'};
-const TRK={service:'Service & Sales',allergy:'Allergy Training'};
+const TRK={service:'Service & Sales',allergy:'Allergy Training',weekly:'Weekly Check-In'};
 const SERVICE_CORE=['dialogue','growcheck','timing','pairing','objection','final'];
 const SERVICE_BONUS=['roleplay'];
 const SERVICE_GAMES={
@@ -141,7 +141,8 @@ const LBL={
   pairing:'Pairing',final:'Final Test',roleplay:'Bonus · Mystery Guest',
   foundations:'Quiz 1 · Foundations',lightspeedsim:'Quiz 2 · Lightspeed',detective:'Bonus · Detective',
   /* legacy modules (pre-rebuild) — still readable in the activity log */
-  philosophy:'Philosophy (legacy)',sequence:'Sequence (legacy)',language:'Language (legacy)',revenue:'Revenue (legacy)'
+  philosophy:'Philosophy (legacy)',sequence:'Sequence (legacy)',language:'Language (legacy)',revenue:'Revenue (legacy)',
+  wk20260713:'Week of 13 July'
 };
 function modulesFor(v,t){ return t==='service' ? SERVICE_GAMES[v] : ALLERGY_GAMES; }
 function certModules(v,t){ return t==='service' ? SERVICE_CORE : ALLERGY_CORE; }

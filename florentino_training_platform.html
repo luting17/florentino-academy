@@ -428,6 +428,76 @@ const VENUES = {
   cb:   { name:'Cellar Bar',             icon:'🍷', short:'Cellar Bar' }
 };
 
+/* ============================================================
+   WEEKLY CHECK-INS — content sourced from the venue food,
+   cocktail and wine notes. options[0] = correct answer.
+   ============================================================ */
+const WEEKLY_CURRENT='wk20260713';
+const WEEKLY={
+ wk20260713:{
+  label:'Week of Monday 13 July',
+  venues:{
+   cafe:{
+    focus:'This week: the food. New starters, the pastas and the desserts — straight from the June menu notes.',
+    mcq:[
+     {q:"The gorgonzola arancini are wrapped in:",options:["Radicchio leaves from Ramarro Farm","Prosciutto","Vine leaves","Nothing — they're served plain"],explanation:"Fried gorgonzola risotto wrapped in Ramarro Farm radicchio, finished with currant agrodolce to balance the richness."},
+     {q:"The wood-fired scallop is cooked and served:",options:["In the half shell in the Josper, with n'duja & honey butter","Seared in a pan with lemon butter","Raw, as a crudo","Skewered over the grill"],explanation:"Shark Bay (WA) scallop, Josper-cooked in the half shell — spicy n'duja meets sweet honey butter."},
+     {q:"The duck croquette comes with:",options:["Fig & Marsala jam and fried sage","Aioli and lemon","Salsa verde","Pickled green tomatoes"],explanation:"Slow-braised Victorian duck leg, pressed overnight, with a red-wine fig purée."},
+     {q:"The ravioli doppio is filled with:",options:["Mushroom on one side, oozy cacio e pepe on the other","Ricotta and spinach","Duck and beetroot","Short rib and veal sugo"],explanation:"Two fillings in one ravioli — porcini-mushroom mix and Pecorino-Romano cacio e pepe — in butter sauce with Pepo Farm hazelnuts."},
+     {q:"Why does the rigatoni alla vodka have that warming mouthfeel?",options:["The vodka is not entirely cooked out","It's finished with chilli oil","It's flambéed tableside","It uses smoked cream"],explanation:"Onion, garlic, chilli, smoked paprika, vodka, cream and parmesan — topped with Floridia buffalo mozzarella and baked."},
+     {q:"The cotoletta di maiale is:",options:["A brined, crumbed free-range pork cutlet on the bone (~200g)","A crumbed veal topside","A chicken schnitzel","A 300g scotch fillet"],explanation:"Western Plains free-range pork, served with mixed cucumbers, pickled green tomatoes and a light garlic aioli."},
+     {q:"The Bonet Piemontese arrives with a tableside moment — which one?",options:["Warm rum caramel poured at the table","A flambé of amaretto","Cheese shaved over the top","Espresso poured over"],explanation:"A rich dark-chocolate terrine from Piedmont, with amaretti biscuits — the warm rum caramel is poured in front of the guest."},
+     {q:"The cured marlin comes from:",options:["Mooloolaba, Queensland","Coffin Bay, SA","Shark Bay, WA","Corner Inlet, VIC"],explanation:"Thin-sliced cured marlin with salsa al dragoncello (tarragon), fire-caramelised orange and fried capers."}
+    ],
+    written:[
+     {q:"A guest asks: \"What's the ravioli doppio?\" — write your table-side answer in one or two sentences.",
+      model:"\"It's one of our most requested dishes — a double ravioli with mushroom on one side and an oozy cacio e pepe on the other, finished in butter sauce with local hazelnuts. Beautiful as an entrée or a main.\" Paint the picture, keep it warm and confident."},
+     {q:"A table orders the cotoletta and the rigatoni alla vodka. Suggest sides and one glass — write your exact line.",
+      model:"\"The shaved fennel salad cuts through the cotoletta beautifully, and the wood-fired broccolini is made for sharing. And may I pour a glass of the Le Corti Chianti Classico with the rigatoni? It's made for pasta.\" A side for every main + a glass that pairs with the pasta."}
+    ]
+   },
+   cb:{
+    focus:'This week: the food. Snacks, the pastas and the classics — know them inside out.',
+    mcq:[
+     {q:"Inside the Burrata's mozzarella shell you find:",options:["Stracciatella","Ricotta","Whipped cream","Gorgonzola dolce"],explanation:"Made by Floridia in Thomastown — it sits on a paté of green olives, pistachio, confit garlic and basil."},
+     {q:"The anchovies on the Peperoni Arrosto are:",options:["Olasagasti, from the Cantabrian Sea","Local Australian anchovies","Marinated white anchovies from Sicily","There are no anchovies on this dish"],explanation:"Josper-roasted capsicums in sherry vinegar, with oregano and fried garlic chips — and Spanish Olasagasti anchovies."},
+     {q:"The agretti finishing the Spaghetti alle Vongole is:",options:["A crunchy, tangy Italian green","A type of small clam","A chilli paste","A citrus zest mix"],explanation:"Crunchy, slightly bitter and mineral — it lifts the Coffin Bay (SA) clams, garlic, chilli and white wine."},
+     {q:"What gives the agnolotti in brodo its smoky, deep broth?",options:["Pancetta rind and parmesan rind in brown chicken stock","Smoked ham hock","A splash of whisky","Charred onions"],explanation:"An Emilia-Romagna classic — chicken, mortadella and pancetta filling, in a broth deepened with pancetta and parmesan rinds. Perfect for the cold weather."},
+     {q:"Our bolognese is made with:",options:["Beef (brisket & chuck), veal, pancetta and pork","Beef only","Pork and fennel sausage","Lamb and beef"],explanation:"Coarsely minced, cooked slowly for 4 hours, finished with a little butter — Italy's most famous ragù done properly."},
+     {q:"The Cotoletta Milanese is cooked in:",options:["Clarified butter","Olive oil","Beer batter","Duck fat"],explanation:"Thin-sliced crumbed veal topside, with a shaved fennel salad dressed in orange-blossom vinaigrette and smoked chilli."},
+     {q:"The rainbow trout is farmed in:",options:["Alexandra, Victoria","Tasmania","New Zealand","Coffin Bay, SA"],explanation:"Crispy-skin trout with salsa verde, Yarra Valley salmon roe and lemon."},
+     {q:"The lasagne is built with how many layers?",options:["Six","Three","Ten","Four"],explanation:"Egg semolina sheets, house bolognese, béchamel and parmesan — baked, then finished with Napoli on the base."}
+    ],
+    written:[
+     {q:"Two guests with glasses of Prosecco ask: \"What should we snack on?\" — write your exact line.",
+      model:"\"The Burrata is magic with the Prosecco — creamy stracciatella over a pistachio-and-olive paté. And the Calamari Fritti come out fast if you fancy something warm.\" Anchor the snack to the glass in their hand."},
+     {q:"A guest asks: \"Tell me about the salame.\" — your answer in one or two sentences.",
+      model:"\"It's a fennel salame from Bundarra's Berkshire pigs in Barham, NSW — ethically raised heritage pork with real depth. We slice it to order and serve it with our house pickles.\" Origin + story = trust."}
+    ]
+   },
+   dr:{
+    focus:'This week: the new sides, the signature dishes — and the brand-new cocktail list, plus your wines by the glass.',
+    mcq:[
+     {q:"The patate al forno are now finished with:",options:["Truffle mayonnaise and San Rocco Collina Veneta","A chicken-stock sugo d'arrosto","Gorgonzola and honey","Salsa verde"],explanation:"Layered Spud Sisters potatoes, deep-fried until golden, truffle mayo piped on, topped with San Rocco — a semi-hard cow's-milk cheese from the hills of Veneto."},
+     {q:"What exactly is the cacciucco?",options:["A Tuscan fish stew from the port of Livorno","A Sicilian pasta dish","A grilled whole fish","A seafood risotto"],explanation:"Livorno's classic — traditionally made with the day's unsold seafood. Ours: Murray cod fillet on confit potatoes with strawberry clams and broccoli leaf."},
+     {q:"The tableside moment on the cacciucco is:",options:["The saffron-spiked tomato broth is poured at the table","The fish is filleted in front of the guest","Parmesan is shaved over it","A flambé of vermouth"],explanation:"The Murray cod is Aquna, pond-farmed in NSW; the strawberry clams come from New Zealand. The rich seafood-tomato broth arrives in front of the guest."},
+     {q:"A guest tries to order the insalata della casa as an entrée. You know that:",options:["It's sized as a side only — guide them to have it alongside their main","It works perfectly as an entrée","It's a large sharing salad","It's only for degustation menus"],explanation:"Ramarro Farm leaves with burnt honey & persimmon dressing — a small bowl, side dish only."},
+     {q:"What defines the Martini Florentino serve?",options:["Freezer pour — Four Pillars 'Olive Leaf' gin and Cocchi Extra Dry","Shaken hard over ice","Stirred and served on the rocks","Built in the glass with tonic"],explanation:"Straight from the freezer, garnished with a lemon twist and olives. Every venue serves its own variation on this martini."},
+     {q:"The Fig Leaf Negroni is a white-style Negroni. What stands in for the Campari?",options:["Suze — with Lillet Blanc and a fig leaf tincture","Aperol","Cynar","Nothing — it keeps the Campari"],explanation:"Four Pillars 'Rare Dry' gin, Lillet Blanc, Suze, Frangelico and apricot brandy — stirred, with a grapefruit coin."},
+     {q:"A guest wants a rich, creamy after-dinner cocktail. Your call?",options:["The Athol Brose — Dalmore 12yr Scotch, oloroso sherry, honey and hand-whipped cream","The Americano Pesca","The 75","The Martini Florentino"],explanation:"From Charles H. Baker's 1939 The Gentleman's Companion — rich and decadent, but never cloying."},
+     {q:"A guest drinks Burgundy Pinot Noir at home and wants something Italian in the same spirit:",options:["Rainoldi 'San Gregorio' Nebbiolo — Valtellina","Feudo Montoni Nero d'Avola","Hickenbotham 'Trueman' Cabernet","Appolonio Copertino Negroamaro"],explanation:"The wine notes call it 'a great Pinot Noir alternative for those wanting a light red' — mountain Nebbiolo from Lombardia."}
+    ],
+    written:[
+     {q:"A guest says: \"I love Negronis, but I fancy something different tonight.\" What do you offer, and how do you sell it? Write your exact line.",
+      model:"\"Then you'll love our Fig Leaf Negroni — a white-style Negroni on Four Pillars Rare Dry, where Suze and a fig-leaf tincture take the place of Campari. Aromatic, bittersweet, stirred cold.\" Offer the story, never the price. (The Americano Pesca is your lighter fallback.)"},
+     {q:"A guest orders the Cacciucco alla Livornese. Offer the perfect glass to go with it — write your exact line.",
+      model:"\"With the cacciucco, may I recommend a glass of the Montenidoli Vernaccia? Crisp and elegant, from San Gimignano — it's made for the saffron and the clams.\" The notes back you up: Vernaccia, Chardonnay or Timorasso."}
+    ]
+   }
+  }
+ }
+};
+
 /* ---- SERVICE & SALES reading content per venue ---- */
 const SERVICE_READ = {
   intro:`<p>The objective is not to sell more food and wine. It is to <strong>create a better experience</strong>. When a recommendation genuinely improves a guest's night, spending rises on its own. We never recommend something because it's expensive — we recommend it because it adds value.</p>
@@ -514,7 +584,7 @@ const DISH_DATA = {
     {dish:"Wagyu, black garlic & truffle", q:"Why is this beef dish NOT safe for a fish allergy?", a:"The black-garlic purée contains anchovy", opts:["The black-garlic purée contains anchovy","It's grilled near the fish station","The truffle oil contains fish stock","It's marinated in Worcestershire sauce"]},
     {dish:"Saffron spaghetti & Fregola al nero", q:"What hidden allergen do both contain?", a:"Fish stock", opts:["Fish stock","Peanut","Sesame","Soy"]},
     {dish:"Spelt sourdough", q:"Is this safe for a coeliac or wheat allergy?", a:"No — spelt is a type of wheat, it contains gluten", opts:["No — spelt is a type of wheat, it contains gluten","Yes, spelt is gluten-free","Yes, if lightly toasted","Only for wheat allergy, not coeliac"]},
-    {dish:"Coral trout", q:"What hidden crustacean is in this dish?", a:"It's finished tableside with a prawn-and-crab bisque", opts:["It's finished tableside with a prawn-and-crab bisque","Oyster sauce in the glaze","Shrimp paste in the marinade","Crab stock in the rice"]},
+    {dish:"Cacciucco alla Livornese (Murray cod)", q:"Why is this fish dish NOT safe for a shellfish allergy?", a:"The broth is made with prawn heads and it's served with clams — crustaceans AND molluscs", opts:["The broth is made with prawn heads and it's served with clams — crustaceans AND molluscs","Oyster sauce in the glaze","Shrimp paste in the marinade","It's safe — it's only fish"]},
     {dish:"Banana semifreddo", q:"Which request must you check for here?", a:"Halal / pork — it's set with gelatine, often pork-derived", opts:["Halal / pork — it's set with gelatine, often pork-derived","Caffeine sensitivity","Sulphites","Lupin"]},
     {dish:"Crudo (cured sea bream)", q:"What hidden allergen is in the crudo besides fish?", a:"Egg — the fennel-pollen mayonnaise", opts:["Egg — the fennel-pollen mayonnaise","Dairy from a cream dressing","Tree nut praline","Sesame oil"]}
   ],
@@ -624,8 +694,9 @@ function openVenue(v){
     g.appendChild(c);
   });
   const wc=document.createElement('div'); wc.className='choice-card';
-  wc.innerHTML=`<div class="icon">🗓️</div><h3>Weekly Check-In</h3><p>Short knowledge checks — weekly & fortnightly</p>
-    <span class="tag tag-todo">Coming soon</span>`;
+  const wkDone=done(v,'weekly',WEEKLY_CURRENT);
+  wc.innerHTML=`<div class="icon">🗓️</div><h3>Weekly Check-In</h3><p>${WEEKLY[WEEKLY_CURRENT].label} — this week's knowledge check</p>
+    <span class="tag ${wkDone?'tag-done':'tag-todo'}">${wkDone?'✓ Done this week':'New this week'}</span>`;
   wc.onclick=()=>openWeekly(v);
   g.appendChild(wc);
   const rc=document.createElement('div'); rc.className='choice-card';
@@ -636,16 +707,83 @@ function openVenue(v){
   goScreen('screen-section');
 }
 function openWeekly(v){
-  document.getElementById('weekly-content').innerHTML=`
-    <p class="page-title">Weekly Check-In</p>
-    <p class="page-sub" style="margin-bottom:18px">${VENUES[v].name} · short knowledge checks to keep the team sharp.</p>
-    <div style="background:#fff;border:1px dashed #cbb78f;border-radius:12px;padding:28px 20px;text-align:center;color:#666">
-      <div style="font-size:2rem;margin-bottom:10px">🗓️</div>
-      <div style="color:var(--navy);font-size:1.05rem;margin-bottom:8px">Coming soon</div>
-      <div style="font-family:sans-serif;font-size:.9rem;line-height:1.6">This is where each week's — and fortnight's — quick knowledge checks will appear for ${VENUES[v].name}.<br>Your manager adds the questions here.</div>
-    </div>`;
+  S.venue=v;
   const w=document.getElementById('who-weekly'); if(w) w.textContent=S.name;
+  const wk=WEEKLY[WEEKLY_CURRENT], data=wk&&wk.venues[v];
+  const el=document.getElementById('weekly-content');
+  if(!data){
+    el.innerHTML=`<p class="page-title">Weekly Check-In</p>
+      <p class="page-sub" style="margin-bottom:18px">${VENUES[v].name}</p>
+      <div style="background:#fff;border:1px dashed #cbb78f;border-radius:12px;padding:28px 20px;text-align:center;color:#666">
+        <div style="font-size:2rem;margin-bottom:10px">🗓️</div>
+        <div style="color:var(--navy);font-size:1.05rem">This week's check-in is being prepared.</div>
+      </div>`;
+    goScreen('screen-weekly');return;
+  }
+  const dn=done(v,'weekly',WEEKLY_CURRENT);
+  el.innerHTML=`<p class="page-title">Weekly Check-In</p>
+    <p class="page-sub" style="margin-bottom:18px">${VENUES[v].name} · ${wk.label}</p>
+    <div class="callout">${data.focus}</div>
+    <p style="font-family:sans-serif;font-size:.9rem;color:#666;line-height:1.6">${data.mcq.length} quick questions (you need 80%) — then ${data.written.length} moments where you write your own line and compare it with a model answer.${dn?'<br><strong style="color:var(--green)">✓ Already passed this week</strong> — play again to stay sharp.':''}</p>
+    <div class="read-actions"><button class="btn btn-gold" onclick="startWeekly()">Start →</button></div>`;
   goScreen('screen-weekly');
+}
+function startWeekly(){
+  const v=S.venue, wk=WEEKLY[WEEKLY_CURRENT], data=wk.venues[v];
+  const el=document.getElementById('weekly-content');
+  const qs=shuffle(data.mcq); let i=0,score=0,wi=0;
+  function head(sub){return `<p class="page-title" style="font-size:1.4rem">Weekly Check-In</p><p class="page-sub" style="margin-bottom:16px">${VENUES[v].name} · ${wk.label}${sub?' · '+sub:''}</p>`;}
+  function render(){
+    if(i>=qs.length){written();return;}
+    const q=qs[i]; const o=shuffle(q.options.map((txt,idx)=>({txt,c:idx===0})));
+    el.innerHTML=head(`Question ${i+1}/${qs.length}`)+
+      `<div class="question-text">${q.q}</div>
+       <div class="options">${o.map(x=>`<div class="option" data-c="${x.c}" onclick="window._wk(this)">${x.txt}</div>`).join('')}</div>
+       <div class="feedback" id="wfb">${q.explanation||''}</div>`;
+    window.scrollTo(0,0);
+  }
+  window._wk=function(elm){
+    if(S.gs.lock)return;S.gs.lock=true;
+    const c=elm.dataset.c==='true';
+    document.querySelectorAll('#weekly-content .option').forEach(x=>{if(x.dataset.c==='true')x.classList.add('correct');});
+    if(!c)elm.classList.add('wrong');else score++;
+    const fb=document.getElementById('wfb');
+    const hasFb=fb&&fb.textContent.trim();
+    if(hasFb){fb.classList.add('show',c?'good':'bad');}
+    setTimeout(()=>{S.gs.lock=false;i++;render();},hasFb?2100:800);
+  };
+  function written(){
+    if(wi>=data.written.length){finish();return;}
+    const wq=data.written[wi];
+    el.innerHTML=head(`Write it · ${wi+1}/${data.written.length}`)+
+      `<div class="question-text">${wq.q}</div>
+       <textarea id="wta" rows="4" style="width:100%;padding:12px;border:1px solid #ccc;border-radius:8px;font-family:inherit;font-size:.95rem;resize:vertical" placeholder="Write it as you'd say it at the table…"></textarea>
+       <div style="margin-top:12px"><button class="btn btn-outline btn-sm" id="wrbtn" onclick="window._wr()">Compare with the model answer →</button></div>
+       <div id="wmodel" style="display:none;margin-top:14px" class="callout">💡 <strong>Model answer:</strong> ${wq.model}
+         <div style="margin-top:14px"><button class="btn btn-gold btn-sm" onclick="window._wn()">Next →</button></div></div>`;
+    window.scrollTo(0,0);
+  }
+  window._wr=function(){
+    const ta=document.getElementById('wta');
+    if(!ta.value.trim()){ta.focus();ta.placeholder='Write your answer first — then compare.';return;}
+    document.getElementById('wmodel').style.display='block';
+    const b=document.getElementById('wrbtn'); if(b)b.style.display='none';
+  };
+  window._wn=function(){wi++;written();};
+  function finish(){
+    const pct=Math.round(score/qs.length*100),pass=pct>=80;
+    const prevTrack=S.track; S.track='weekly'; saveProgress(WEEKLY_CURRENT,pct); S.track=prevTrack;
+    if(pass)launchConfetti();
+    el.innerHTML=head('')+`<div class="result-card">
+      <div class="result-score">${pct}%</div>
+      <div class="result-label">${score} / ${qs.length} correct</div>
+      <div class="result-msg">${pass?'🎉 Sharp for the week — great work.':'📚 Have another look at the notes and try again — you need 80%.'}</div>
+      <div class="result-actions">
+        <button class="btn btn-outline" onclick="startWeekly()">🔄 Play again</button>
+        <button class="btn btn-green" onclick="openVenue(S.venue)">← Back</button>
+      </div></div>`;
+  }
+  render();
 }
 function startReflection(){
   const items=[
@@ -760,7 +898,7 @@ function openGuide(src,phase,title){
 }
 function allergyReadingHTML(v){
   const ex = {
-    dr:`In the Dining Room: dairy is almost everywhere; egg hides in the crudo's mayo and the chocolatini; the Wagyu's black-garlic purée contains <strong>anchovy</strong> (a beef dish that is not fish-safe); the saffron spaghetti and fregola use <strong>fish stock</strong>; the coral trout is finished with a <strong>prawn-and-crab bisque</strong>; the spelt sourdough is still wheat.`,
+    dr:`In the Dining Room: dairy is almost everywhere; egg hides in the crudo's mayo and the chocolatini; the Wagyu's black-garlic purée contains <strong>anchovy</strong> (a beef dish that is not fish-safe); the saffron spaghetti and fregola use <strong>fish stock</strong>; the cacciucco broth is made with <strong>prawn heads</strong> and served with <strong>clams</strong> (crustaceans AND molluscs); the spelt sourdough is still wheat.`,
     cafe:`In the Café: dairy is in the suppli, rigatoni alla vodka and most pastas; the <strong>vitello tonnato</strong> sauce is an egg-based mayonnaise made with tuna (not egg- or fish-free); anchovy hides in the salsa verde, Livornese sauce and the fagioli vinaigrette; the wood-fired eggplant carries an easy-to-miss <strong>pine nut</strong>.`,
     cb:`In the Cellar Bar: the <strong>Peperoni Arrosto</strong> is finished with Cantabrian anchovies (not fish-safe) and contains dairy; the Burrata is garnished with <strong>pistachio</strong>; the Spaghetti alle Vongole is <strong>molluscs</strong>; the Calamari Fritti is squid (mollusc) in a wheat beer batter.`
   };
@@ -970,7 +1108,7 @@ const DIALOGUE_DATA={
       {guest:'"We can\'t decide on mains — what would you do?"',
        ch:[
         {t:'"For two, La Fiorentina — our 1kg T-bone, carved tableside. It\'s built to be shared, and it makes the night."',sat:12,rev:70,rt:'PERFECT',fb:'They asked for guidance — give the hero with total confidence.'},
-        {t:'"The Wagyu and the Coral Trout are both excellent."',sat:5,rev:30,rt:'GOOD',fb:'Solid options, but a fork in the road isn\'t a recommendation. Commit.'},
+        {t:'"The Wagyu and the Cacciucco are both excellent."',sat:5,rev:30,rt:'GOOD',fb:'Solid options, but a fork in the road isn\'t a recommendation. Commit.'},
         {t:'"Everything\'s good here, honestly."',sat:-5,rev:0,rt:'NEVER',fb:'That answer helps nobody. They handed you the table — take it.'}
        ]},
       {guest:'Mains are down, the mood is glowing. Halfway through the plates.',
@@ -992,13 +1130,13 @@ const DIALOGUE_DATA={
     nodes:[
       {guest:'"We\'ve got a bit of time today for once!"',
        ch:[
-        {t:'"Then start properly — the suppli take two minutes and are perfect to share while you look at the menu. A glass of Prosecco with them?"',sat:12,rev:35,rt:'PERFECT',fb:'Time = permission. Anchor a shared starter + aperitivo immediately.'},
+        {t:'"Then start properly — the gorgonzola arancini are perfect to share while you look at the menu. A glass of Prosecco with them?"',sat:12,rev:35,rt:'PERFECT',fb:'Time = permission. Anchor a shared starter + aperitivo immediately.'},
         {t:'"Great — I\'ll give you a few minutes with the menu."',sat:2,rev:0,rt:'WEAK',fb:'They TOLD you they have time. That was an invitation.'},
         {t:'"Our set lunch deal is the best value if you\'re staying a while."',sat:-4,rev:0,rt:'NEVER',fb:'Inventing offers we don\'t run erodes trust instantly.'}
        ]},
       {guest:'Two order pasta, one orders the cotoletta.',
        ch:[
-        {t:'"Lovely — a side salad cuts through the cotoletta beautifully. And a glass of the Le Corti Chianti Classico with the pasta?"',sat:10,rev:40,rt:'PERFECT',fb:'A side for every main + a glass that pairs with the pasta — the Café formula.'},
+        {t:'"Lovely — the shaved fennel salad cuts through the cotoletta beautifully. And a glass of the Le Corti Chianti Classico with the pasta?"',sat:10,rev:40,rt:'PERFECT',fb:'A side for every main + a glass that pairs with the pasta — the Café formula.'},
         {t:'"Any sides with that?"',sat:4,rev:12,rt:'GOOD',fb:'Right instinct — but name the side and paint it. Specific beats generic.'},
         {t:'Ring it through as ordered.',sat:0,rev:0,rt:'WEAK',fb:'Every main deserves a side suggestion. That\'s the standard.'}
        ]},
@@ -1073,7 +1211,7 @@ const GROW_DATA={
   ]},
   cafe:{base:75,label:'Table of 3 · two pastas + one cotoletta · tap water',moments:[
     {c:'They\'ve just ordered mains. Menus still open.',o:[
-      {t:'"A side with the cotoletta? The salad cuts through it beautifully."',q:2,acc:70,rev:14,fb:'A side for every main — highest acceptance right at ordering.'},
+      {t:'"A side with the cotoletta? The shaved fennel salad cuts through it beautifully."',q:2,acc:70,rev:14,fb:'A side for every main — highest acceptance right at ordering.'},
       {t:'"Dessert today?"',q:0,acc:10,rev:16,fb:'Too early — nobody commits to tiramisu before the pasta.'},
       {t:'Collect the menus quietly.',q:1,acc:100,rev:0,fb:'Clean service, missed side. That\'s the standard move you skipped.'}]},
     {c:'Menus collected. Drinks: three tap waters.',o:[
@@ -1128,7 +1266,7 @@ const TIMING_DATA={
   ],
   cafe:[
     {a:'Offer a glass of Prosecco or a spritz to start',s:0,fb:'Aperitivo at arrival — even at lunch, one warm offer.'},
-    {a:'Suggest the suppli to share while they decide',s:0,fb:'A fast shared starter belongs at the very top of the visit.'},
+    {a:'Suggest the gorgonzola arancini to share while they decide',s:0,fb:'A fast shared starter belongs at the very top of the visit.'},
     {a:'Recommend a glass that pairs with the pasta',s:1,fb:'Glass-with-pasta happens at ordering time.'},
     {a:'Suggest a side with every main',s:1,fb:'Sides join the order — that\'s the Café standard.'},
     {a:'Plant the tiramisu — "save room, it goes fast"',s:2,fb:'Plant it while they\'re eating and happy, before appetite fades.'},
@@ -1152,17 +1290,17 @@ const TIMING_DATA={
 const PAIR_DATA={
   dr:[
     {dish:'Oysters, salted mandarin',wine:'NV Louis Roederer \'Collection 246\' Champagne',story:'Classic Champagne and oysters — chalk, salt and bubbles.'},
-    {dish:'Crudo (cured sea bream)',wine:'Montenidoli \'Fiore\' Vernaccia',story:'San Gimignano\'s elegant white — made for lighter dishes.'},
+    {dish:'Cacciucco alla Livornese (Murray cod)',wine:'Montenidoli \'Fiore\' Vernaccia',story:'Straight from the food notes: Vernaccia, Chardonnay or Timorasso with the cacciucco.'},
     {dish:'Duck Liver Parfait',wine:'Rainoldi \'San Gregorio\' Nebbiolo',story:'Valtellina Nebbiolo — a lifted, lighter red that loves rich parfait.'},
     {dish:'Wagyu, black garlic & truffle',wine:'Fattoria di San Lorenzo Syrah',story:'A mature Syrah with the depth to meet marble-score Wagyu.'},
     {dish:'Soufflé al cioccolato',wine:'Braida Moscato d\'Asti',story:'Gently sparkling, sweet Piemonte Moscato — dessert\'s best friend.'}
   ],
   cafe:[
-    {dish:'Vitello tonnato',wine:'Corte Giara Pinot Grigio',story:'Crisp Veneto Pinot Grigio against the creamy tonnato.'},
+    {dish:'Cured marlin, burnt orange',wine:'Corte Giara Pinot Grigio',story:'Crisp Veneto Pinot Grigio alongside the cured fish and tarragon.'},
     {dish:'Rigatoni alla vodka',wine:'Le Corti \'Chianti Classico\' Sangiovese',story:'Chianti Classico — built for pasta, tomato and richness.'},
-    {dish:'Market fish, salsa verde',wine:'Fontaleoni Vernaccia',story:'"Great for anyone having seafood" — San Gimignano freshness.'},
-    {dish:'Cotoletta (crumbed veal)',wine:'Cascina Sot \'Langhe\' Chardonnay',story:'A Langhe Chardonnay with the weight for golden crumb.'},
-    {dish:'Chocolate tart',wine:'Terre Natuzzi Vin Santo del Chianti',story:'Tuscany\'s amber dessert wine — figs, honey, chocolate.'}
+    {dish:'Filetto di pesce, Livornese sauce',wine:'Fontaleoni Vernaccia',story:'"Great for anyone having seafood" — San Gimignano freshness.'},
+    {dish:'Cotoletta di maiale (crumbed pork)',wine:'Cascina Sot \'Langhe\' Chardonnay',story:'A Langhe Chardonnay with the weight for golden crumb.'},
+    {dish:'Bonet Piemontese (chocolate terrine)',wine:'Terre Natuzzi Vin Santo del Chianti',story:'Tuscany\'s amber dessert wine — honeyed depth for dark chocolate.'}
   ],
   cb:[
     {dish:'Burrata (olive, pistachio, basil)',wine:'NV Riva dei Frati Prosecco',story:'The house anchor — "the Burrata with the Prosecco is magic."'},
@@ -1209,7 +1347,7 @@ const OBJECTION_DATA={
       {t:'"Okay, I\'ll be fast."',rt:'WEAK',why:'Speed promised, nothing recommended.'},
       {t:'"Everything takes a while here."',rt:'NEVER',why:'You sold against your own kitchen.'}]},
     {obj:'"We\'re not having starters."',r:[
-      {t:'"No problem — the suppli take two minutes and are perfect to share while you decide."',rt:'PERFECT',why:'You respected the "no" and offered a tiny, easy yes instead.'},
+      {t:'"No problem — the gorgonzola arancini take five minutes and are perfect to share while you decide."',rt:'PERFECT',why:'You respected the "no" and offered a tiny, easy yes instead.'},
       {t:'"The kitchen recommends a small start."',rt:'GOOD',why:'Borrowed authority works — your own conviction works better.'},
       {t:'"That\'s fine."',rt:'WEAK',why:'Agreement without guidance is a missed table.'},
       {t:'"Are you sure? They\'re great."',rt:'NEVER',why:'"Are you sure?" challenges the guest. Never.'}]},
