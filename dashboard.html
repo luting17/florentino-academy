@@ -138,7 +138,7 @@ const ALLERGY_BONUS=['detective'];
 const ALLERGY_GAMES=[...ALLERGY_CORE,...ALLERGY_BONUS];
 const LBL={
   dialogue:'Dialogue',growcheck:'Grow the Check',timing:'Timing',objection:'Objection',
-  pairing:'Pairing',final:'Final Test',roleplay:'Bonus · AI Guest',
+  pairing:'Pairing',final:'Final Test',roleplay:'Bonus · Mystery Guest',
   foundations:'Quiz 1 · Foundations',lightspeedsim:'Quiz 2 · Lightspeed',detective:'Bonus · Detective',
   /* legacy modules (pre-rebuild) — still readable in the activity log */
   philosophy:'Philosophy (legacy)',sequence:'Sequence (legacy)',language:'Language (legacy)',revenue:'Revenue (legacy)'
@@ -258,7 +258,7 @@ function render(){
   if(!rows.length) body='<tr><td colspan="'+(mods.length+2)+'" class="loading">No staff or results yet.</td></tr>';
   document.getElementById('matrix').innerHTML=
     `<div class="sec-title">${VEN[v]} — ${TRK[t]}</div>
-     <div class="legend">Cell = best score. Certified = all required modules passed (≥80%). ${t==='allergy'?'Dish Detective is a bonus, not required.':'The AI Guest is a bonus, not required.'}</div>
+     <div class="legend">Cell = best score. Certified = all required modules passed (≥80%). ${t==='allergy'?'Dish Detective is a bonus, not required.':'The Mystery Guest is a bonus, not required.'}</div>
      <div class="tbl-wrap"><table><thead>${head}</thead><tbody>${body}</tbody></table></div>`;
 }
 

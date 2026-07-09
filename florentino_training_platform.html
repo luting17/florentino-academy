@@ -830,7 +830,7 @@ const GAME_INFO={
   pairing:{icon:'🍷',title:'Pairing Match',sub:'Match dish to the right glass — tap to pair'},
   objection:{icon:'🥊',title:'Objection Arena',sub:'3 lives — turn every pushback into a yes'},
   final:{icon:'🏆',title:'Final Test',sub:'Pass 80% to be certified'},
-  roleplay:{icon:'🤖',title:'AI Guest · Bonus',sub:'Type your pitch — a virtual guest reacts & coaches you'},
+  roleplay:{icon:'🕵️',title:'Mystery Guest · Bonus',sub:'Type your pitch — the mystery guest reacts & coaches you'},
   foundations:{icon:'🧠',title:'Quiz 1 · Allergy Foundations',sub:'General allergy knowledge — 80% to pass'},
   lightspeedsim:{icon:'💻',title:'Quiz 2 · Lightspeed Order',sub:'Build a real allergy order — the exam'},
   lightspeed:{icon:'💻',title:'Lightspeed Order Quiz',sub:'Entering an allergy correctly'},
@@ -845,7 +845,7 @@ function openHub(){
   document.getElementById('hub-title').textContent=(t==='service'?'Service & Sales':'Allergy Training');
   document.getElementById('hub-desc').textContent = t==='allergy'
     ? VENUES[v].name+' · pass the 2 quizzes to be certified — Dish Detective is a bonus'
-    : VENUES[v].name+' · complete the '+certList.length+' core games to be certified — the AI Guest is a bonus';
+    : VENUES[v].name+' · complete the '+certList.length+' core games to be certified — the Mystery Guest is a bonus';
   const dn=certList.filter(m=>done(v,t,m)).length;
   document.getElementById('hub-progress').style.width=Math.round(dn/certList.length*100)+'%';
   let progText=dn+' / '+certList.length+(t==='allergy'?' quizzes passed':' games completed');
@@ -861,7 +861,7 @@ function openHub(){
     const aiOff=(m==='roleplay'&&!ROLEPLAY_URL);
     c.className='module-card'+(cp?' completed':'');
     c.innerHTML=`<span class="badge ${cp?'badge-done':(aiOff?'badge-soon':'badge-play')}">${cp?'✓ Done':(aiOff?'Soon':'Play')}</span>
-      <div class="m-icon">${info.icon}</div><h3>${info.title}</h3><p>${aiOff?'Coming soon — your manager is setting up the AI coach.':info.sub}</p>
+      <div class="m-icon">${info.icon}</div><h3>${info.title}</h3><p>${aiOff?'Coming soon — your manager is setting up the Mystery Guest.':info.sub}</p>
       ${cp?`<div class="score-line">Score: ${scoreOf(v,t,m)}%</div>`:''}`;
     if(!aiOff) c.onclick=()=>launchGame(m); else c.style.opacity='.65';
     grid.appendChild(c);
@@ -1464,7 +1464,7 @@ const GAMES={
   /* ---------- AI GUEST (bonus · needs ROLEPLAY_URL) ---------- */
   roleplay(){
     if(!ROLEPLAY_URL){
-      setArea('<div class="result-card"><div style="font-size:2.4rem">🤖</div><div class="result-msg">The AI Guest is being set up by your manager.<br>Check back soon!</div><div class="result-actions"><button class="btn btn-green" onclick="exitGame()">← Back to modules</button></div></div>');
+      setArea('<div class="result-card"><div style="font-size:2.4rem">🤖</div><div class="result-msg">The Mystery Guest is being prepared by your manager.<br>Check back soon!</div><div class="result-actions"><button class="btn btn-green" onclick="exitGame()">← Back to modules</button></div></div>');
       return;
     }
     const TURNS=3;
@@ -1513,7 +1513,7 @@ const GAMES={
         busy=false;chat.pop();
         chatScreen('');
         const fb=document.getElementById('fb');
-        if(fb){fb.innerHTML='⚠️ The AI guest didn\'t answer ('+escH(e.message)+'). Check the connection and try again.';fb.classList.add('show','bad');}
+        if(fb){fb.innerHTML='⚠️ The guest didn\'t answer ('+escH(e.message)+'). Check the connection and try again.';fb.classList.add('show','bad');}
       }
     };
     function finish(){
