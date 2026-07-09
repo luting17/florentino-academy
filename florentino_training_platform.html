@@ -456,25 +456,7 @@ const WEEKLY={
       model:"\"The shaved fennel salad cuts through the cotoletta beautifully, and the wood-fired broccolini is made for sharing. And may I pour a glass of the Le Corti Chianti Classico with the rigatoni? It's made for pasta.\" A side for every main + a glass that pairs with the pasta."}
     ]
    },
-   cb:{
-    focus:'This week: the food. Snacks, the pastas and the classics — know them inside out.',
-    mcq:[
-     {q:"Inside the Burrata's mozzarella shell you find:",options:["Stracciatella","Ricotta","Whipped cream","Gorgonzola dolce"],explanation:"Made by Floridia in Thomastown — it sits on a paté of green olives, pistachio, confit garlic and basil."},
-     {q:"The anchovies on the Peperoni Arrosto are:",options:["Olasagasti, from the Cantabrian Sea","Local Australian anchovies","Marinated white anchovies from Sicily","There are no anchovies on this dish"],explanation:"Josper-roasted capsicums in sherry vinegar, with oregano and fried garlic chips — and Spanish Olasagasti anchovies."},
-     {q:"The agretti finishing the Spaghetti alle Vongole is:",options:["A crunchy, tangy Italian green","A type of small clam","A chilli paste","A citrus zest mix"],explanation:"Crunchy, slightly bitter and mineral — it lifts the Coffin Bay (SA) clams, garlic, chilli and white wine."},
-     {q:"What gives the agnolotti in brodo its smoky, deep broth?",options:["Pancetta rind and parmesan rind in brown chicken stock","Smoked ham hock","A splash of whisky","Charred onions"],explanation:"An Emilia-Romagna classic — chicken, mortadella and pancetta filling, in a broth deepened with pancetta and parmesan rinds. Perfect for the cold weather."},
-     {q:"Our bolognese is made with:",options:["Beef (brisket & chuck), veal, pancetta and pork","Beef only","Pork and fennel sausage","Lamb and beef"],explanation:"Coarsely minced, cooked slowly for 4 hours, finished with a little butter — Italy's most famous ragù done properly."},
-     {q:"The Cotoletta Milanese is cooked in:",options:["Clarified butter","Olive oil","Beer batter","Duck fat"],explanation:"Thin-sliced crumbed veal topside, with a shaved fennel salad dressed in orange-blossom vinaigrette and smoked chilli."},
-     {q:"The rainbow trout is farmed in:",options:["Alexandra, Victoria","Tasmania","New Zealand","Coffin Bay, SA"],explanation:"Crispy-skin trout with salsa verde, Yarra Valley salmon roe and lemon."},
-     {q:"The lasagne is built with how many layers?",options:["Six","Three","Ten","Four"],explanation:"Egg semolina sheets, house bolognese, béchamel and parmesan — baked, then finished with Napoli on the base."}
-    ],
-    written:[
-     {q:"Two guests with glasses of Prosecco ask: \"What should we snack on?\" — write your exact line.",
-      model:"\"The Burrata is magic with the Prosecco — creamy stracciatella over a pistachio-and-olive paté. And the Calamari Fritti come out fast if you fancy something warm.\" Anchor the snack to the glass in their hand."},
-     {q:"A guest asks: \"Tell me about the salame.\" — your answer in one or two sentences.",
-      model:"\"It's a fennel salame from Bundarra's Berkshire pigs in Barham, NSW — ethically raised heritage pork with real depth. We slice it to order and serve it with our house pickles.\" Origin + story = trust."}
-    ]
-   },
+   /* cb: waiting for the new Cellar Bar menu food notes — check-in added then */
    dr:{
     focus:'This week: the new sides, the signature dishes — and the brand-new cocktail list, plus your wines by the glass.',
     mcq:[
@@ -584,16 +566,16 @@ const DISH_DATA = {
     {dish:"Wagyu, black garlic & truffle", q:"Why is this beef dish NOT safe for a fish allergy?", a:"The black-garlic purée contains anchovy", opts:["The black-garlic purée contains anchovy","It's grilled near the fish station","The truffle oil contains fish stock","It's marinated in Worcestershire sauce"]},
     {dish:"Saffron spaghetti & Fregola al nero", q:"What hidden allergen do both contain?", a:"Fish stock", opts:["Fish stock","Peanut","Sesame","Soy"]},
     {dish:"Spelt sourdough", q:"Is this safe for a coeliac or wheat allergy?", a:"No — spelt is a type of wheat, it contains gluten", opts:["No — spelt is a type of wheat, it contains gluten","Yes, spelt is gluten-free","Yes, if lightly toasted","Only for wheat allergy, not coeliac"]},
-    {dish:"Cacciucco alla Livornese (Murray cod)", q:"Why is this fish dish NOT safe for a shellfish allergy?", a:"The broth is made with prawn heads and it's served with clams — crustaceans AND molluscs", opts:["The broth is made with prawn heads and it's served with clams — crustaceans AND molluscs","Oyster sauce in the glaze","Shrimp paste in the marinade","It's safe — it's only fish"]},
+    {dish:"Cacciucco alla Livornese (Murray cod)", q:"A shellfish-allergic guest loves fish. Can they have the cacciucco?", a:"Only adapted — the broth uses prawn heads and it comes with clams. Matrix: no sauce, sub gremolata", opts:["Only adapted — the broth uses prawn heads and it comes with clams. Matrix: no sauce, sub gremolata","Yes, as served — it's only fish","No — never, no substitution exists","Yes, if the clams are picked out at the pass"]},
     {dish:"Banana semifreddo", q:"Which request must you check for here?", a:"Halal / pork — it's set with gelatine, often pork-derived", opts:["Halal / pork — it's set with gelatine, often pork-derived","Caffeine sensitivity","Sulphites","Lupin"]},
     {dish:"Crudo (cured sea bream)", q:"What hidden allergen is in the crudo besides fish?", a:"Egg — the fennel-pollen mayonnaise", opts:["Egg — the fennel-pollen mayonnaise","Dairy from a cream dressing","Tree nut praline","Sesame oil"]}
   ],
   cafe:[
-    {dish:"Vitello tonnato", q:"Why is this sliced-veal dish NOT egg-free or fish-free?", a:"The tonnato sauce is an egg-based mayonnaise made with tuna", opts:["The tonnato sauce is an egg-based mayonnaise made with tuna","It's crumbed in breadcrumbs","It's cooked in fish stock","It contains anchovy garnish only"]},
+    {dish:"Wood-fired scallop, n'duja & honey butter", q:"A dairy-allergic guest wants the scallop. What does the Matrix say?", a:"Yes — served without the n'duja butter, sub EVOO", opts:["Yes — served without the n'duja butter, sub EVOO","No — the dairy can't be removed","Yes, as served — the butter is cooked out","Only the shellfish matters here"]},
     {dish:"Salsa verde / Livornese sauce / fagioli vinaigrette", q:"What hidden fish allergen do these share?", a:"Anchovy", opts:["Anchovy","Crab","Oyster sauce","Squid ink"]},
     {dish:"Wood-fired eggplant", q:"Which easy-to-miss tree nut is in this dish?", a:"Pine nut", opts:["Pine nut","Cashew","Walnut","Almond"]},
     {dish:"Ravioli doppio", q:"Which allergens does this fresh pasta carry?", a:"Egg (dough), dairy (butter & pecorino) and hazelnut", opts:["Egg (dough), dairy (butter & pecorino) and hazelnut","Only wheat","Fish and shellfish","Sesame and soy"]},
-    {dish:"Suppli", q:"Which three allergens are in the suppli?", a:"Dairy (parmesan & pecorino), egg (crumb) and wheat (crumb)", opts:["Dairy (parmesan & pecorino), egg (crumb) and wheat (crumb)","Fish, egg, soy","Tree nut, sesame, dairy","Shellfish, wheat, egg"]},
+    {dish:"Patate fritte (fries)", q:"Why can we never guarantee the fries for a seafood allergy?", a:"The shared fryer carries traces of seafood — and gluten, dairy and egg", opts:["The shared fryer carries traces of seafood — and gluten, dairy and egg","The salt blend contains fish","They're cooked in fish oil","We can — fries are just potato"]},
     {dish:"Jerusalem artichoke tart", q:"Which tree nut is in the filling?", a:"Cashew", opts:["Cashew","Pine nut","Almond","Macadamia"]}
   ],
   cb:[
@@ -695,8 +677,9 @@ function openVenue(v){
   });
   const wc=document.createElement('div'); wc.className='choice-card';
   const wkDone=done(v,'weekly',WEEKLY_CURRENT);
-  wc.innerHTML=`<div class="icon">🗓️</div><h3>Weekly Check-In</h3><p>${WEEKLY[WEEKLY_CURRENT].label} — this week's knowledge check</p>
-    <span class="tag ${wkDone?'tag-done':'tag-todo'}">${wkDone?'✓ Done this week':'New this week'}</span>`;
+  const wkAvail=!!(WEEKLY[WEEKLY_CURRENT].venues&&WEEKLY[WEEKLY_CURRENT].venues[v]);
+  wc.innerHTML=`<div class="icon">🗓️</div><h3>Weekly Check-In</h3><p>${wkAvail?WEEKLY[WEEKLY_CURRENT].label+" — this week's knowledge check":"This week's check-in is being prepared"}</p>
+    <span class="tag ${wkDone?'tag-done':(wkAvail?'tag-todo':'tag-soon')}">${wkDone?'✓ Done this week':(wkAvail?'New this week':'Coming soon')}</span>`;
   wc.onclick=()=>openWeekly(v);
   g.appendChild(wc);
   const rc=document.createElement('div'); rc.className='choice-card';
@@ -899,7 +882,7 @@ function openGuide(src,phase,title){
 function allergyReadingHTML(v){
   const ex = {
     dr:`In the Dining Room: dairy is almost everywhere; egg hides in the crudo's mayo and the chocolatini; the Wagyu's black-garlic purée contains <strong>anchovy</strong> (a beef dish that is not fish-safe); the saffron spaghetti and fregola use <strong>fish stock</strong>; the cacciucco broth is made with <strong>prawn heads</strong> and served with <strong>clams</strong> (crustaceans AND molluscs); the spelt sourdough is still wheat.`,
-    cafe:`In the Café: dairy is in the suppli, rigatoni alla vodka and most pastas; the <strong>vitello tonnato</strong> sauce is an egg-based mayonnaise made with tuna (not egg- or fish-free); anchovy hides in the salsa verde, Livornese sauce and the fagioli vinaigrette; the wood-fired eggplant carries an easy-to-miss <strong>pine nut</strong>.`,
+    cafe:`In the Café: dairy is almost everywhere — the arancini, the rigatoni alla vodka (<strong>no sub</strong>) and most pastas, plus the n'duja butter on the scallop (sub EVOO); the artichoke tart contains <strong>cashew</strong>; the eggplant carries an easy-to-miss <strong>pine nut</strong>; anchovy hides in the salsa verde, the Livornese sauce and the bagna cauda on the broccolini; and the shared fryer leaves <strong>traces</strong> on the fries.`,
     cb:`In the Cellar Bar: the <strong>Peperoni Arrosto</strong> is finished with Cantabrian anchovies (not fish-safe) and contains dairy; the Burrata is garnished with <strong>pistachio</strong>; the Spaghetti alle Vongole is <strong>molluscs</strong>; the Calamari Fritti is squid (mollusc) in a wheat beer batter.`
   };
   return `
