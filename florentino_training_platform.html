@@ -1117,7 +1117,7 @@ const PHIL_VENUE={
 const DIALOGUE_DATA={
   dr:{
     intro:'Saturday, 7:30pm. Table 12 — a couple, dressed up, unhurried. You approach.',
-    maxRev:195,
+    maxRev:345,
     nodes:[
       {guest:'"It\'s our anniversary tonight, actually."',
        ch:[
@@ -1127,19 +1127,19 @@ const DIALOGUE_DATA={
        ]},
       {guest:'They\'re browsing the entrées, glasses of Champagne in hand.',
        ch:[
-        {t:'"The oysters with salted mandarin are a beautiful way to begin — especially with that glass of Champagne."',sat:10,rev:36,rt:'PERFECT',fb:'Paint a picture + anchor it to what they\'re already enjoying.'},
+        {t:'"Half a dozen oysters with salted mandarin are a beautiful way to begin — especially with that glass of Champagne."',sat:10,rev:48,rt:'PERFECT',fb:'Paint a picture + anchor it to what they\'re already enjoying.'},
         {t:'"Any questions about the entrées?"',sat:3,rev:0,rt:'GOOD',fb:'Helpful, but a missed chance to guide. Recommend with confidence.'},
         {t:'"Do you want oysters?"',sat:-2,rev:0,rt:'WEAK',fb:'Closed question, no picture. "Do you want…" is flat — describe the experience.'}
        ]},
       {guest:'"We can\'t decide on mains — what would you do?"',
        ch:[
-        {t:'"For two, La Fiorentina — our 1kg T-bone, carved tableside. It\'s built to be shared, and it makes the night."',sat:12,rev:70,rt:'PERFECT',fb:'They asked for guidance — give the hero with total confidence.'},
-        {t:'"The Wagyu and the Cacciucco are both excellent."',sat:5,rev:30,rt:'GOOD',fb:'Solid options, but a fork in the road isn\'t a recommendation. Commit.'},
+        {t:'"For two, La Fiorentina — our 1kg T-bone, carved tableside. It\'s built to be shared, and it makes the night."',sat:12,rev:205,rt:'PERFECT',fb:'They asked for guidance — give the hero with total confidence.'},
+        {t:'"The Wagyu and the Cacciucco are both excellent."',sat:5,rev:75,rt:'GOOD',fb:'Solid options, but a fork in the road isn\'t a recommendation. Commit.'},
         {t:'"Everything\'s good here, honestly."',sat:-5,rev:0,rt:'NEVER',fb:'That answer helps nobody. They handed you the table — take it.'}
        ]},
       {guest:'Mains are down, the mood is glowing. Halfway through the plates.',
        ch:[
-        {t:'"Our soufflé needs a little preparation — if it appeals, I can have the kitchen begin one now so it\'s perfectly timed."',sat:10,rev:24,rt:'PERFECT',fb:'Dessert planted BEFORE mains are finished — the golden rule.'},
+        {t:'"Our soufflé needs a little preparation — if it appeals, I can have the kitchen begin one now so it\'s perfectly timed."',sat:10,rev:27,rt:'PERFECT',fb:'Dessert planted BEFORE mains are finished — the golden rule.'},
         {t:'Wait until the plates are cleared, then bring the dessert menu.',sat:2,rev:0,rt:'WEAK',fb:'Decisions on a full stomach skew to "no". Plant early, harvest later.'},
         {t:'Drop the bill folder on the corner of the table to save time.',sat:-12,rev:0,rt:'NEVER',fb:'You just ended their anniversary. Never rush a glowing table.'}
        ]},
@@ -1152,17 +1152,17 @@ const DIALOGUE_DATA={
     ]},
   cafe:{
     intro:'Thursday, 1pm. Table 6 — three colleagues on a long lunch, relaxed but chatty.',
-    maxRev:108,
+    maxRev:142,
     nodes:[
       {guest:'"We\'ve got a bit of time today for once!"',
        ch:[
-        {t:'"Then start properly — the gorgonzola arancini are perfect to share while you look at the menu. A glass of Prosecco with them?"',sat:12,rev:35,rt:'PERFECT',fb:'Time = permission. Anchor a shared starter + aperitivo immediately.'},
+        {t:'"Then start properly — the gorgonzola arancini are perfect to share while you look at the menu. A glass of Prosecco with them?"',sat:12,rev:45,rt:'PERFECT',fb:'Time = permission. Anchor a shared starter + aperitivo immediately.'},
         {t:'"Great — I\'ll give you a few minutes with the menu."',sat:2,rev:0,rt:'WEAK',fb:'They TOLD you they have time. That was an invitation.'},
         {t:'"Our set lunch deal is the best value if you\'re staying a while."',sat:-4,rev:0,rt:'NEVER',fb:'Inventing offers we don\'t run erodes trust instantly.'}
        ]},
       {guest:'Two order pasta, one orders the cotoletta.',
        ch:[
-        {t:'"Lovely — the shaved fennel salad cuts through the cotoletta beautifully. And a glass of the Le Corti Chianti Classico with the pasta?"',sat:10,rev:40,rt:'PERFECT',fb:'A side for every main + a glass that pairs with the pasta — the Café formula.'},
+        {t:'"Lovely — the shaved fennel salad cuts through the cotoletta beautifully. And a glass of the Le Corti Chianti Classico with the pasta?"',sat:10,rev:33,rt:'PERFECT',fb:'A side for every main + a glass that pairs with the pasta — the Café formula.'},
         {t:'"Any sides with that?"',sat:4,rev:12,rt:'GOOD',fb:'Right instinct — but name the side and paint it. Specific beats generic.'},
         {t:'Ring it through as ordered.',sat:0,rev:0,rt:'WEAK',fb:'Every main deserves a side suggestion. That\'s the standard.'}
        ]},
@@ -1174,8 +1174,8 @@ const DIALOGUE_DATA={
        ]},
       {guest:'Plates cleared. They\'re debating whether to head back to the office.',
        ch:[
-        {t:'"One tiramisu, three spoons — and affogatos, espresso over gelato, for anyone who needs to look busy this afternoon?"',sat:10,rev:33,rt:'PERFECT',fb:'Sharing lowers the barrier; the affogato line is charming and specific.'},
-        {t:'"Would you like the dessert menu?"',sat:3,rev:8,rt:'GOOD',fb:'Fine — but you planted the tiramisu earlier. Harvest it by name.'},
+        {t:'"One tiramisu, three spoons — and affogatos, espresso over gelato, for anyone who needs to look busy this afternoon?"',sat:10,rev:64,rt:'PERFECT',fb:'Sharing lowers the barrier; the affogato line is charming and specific.'},
+        {t:'"Would you like the dessert menu?"',sat:3,rev:20,rt:'GOOD',fb:'Fine — but you planted the tiramisu earlier. Harvest it by name.'},
         {t:'"Just the bill?"',sat:-4,rev:0,rt:'NEVER',fb:'You answered a question they hadn\'t asked. Never close a table for them.'}
        ]}
     ]},
@@ -1213,21 +1213,21 @@ const DIALOGUE_DATA={
 /* ---- GROW THE CHECK: base order + decision moments.
    Score = decision quality; "acc" = realistic acceptance odds shown to the player. */
 const GROW_DATA={
-  dr:{base:140,label:'Table of 2 · La Fiorentina ordered · still water',moments:[
+  dr:{base:205,label:'Table of 2 · La Fiorentina ($205) ordered · still water',moments:[
     {c:'They\'ve just sat down, menus closed, chatting.',o:[
       {t:'Suggest an aperitivo: "May I start you with a glass of Champagne while you decide?"',q:2,acc:70,rev:50,fb:'Arrival = aperitivo moment. Highest acceptance of the night.'},
       {t:'Suggest the soufflé for dessert already.',q:0,acc:10,rev:24,fb:'Dessert at hello feels like a script. Wrong moment.'},
       {t:'Take the food order straight away.',q:1,acc:100,rev:0,fb:'Efficient, but you skipped the most accepted upsell of the night.'}]},
     {c:'Entrées: they hesitate between two starters.',o:[
-      {t:'"The oysters with salted mandarin are a beautiful way to begin — shall we start there?"',q:2,acc:65,rev:36,fb:'Hesitation = they want guidance. Confident, specific, accepted.'},
-      {t:'"Take your time!"',q:0,acc:100,rev:0,fb:'Politeness that costs $36. They were asking for help.'},
+      {t:'"Half a dozen oysters with salted mandarin are a beautiful way to begin — shall we start there?"',q:2,acc:65,rev:48,fb:'Hesitation = they want guidance. Confident, specific, accepted — 6 × $8.'},
+      {t:'"Take your time!"',q:0,acc:100,rev:0,fb:'Politeness that costs $48. They were asking for help.'},
       {t:'"Both! Have both."',q:1,acc:30,rev:60,fb:'Fun, sometimes lands — but reads pushy on a quiet table.'}]},
     {c:'Mains ordered. Wine not yet discussed.',o:[
       {t:'"May I recommend something that pairs beautifully with the Fiorentina — by the glass or a bottle?"',q:2,acc:75,rev:70,fb:'Wine at ordering time is expected — highest-value moment of the meal.'},
       {t:'Drop the wine list and walk away.',q:1,acc:35,rev:40,fb:'The list without a guide converts poorly.'},
       {t:'Wait — maybe they\'ll ask later.',q:0,acc:0,rev:0,fb:'They rarely ask later. The moment was now.'}]},
     {c:'Mains half-eaten, mood is great.',o:[
-      {t:'Plant the soufflé: "It needs 20 minutes — I can have the kitchen begin one now."',q:2,acc:60,rev:24,fb:'The classic plant — before they\'re full, with a built-in reason to say yes now.'},
+      {t:'Plant the soufflé: "It needs 20 minutes — I can have the kitchen begin one now."',q:2,acc:60,rev:27,fb:'The classic plant — before they\'re full, with a built-in reason to say yes now.'},
       {t:'Ask now if they want the bill soon.',q:0,acc:100,rev:0,fb:'Bill talk mid-main ends the spending — and the mood.'},
       {t:'Suggest a second bottle of wine.',q:1,acc:30,rev:70,fb:'Right idea if glasses are empty — check the glasses first.'}]},
     {c:'Dessert done. They\'re lingering happily.',o:[
@@ -1235,9 +1235,9 @@ const GROW_DATA={
       {t:'"Anything else?"',q:1,acc:20,rev:15,fb:'Vague closes convert at a fraction of specific ones.'},
       {t:'Bring the bill.',q:0,acc:100,rev:0,fb:'A lingering table is still spending. Let them end the night.'}]}
   ]},
-  cafe:{base:75,label:'Table of 3 · two pastas + one cotoletta · tap water',moments:[
+  cafe:{base:140,label:'Table of 3 · two pastas + one cotoletta ($140) · tap water',moments:[
     {c:'They\'ve just ordered mains. Menus still open.',o:[
-      {t:'"A side with the cotoletta? The shaved fennel salad cuts through it beautifully."',q:2,acc:70,rev:14,fb:'A side for every main — highest acceptance right at ordering.'},
+      {t:'"A side with the cotoletta? The shaved fennel salad cuts through it beautifully."',q:2,acc:70,rev:17,fb:'A side for every main — highest acceptance right at ordering. The fennel is $17.'},
       {t:'"Dessert today?"',q:0,acc:10,rev:16,fb:'Too early — nobody commits to tiramisu before the pasta.'},
       {t:'Collect the menus quietly.',q:1,acc:100,rev:0,fb:'Clean service, missed side. That\'s the standard move you skipped.'}]},
     {c:'Menus collected. Drinks: three tap waters.',o:[
@@ -1249,11 +1249,11 @@ const GROW_DATA={
       {t:'"Enjoy!"',q:1,acc:100,rev:0,fb:'Perfectly nice. Perfectly forgettable.'},
       {t:'List all five desserts.',q:0,acc:15,rev:0,fb:'A menu recital mid-bite is noise. One vivid dish beats five names.'}]},
     {c:'Plates cleared. They check the time.',o:[
-      {t:'"One tiramisu, three spoons? And affogatos for the road?"',q:2,acc:55,rev:26,fb:'Sharing + a fast finish respects the clock AND grows the check.'},
-      {t:'Bring the dessert menus.',q:1,acc:30,rev:18,fb:'Menus slow a time-conscious table. Name the dish instead.'},
+      {t:'"One tiramisu, three spoons? And affogatos for the road?"',q:2,acc:55,rev:64,fb:'Sharing + a fast finish respects the clock AND grows the check — tiramisu $24, affogati $20 each.'},
+      {t:'Bring the dessert menus.',q:1,acc:30,rev:20,fb:'Menus slow a time-conscious table. Name the dish instead.'},
       {t:'Bring the bill — they\'re clearly done.',q:0,acc:100,rev:0,fb:'They checked the time; they didn\'t ask for the bill. Big difference.'}]},
     {c:'Dessert demolished. Happy table.',o:[
-      {t:'"Three espressos to finish properly?"',q:2,acc:65,rev:14,fb:'Coffee is the easiest yes in the building at this moment.'},
+      {t:'"Three espressos to finish properly?"',q:2,acc:65,rev:15,fb:'Coffee is the easiest yes in the building at this moment.'},
       {t:'"Anything else at all?"',q:1,acc:20,rev:5,fb:'Vague. An espresso by name converts three times better.'},
       {t:'Start wiping the next table.',q:0,acc:0,rev:0,fb:'The table can see you\'ve moved on. End as you began.'}]}
   ]},
