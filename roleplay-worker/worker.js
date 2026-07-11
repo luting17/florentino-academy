@@ -13,7 +13,7 @@ const DEFAULT_ORIGIN = 'https://luting17.github.io';
 const MODEL = 'claude-sonnet-4-5';
 const MAX_TOKENS = 500;
 const MAX_MESSAGES = 12;          // 3 exchanges + margin
-const MAX_CHARS_PER_MSG = 600;    // waiters type short lines; blocks abuse
+const MAX_CHARS_PER_MSG = 1600;   // roleplay lines + weekly written answers; blocks abuse
 
 export default {
   async fetch(request, env) {
