@@ -137,12 +137,13 @@ const ALLERGY_CORE=['foundations','lightspeedsim'];
 const ALLERGY_BONUS=['detective'];
 const ALLERGY_GAMES=[...ALLERGY_CORE,...ALLERGY_BONUS];
 const LBL={
-  dialogue:'Dialogue',growcheck:'Grow the Check',timing:'Timing',objection:'Objection',
+  dialogue:'Dialogue',growcheck:'Grow the Check',timing:'Right Call',objection:'Objection',
   pairing:'Pairing',final:'Final Test',roleplay:'Bonus · Mystery Guest',
   foundations:'Quiz 1 · Foundations',lightspeedsim:'Quiz 2 · Lightspeed',detective:'Bonus · Detective',
   /* legacy modules (pre-rebuild) — still readable in the activity log */
   philosophy:'Philosophy (legacy)',sequence:'Sequence (legacy)',language:'Language (legacy)',revenue:'Revenue (legacy)',
-  wk20260713:'Week of 13 July'
+  wk20260713:'Weekly (legacy)',
+  wkt1:'Weekly · Test 1 Foundations',wkt2:'Weekly · Test 2 Primi & Whites',wkt3:'Weekly · Test 3 Secondi, Reds & Spirits',wkt4:'Weekly · Test 4 Dolci, Prices & Menus'
 };
 function modulesFor(v,t){ return t==='service' ? SERVICE_GAMES[v] : ALLERGY_GAMES; }
 function certModules(v,t){ return t==='service' ? SERVICE_CORE : ALLERGY_CORE; }
