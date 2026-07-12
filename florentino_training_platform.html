@@ -1115,6 +1115,13 @@ function openVenue(v){
     {key:'service',icon:'✨',title:'Service & Sales',desc:'Hospitality, recommendations & the art of the upsell'},
     {key:'allergy',icon:'🌿',title:'Allergy Training',desc:'Allergens, the Lightspeed procedure & keeping guests safe'}
   ];
+  const wc=document.createElement('div'); wc.className='choice-card';
+  const wkTests=WEEKLY_TESTS[v];
+  const wkDn=wkTests?wkTests.filter(x=>done(v,'weekly',x.key)).length:0;
+  wc.innerHTML=`<div class="icon">🗓️</div><h3>Weekly Check-In</h3><p>${wkTests?'Four written tests — the whole menu, coach-graded':'Being prepared with the new menu'}</p>
+    <span class="tag ${wkTests?(wkDn===4?'tag-done':'tag-todo'):'tag-soon'}">${wkTests?(wkDn===4?'✓ All 4 passed':wkDn+'/4 passed'):'Coming soon'}</span>`;
+  wc.onclick=()=>openWeekly(v);
+  g.appendChild(wc);
   tracks.forEach(t=>{
     const c=document.createElement('div'); c.className='choice-card';
     const tc=trackComplete(v,t.key);
@@ -1123,13 +1130,6 @@ function openVenue(v){
     c.onclick=()=>openTrack(v,t.key);
     g.appendChild(c);
   });
-  const wc=document.createElement('div'); wc.className='choice-card';
-  const wkTests=WEEKLY_TESTS[v];
-  const wkDn=wkTests?wkTests.filter(x=>done(v,'weekly',x.key)).length:0;
-  wc.innerHTML=`<div class="icon">🗓️</div><h3>Weekly Check-In</h3><p>${wkTests?'Four written tests — the whole menu, coach-graded':'Being prepared with the new menu'}</p>
-    <span class="tag ${wkTests?(wkDn===4?'tag-done':'tag-todo'):'tag-soon'}">${wkTests?(wkDn===4?'✓ All 4 passed':wkDn+'/4 passed'):'Coming soon'}</span>`;
-  wc.onclick=()=>openWeekly(v);
-  g.appendChild(wc);
   const rvc=document.createElement('div'); rvc.className='choice-card';
   rvc.innerHTML=`<div class="icon">📚</div><h3>Revision Library</h3><p>Food, wines, cocktails & spirits — optional practice decks</p>
     <span class="tag tag-todo">Optional · not recorded</span>`;
