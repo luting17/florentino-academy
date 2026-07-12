@@ -226,6 +226,15 @@ body{font-family:Georgia,'Times New Roman',serif;background:var(--cream);color:v
 .chat-input{display:flex;gap:8px;align-items:stretch}
 .chat-input textarea{flex:1;padding:10px;border:1px solid #ccc;border-radius:8px;font-family:inherit;font-size:.95rem;resize:none}
 .badge-soon{background:#ddd;color:#888}
+.odds-wrap{margin-top:10px;font-family:sans-serif}
+.odds-row{display:flex;align-items:center;gap:8px;margin-top:7px}
+.odds-lbl{font-size:.68rem;letter-spacing:.5px;text-transform:uppercase;color:#999;flex:none}
+.odds-bar{flex:1;height:10px;background:#e8e2d6;border-radius:5px;overflow:hidden;max-width:200px}
+.odds-fill{height:100%;border-radius:5px;background:linear-gradient(90deg,var(--gold-l),var(--gold))}
+.odds-pct{font-size:.8rem;font-weight:700;color:var(--gold)}
+.odds-verdict{padding:7px 11px;border-radius:8px;font-size:.85rem;display:inline-block}
+.odds-verdict.yes{background:rgba(62,124,83,.12);color:var(--green)}
+.odds-verdict.no{background:rgba(31,58,95,.07);color:#667}
 @media(max-width:480px){.match-wrap{gap:6px}.mcard{font-size:.78rem;padding:10px}.bubble{max-width:100%}}
 
 /* PHASE CARDS (allergy reading) */
@@ -429,187 +438,378 @@ const VENUES = {
 };
 
 /* ============================================================
-   WEEKLY CHECK-IN — 4 general-knowledge tests, all visible.
-   Written answers, AI-graded /10 (pass 70%). Sources: food &
-   cocktail & wine notes, Allergy Matrix, FLORENTINO MENUS.xlsx.
+   WEEKLY CHECK-IN — 4 mixed general-knowledge tests.
+   Each test blends food, wine, cocktails, spirits & prices;
+   question order is shuffled on every attempt. Written answers,
+   AI-graded /10 (pass 70%). Sources: notes, Matrix, MENUS.xlsx.
    ============================================================ */
 const WEEKLY_PASS=70;
 const WEEKLY_TESTS={
- dr:[
-  {key:'wkt1',icon:'🐟',label:'Test 1 · Foundations',focus:'The Cacciucco, the sides, the Matrix — and the new cocktail list.',
-   questions:[
-    {q:"Present the Cacciucco alla Livornese as our signature: the story, what's on the plate, the tableside moment, and who farms the cod.",
-     model:"Cacciucco is the fish stew of Livorno, the Tuscan port — traditionally made with the day's unsold catch. Ours: a fillet of Aquna Murray cod, pond-farmed in NSW, on confit potatoes with New Zealand strawberry clams and broccoli leaf — and the saffron-spiked tomato-seafood broth is poured at the table. $75."},
-    {q:"Sell me BOTH the brussels sprouts and the patate al forno — technique and what's in each — then flag what the Matrix says about each (subs included).",
-     model:"Sprouts ($18): caramelised, folded with ham hock braised overnight in chicken stock, roasted chestnuts, crispy sage, verjuice currants — Matrix: no ham hock for vegetarian, no chestnuts for nuts, no butter for dairy-free. Patate ($18): Spud Sisters potatoes layered, pressed overnight, deep-fried golden, truffle mayonnaise piped on, San Rocco Collina Veneta to finish — Matrix: no truffle aioli for egg, no cheese for dairy-free."},
-    {q:"A COELIAC guest sits down for bread, an entrée and a pasta. Walk me through what the Matrix allows — and name the one raw dish that is NOT coeliac-friendly and why.",
-     model:"Bread: GF bread is available for the bread & butter. Entrée: the oysters, or the mushroom risotto as a safe primo. Pasta: the saffron spaghetti has a gluten-free pasta sub. The sea bream crudo is NOT coeliac-friendly — there's gluten in the shared fryer, so it can't be guaranteed. It all goes through Lightspeed with the subs."},
-    {q:"The FIG LEAF NEGRONI — spec it exactly (every bottle), the serve, and sell it to a Negroni lover in two sentences.",
-     model:"Four Pillars 'Rare Dry' gin, Lillet Blanc, Suze, Frangelico, Joseph Cartron apricot brandy and a fig leaf tincture — stirred, lowball, grapefruit coin. 'It's our white Negroni — Suze and fig leaf where the Campari would be. Aromatic, bittersweet, and nothing like anyone else's.'"},
-    {q:"The MARTINI FLORENTINO — gin, vermouth, the serve, the garnish — and the one-line story behind it.",
-     model:"Four Pillars 'Olive Leaf' gin, Cocchi Extra Dry vermouth, filtered water — a freezer pour into a classic martini glass, lemon twist and olives. Every one of our venues serves its own variation on this martini, each with a vermouth that speaks to the room."},
-    {q:"Wine by the glass tonight: pick ONE — producer & region, three taste words — and name the current dish it sings with.",
-     model:"Montenidoli 'Fiore' Vernaccia, San Gimignano — elegant, saline, precise — with the Cacciucco (the food notes name Vernaccia, Chardonnay or Timorasso). Rainoldi 'San Gregorio' Nebbiolo with the duck liver parfait also earns full marks — any real producer/region/dish match does."},
-    {q:"Give three upsells you'd ACTUALLY say tableside — one cocktail, one wine, one dish. Origin + flavour = experience.",
-     model:"Cocktail: 'An Americano Pesca to start — peach aperitif and Campari, light and elegant.' Wine: 'The Braida Moscato d'Asti with the soufflé — gently sparkling, dessert's best friend.' Dish: 'For two, La Fiorentina — our 1kg O'Connor T-bone, carved tableside.' Any specific, origin-led lines with warmth earn full marks."}
-   ]},
-  {key:'wkt2',icon:'🦪',label:'Test 2 · Assaggini, Antipasti & Whites',focus:'Every opener on the menu, and the white wines & light cocktails that carry them.',
-   questions:[
-    {q:"A table asks 'how do the small starters work?' — walk them through the assaggini section with prices, ending on your recommendation.",
-     model:"Assaggini are our small openers: oysters with salted mandarin ($8 each), the pumpkin tartelletta with Parmigiano and pumpkin-seed praline ($13), the duck liver parfait in a porcini cannolo ($13), the cozze smoked-mussel toast with whipped n'duja ($13), and the culatello board with melon, grissini and olives ($30). Then recommend one with confidence — e.g. 'start with half a dozen oysters while you browse.'"},
-    {q:"Present the CULATELLO board like a story: what culatello is, where it's from, what's new on the plate, and the documented wine match.",
-     model:"Culatello is the 'king of salumi' — the leanest hind-leg muscle, aged 12+ months in the misty Po Valley. We serve it with rockmelon compressed in basil syrup, calabrese-caviar stuffed Losada olives and hand-rolled rosemary & parmesan grissini. The notes pair it with the DUBL Rosato or Champagne. $30."},
-    {q:"The COZZE toast — what's on it, where are the mussels from, and which allergens should ring in your head?",
-     model:"Smoked Flinders Island mussels on toast with whipped n'duja and pickled baby fennel — finger food, $13. Flags: molluscs (shellfish), gluten in the toast, chilli and pork in the n'duja — the Matrix lists the subs (no n'duja, sub ricotta on some builds — check it)."},
-    {q:"A guest loves squid ink pasta. Present the FREGOLA AL NERO — and name its allergen family.",
-     model:"Fregola al nero di seppia — Sardinian pearl pasta in squid ink with arrow squid, preserved lemon and chilli, $38. Squid is a MOLLUSC — so 'no shellfish' rules it out; white wine in the base too. Offer the GF/DF saffron spaghetti as the alternative the Matrix suggests."},
-    {q:"The CARAMELLE — shape, filling, garnish. Sell it to a vegetarian-leaning guest.",
-     model:"Caramelle — 'candy-wrapped' pasta — filled with smoked onion and Jerusalem artichoke, finished with hazelnut, $34. 'Sweet smoked onion inside a silk pasta parcel, roasted hazelnuts on top — comfort with craft.' (Egg in the pasta; hazelnut is a listed sub.)"},
-    {q:"Three whites, three guests: (a) 'I drink Pinot Grigio', (b) 'I love Chablis', (c) 'rich, buttery Chardonnay please'. Name producer & region for each.",
-     model:"(a) Manni Nossing Müller-Thurgau, Alto Adige — 'a great alternative to Pinot Grigio, light and crisp.' (b) Claudio Mariotto 'Cavallina' Timorasso, Colli Tortonesi — the notes literally say 'Chablis lovers.' (c) Tapanappa Tiers Vineyard Chardonnay, Adelaide Hills — rich, buttery, elegant."},
-    {q:"'Dry, savoury bubbles — nothing sweet.' Your pour, with the story.",
-     model:"The DUBL Rosato from Feudi di San Gregorio — Aglianico sparkling made méthode champenoise in Campania with Anselme Selosse's counsel; wild strawberry, violets, toasted brioche. The notes' exact WHO: 'anyone that likes dry, savoury bubbles.'"},
-    {q:"Present the 75 and the AMERICANO PESCA in one breath each — and say which guest gets which.",
-     model:"The 75: Louis Roederer Champagne, Hine VSOP cognac, Italicus and lemon — 'a cocktail for wine lovers,' elegant and celebratory. The Americano Pesca: Rinquinquin peach, Cocchi Rosso, Campari, soda — low-ABV, bittersweet, built for the aperitivo hour or the guest pacing themselves."},
-    {q:"A guest with a SHELLFISH allergy asks which openers are safe. Sort the assaggini & antipasti fast.",
-     model:"Off: oysters, cozze (molluscs), fregola (squid). Safe or adaptable: pumpkin tartelletta, parfait cannoli, culatello board, crudo (it's FISH, not shellfish — different family), caramelle, cappelletti. And it all still goes through Lightspeed with the ALLERGY line + seat."},
-    {q:"Write your 30-second table-side pitch that takes a hesitant couple from 'just mains' to a full opening course.",
-     model:"Any warm, specific pitch works, e.g.: 'Before your mains — half a dozen oysters with salted mandarin and two glasses of the DUBL Rosato. Ten minutes of pure Italy while the kitchen works.' Must name a dish + a drink and sell the experience, not push."}
-   ]},
-  {key:'wkt3',icon:'🥩',label:'Test 3 · Secondi, Reds & House Spirits',focus:'The main event: secondi, the red list, and the seven house bottles.',
-   questions:[
-    {q:"Present the WAGYU: producer & marble score, what's on the plate — and the hidden allergen the Matrix flags.",
-     model:"Bistecca of Sher MB9 Wagyu — black garlic, glazed carrot, Chianti sugo, $75. The trap: the black garlic purée CONTAINS ANCHOVY — a beef dish that is not fish-safe as served. Matrix sub: no black garlic, red wine vinaigrette, plain carrot."},
-    {q:"The SPAGHETTI ALLO ZAFFERANO — what's in it, and what does the Matrix offer for (a) a vegetarian and (b) a coeliac?",
-     model:"Saffron spaghetti with king prawn and gremolata, $52. (a) Vegetarian: no prawns ('bugs'), no fish stock — zucchini and veg stock sub. (b) Coeliac: gluten-free pasta available. One dish, three guests — if you know the Matrix."},
-    {q:"A table wants steak but can't decide between the Wagyu, the Fiorentina and the T-bone conversation. Lay out the beef offer with prices and one confident steer.",
-     model:"The Bistecca Wagyu Sher MB9 ($75) — rich, sauced, individual. La Fiorentina — 1kg O'Connor T-bone from Gippsland, carved tableside, built for two ($205). Then steer: 'For the two of you, the Fiorentina — it makes the night.'"},
-    {q:"Reds, three guests: (a) 'Burgundy Pinot drinker', (b) 'something light and Italian', (c) 'big Aussie red'. Producer & region each.",
-     model:"(a) Colterenzio 'St.Daniel' Riserva Pinot Nero, Alto Adige — 'Burgundian style Pinot drinkers.' (b) Rainoldi 'San Gregorio' Nebbiolo, Valtellina — 'a great Pinot alternative, light red.' (c) Hickenbotham 'Trueman' Cabernet or the Fattoria di San Lorenzo Syrah — mature, deep, structured."},
-    {q:"HOUSE SPIRITS lightning round: what do we pour for Vodka, Gin, and Rye — producer, place, one flavour line each.",
-     model:"Vodka: Vanishing Point, Melbourne — clean, smooth, subtle grain sweetness. Gin: Four Pillars, Yarra Valley — bright citrus, native botanicals. Rye: The Gospel Straight Rye, Brunswick — bold spice, pepper, dried fruit."},
-    {q:"Same again for Tequila, Mezcal, Bourbon and Blended Scotch.",
-     model:"Tequila blanco: Batanga, Jalisco — fresh agave, citrus, crisp. Mezcal: San Cosme, Oaxaca — light smoke, earthy, the approachable mezcal. Bourbon: Four Roses, Kentucky — vanilla, caramel, soft. Blended Scotch: Whyte & Mackay, Glasgow — light smoke, honey, smooth."},
-    {q:"A guest says 'surprise me with something smoky after dinner.' Two different right answers — give both, with the sell.",
-     model:"San Cosme mezcal, Oaxaca — 'light smoke, earthy, the gentle way into mezcal.' Or the Athol Brose — Dalmore 12yr Scotch, oloroso, honey, whipped cream — 'a 1939 nightcap, rich but never cloying.' Origin + flavour = experience."},
-    {q:"The RISOTTO AI FUNGHI — mushroom, dietary status, and which guest you'd steer to it.",
-     model:"'Hen of the Woods' mushroom risotto, $46, gluten-free as-is; vegetarian with no butter/cheese swaps per Matrix (white wine in the base — flag for halal). The comfort-seeker, the vegetarian, or the coeliac's safest primo."},
-    {q:"Banana semifreddo + a halal guest — what must you know?",
-     model:"The semifreddo is set with GELATINE — the Matrix flags it red for halal (often pork-derived) with no sub. Guide them to the soufflé or tiramisu instead (checking the tiramisu's Strega for strict no-alcohol guests)."},
-    {q:"Write the exact line you'd use to sell a second bottle to a table mid-mains, without a hint of pressure.",
-     model:"E.g.: 'You're getting to the good part of that bottle — shall I have its twin ready before the Fiorentina lands?' Any line that's warm, timed to the meal, and makes it easy to say yes earns full marks."}
-   ]},
-  {key:'wkt4',icon:'🍫',label:'Test 4 · Dolci, Prices & The Menus',focus:'The sweet close, every key price, and which menu goes to which table.',
-   questions:[
-    {q:"Talk me through the dolci list — every dessert, its price, and one selling detail each.",
-     model:"Soufflé al cioccolato ($27) — fig, Fernet Branca, pine nut, 20-minute lead. Tiramisu ($24) — pavesini, mascarpone, a lift of Strega. Semifreddo ($24) — caramelised banana, fennel butterscotch, GF. Formaggio dal carrello ($32/$54) — today's wheel from the trolley. And the chocolatini arrive as the final touch — never printed, always a gift."},
-    {q:"The TIRAMISU and a pregnant guest — what does the Matrix flag, and what do you say?",
-     model:"It's flagged for RAW EGG (no-raw-proteins column) and Strega (alcohol). Kind, discreet line: 'The tiramisu has raw egg and a touch of liqueur — may I steer you to the soufflé instead? It's the kitchen's pride.'"},
-    {q:"Prices, rapid fire: La Fiorentina, the caviar (both tins), the Cacciucco, the soufflé, the cheese trolley.",
-     model:"Fiorentina $205 · Oscietra 30g $190 / Beluga $280 · Cacciucco $75 · Soufflé $27 · Formaggio $32 or $54 for the grand plate."},
-    {q:"A booking of NINE wants Saturday dinner. Which menus can you offer them — names, courses, prices — and what is NOT for them?",
-     model:"7+ bookings in the Dining Room go to the set menus: Menu Essenza — 5 courses, $200 — or Menu d'Autore — 7 courses, $260. The GROUP MENUS sheet ($165/$190 individual set/choice) is for FUNCTIONS in the Dining Room — and the Café/Ombra group menus don't apply here."},
-    {q:"Walk a vegan through dinner — the dedicated dishes, snack to dessert.",
-     model:"Smoked tomato toast with pickled baby fennel to open, the wood-roasted eggplant with currant agrodolce and pine nuts, sopressini al ragù di porcini as the pasta, and poached quince with fig leaf & coconut sorbet to finish. A full journey, not a compromise."},
-    {q:"What are Essenza and Autore actually made of? Name the courses that differ.",
-     model:"Both open with oysters, tartelletta, parfait cannoli + sourdough ritual, then crudo… Autore (7 courses, $260) adds the Cacciucco and the gorgonzola dolce torta ahead of the soufflé; Essenza (5 courses, $200) runs crudo → cappelletti → Wagyu → soufflé. Both close with sorbet and chocolatini, unprinted."},
-    {q:"The cheese moment: trolley vs gorgonzola dolce — present both and price the trolley options.",
-     model:"The trolley: today's cheeses, condiments, cherry & walnut loaf — $32, or $54 for the grand selection. The gorgonzola dolce with pear & walnut torta and sweet vermouth is the plated cheese-dessert hybrid. 'Something savoury to land the meal?' catches the no-dessert guest."},
-    {q:"A guest asks 'why is the Fiorentina $205?' — answer with grace, no apology.",
-     model:"E.g.: 'It's a full kilo of O'Connor Gippsland beef on the bone, dry-handled, carved at your table — dinner and theatre for two.' Value explained through origin, craft and experience — never defensiveness."},
-    {q:"Digestivi close: three different endings for three moods — name them.",
-     model:"Athol Brose for the rich nightcap; a grappa or amaro for the classicist; the Braida Moscato d'Asti for the gently sweet finish. Espresso rides alongside any of them."},
-    {q:"Your full 'last five minutes' script: dessert done, table glowing — write it.",
-     model:"Any warm close that offers a digestivo/coffee, plants the return visit, and ends personally. E.g.: 'Two Athol Broses to land the night… and next time, ask me for the caviar story.' Specific + warm + forward-looking = full marks."}
-   ]}
+ "dr": [
+  {
+   "key": "wkt1",
+   "icon": "1️⃣",
+   "label": "Test 1 · General Knowledge",
+   "focus": "A bit of everything — food, wine, cocktails, spirits & prices, in random order.",
+   "questions": [
+    {
+     "q": "Present the Cacciucco alla Livornese as our signature: the story, what's on the plate, the tableside moment, and who farms the cod.",
+     "model": "Cacciucco is the fish stew of Livorno, the Tuscan port — traditionally made with the day's unsold catch. Ours: a fillet of Aquna Murray cod, pond-farmed in NSW, on confit potatoes with New Zealand strawberry clams and broccoli leaf — and the saffron-spiked tomato-seafood broth is poured at the table. $75."
+    },
+    {
+     "q": "Present the CULATELLO board like a story: what culatello is, where it's from, what's new on the plate, and the documented wine match.",
+     "model": "Culatello is the 'king of salumi' — the leanest hind-leg muscle, aged 12+ months in the misty Po Valley. We serve it with rockmelon compressed in basil syrup, calabrese-caviar stuffed Losada olives and hand-rolled rosemary & parmesan grissini. The notes pair it with the DUBL Rosato or Champagne. $30."
+    },
+    {
+     "q": "Talk me through the dolci list — every dessert, its price, and one selling detail each.",
+     "model": "Soufflé al cioccolato ($27) — fig, Fernet Branca, pine nut, 20-minute lead. Tiramisu ($24) — pavesini, mascarpone, a lift of Strega. Semifreddo ($24) — caramelised banana, fennel butterscotch, GF. Formaggio dal carrello ($32/$54) — today's wheel from the trolley. And the chocolatini arrive as the final touch — never printed, always a gift."
+    },
+    {
+     "q": "Three whites, three guests: (a) 'I drink Pinot Grigio', (b) 'I love Chablis', (c) 'rich, buttery Chardonnay please'. Name producer & region for each.",
+     "model": "(a) Manni Nossing Müller-Thurgau, Alto Adige — 'a great alternative to Pinot Grigio, light and crisp.' (b) Claudio Mariotto 'Cavallina' Timorasso, Colli Tortonesi — the notes literally say 'Chablis lovers.' (c) Tapanappa Tiers Vineyard Chardonnay, Adelaide Hills — rich, buttery, elegant."
+    },
+    {
+     "q": "The MARTINI FLORENTINO — gin, vermouth, the serve, the garnish — and the one-line story behind it.",
+     "model": "Four Pillars 'Olive Leaf' gin, Cocchi Extra Dry vermouth, filtered water — a freezer pour into a classic martini glass, lemon twist and olives. Every one of our venues serves its own variation on this martini, each with a vermouth that speaks to the room."
+    },
+    {
+     "q": "HOUSE SPIRITS lightning round: what do we pour for Vodka, Gin, and Rye — producer, place, one flavour line each.",
+     "model": "Vodka: Vanishing Point, Melbourne — clean, smooth, subtle grain sweetness. Gin: Four Pillars, Yarra Valley — bright citrus, native botanicals. Rye: The Gospel Straight Rye, Brunswick — bold spice, pepper, dried fruit."
+    },
+    {
+     "q": "Prices, rapid fire: La Fiorentina, the caviar (both tins), the Cacciucco, the soufflé, the cheese trolley.",
+     "model": "Fiorentina $205 · Oscietra 30g $190 / Beluga $280 · Cacciucco $75 · Soufflé $27 · Formaggio $32 or $54 for the grand plate."
+    },
+    {
+     "q": "Write your 30-second table-side pitch that takes a hesitant couple from 'just mains' to a full opening course.",
+     "model": "Any warm, specific pitch works, e.g.: 'Before your mains — half a dozen oysters with salted mandarin and two glasses of the DUBL Rosato. Ten minutes of pure Italy while the kitchen works.' Must name a dish + a drink and sell the experience, not push."
+    },
+    {
+     "q": "A COELIAC guest sits down for bread, an entrée and a pasta. Walk me through what the Matrix allows — and name the one raw dish that is NOT coeliac-friendly and why.",
+     "model": "Bread: GF bread is available for the bread & butter. Entrée: the oysters, or the mushroom risotto as a safe primo. Pasta: the saffron spaghetti has a gluten-free pasta sub. The sea bream crudo is NOT coeliac-friendly — there's gluten in the shared fryer, so it can't be guaranteed. It all goes through Lightspeed with the subs."
+    }
+   ]
+  },
+  {
+   "key": "wkt2",
+   "icon": "2️⃣",
+   "label": "Test 2 · General Knowledge",
+   "focus": "A bit of everything — food, wine, cocktails, spirits & prices, in random order.",
+   "questions": [
+    {
+     "q": "A table asks 'how do the small starters work?' — walk them through the assaggini section with prices, ending on your recommendation.",
+     "model": "Assaggini are our small openers: oysters with salted mandarin ($8 each), the pumpkin tartelletta with Parmigiano and pumpkin-seed praline ($13), the duck liver parfait in a porcini cannolo ($13), the cozze smoked-mussel toast with whipped n'duja ($13), and the culatello board with melon, grissini and olives ($30). Then recommend one with confidence — e.g. 'start with half a dozen oysters while you browse.'"
+    },
+    {
+     "q": "Present the WAGYU: producer & marble score, what's on the plate — and the hidden allergen the Matrix flags.",
+     "model": "Bistecca of Sher MB9 Wagyu — black garlic, glazed carrot, Chianti sugo, $75. The trap: the black garlic purée CONTAINS ANCHOVY — a beef dish that is not fish-safe as served. Matrix sub: no black garlic, red wine vinaigrette, plain carrot."
+    },
+    {
+     "q": "The TIRAMISU and a pregnant guest — what does the Matrix flag, and what do you say?",
+     "model": "It's flagged for RAW EGG (no-raw-proteins column) and Strega (alcohol). Kind, discreet line: 'The tiramisu has raw egg and a touch of liqueur — may I steer you to the soufflé instead? It's the kitchen's pride.'"
+    },
+    {
+     "q": "Walk a vegan through dinner — the dedicated dishes, snack to dessert.",
+     "model": "Smoked tomato toast with pickled baby fennel to open, the wood-roasted eggplant with currant agrodolce and pine nuts, sopressini al ragù di porcini as the pasta, and poached quince with fig leaf & coconut sorbet to finish. A full journey, not a compromise."
+    },
+    {
+     "q": "'Dry, savoury bubbles — nothing sweet.' Your pour, with the story.",
+     "model": "The DUBL Rosato from Feudi di San Gregorio — Aglianico sparkling made méthode champenoise in Campania with Anselme Selosse's counsel; wild strawberry, violets, toasted brioche. The notes' exact WHO: 'anyone that likes dry, savoury bubbles.'"
+    },
+    {
+     "q": "The FIG LEAF NEGRONI — spec it exactly (every bottle), the serve, and sell it to a Negroni lover in two sentences.",
+     "model": "Four Pillars 'Rare Dry' gin, Lillet Blanc, Suze, Frangelico, Joseph Cartron apricot brandy and a fig leaf tincture — stirred, lowball, grapefruit coin. 'It's our white Negroni — Suze and fig leaf where the Campari would be. Aromatic, bittersweet, and nothing like anyone else's.'"
+    },
+    {
+     "q": "Same again for Tequila, Mezcal, Bourbon and Blended Scotch.",
+     "model": "Tequila blanco: Batanga, Jalisco — fresh agave, citrus, crisp. Mezcal: San Cosme, Oaxaca — light smoke, earthy, the approachable mezcal. Bourbon: Four Roses, Kentucky — vanilla, caramel, soft. Blended Scotch: Whyte & Mackay, Glasgow — light smoke, honey, smooth."
+    },
+    {
+     "q": "A booking of NINE wants Saturday dinner. Which menus can you offer them — names, courses, prices — and what is NOT for them?",
+     "model": "7+ bookings in the Dining Room go to the set menus: Menu Essenza — 5 courses, $200 — or Menu d'Autore — 7 courses, $260. The GROUP MENUS sheet ($165/$190 individual set/choice) is for FUNCTIONS in the Dining Room — and the Café/Ombra group menus don't apply here."
+    },
+    {
+     "q": "Write the exact line you'd use to sell a second bottle to a table mid-mains, without a hint of pressure.",
+     "model": "E.g.: 'You're getting to the good part of that bottle — shall I have its twin ready before the Fiorentina lands?' Any line that's warm, timed to the meal, and makes it easy to say yes earns full marks."
+    }
+   ]
+  },
+  {
+   "key": "wkt3",
+   "icon": "3️⃣",
+   "label": "Test 3 · General Knowledge",
+   "focus": "A bit of everything — food, wine, cocktails, spirits & prices, in random order.",
+   "questions": [
+    {
+     "q": "The COZZE toast — what's on it, where are the mussels from, and which allergens should ring in your head?",
+     "model": "Smoked Flinders Island mussels on toast with whipped n'duja and pickled baby fennel — finger food, $13. Flags: molluscs (shellfish), gluten in the toast, chilli and pork in the n'duja — the Matrix lists the subs (no n'duja, sub ricotta on some builds — check it)."
+    },
+    {
+     "q": "The SPAGHETTI ALLO ZAFFERANO — what's in it, and what does the Matrix offer for (a) a vegetarian and (b) a coeliac?",
+     "model": "Saffron spaghetti with king prawn and gremolata, $52. (a) Vegetarian: no prawns ('bugs'), no fish stock — zucchini and veg stock sub. (b) Coeliac: gluten-free pasta available. One dish, three guests — if you know the Matrix."
+    },
+    {
+     "q": "Sell me BOTH the brussels sprouts and the patate al forno — technique and what's in each — then flag what the Matrix says about each (subs included).",
+     "model": "Sprouts ($18): caramelised, folded with ham hock braised overnight in chicken stock, roasted chestnuts, crispy sage, verjuice currants — Matrix: no ham hock for vegetarian, no chestnuts for nuts, no butter for dairy-free. Patate ($18): Spud Sisters potatoes layered, pressed overnight, deep-fried golden, truffle mayonnaise piped on, San Rocco Collina Veneta to finish — Matrix: no truffle aioli for egg, no cheese for dairy-free."
+    },
+    {
+     "q": "The cheese moment: trolley vs gorgonzola dolce — present both and price the trolley options.",
+     "model": "The trolley: today's cheeses, condiments, cherry & walnut loaf — $32, or $54 for the grand selection. The gorgonzola dolce with pear & walnut torta and sweet vermouth is the plated cheese-dessert hybrid. 'Something savoury to land the meal?' catches the no-dessert guest."
+    },
+    {
+     "q": "Reds, three guests: (a) 'Burgundy Pinot drinker', (b) 'something light and Italian', (c) 'big Aussie red'. Producer & region each.",
+     "model": "(a) Colterenzio 'St.Daniel' Riserva Pinot Nero, Alto Adige — 'Burgundian style Pinot drinkers.' (b) Rainoldi 'San Gregorio' Nebbiolo, Valtellina — 'a great Pinot alternative, light red.' (c) Hickenbotham 'Trueman' Cabernet or the Fattoria di San Lorenzo Syrah — mature, deep, structured."
+    },
+    {
+     "q": "Present the 75 and the AMERICANO PESCA in one breath each — and say which guest gets which.",
+     "model": "The 75: Louis Roederer Champagne, Hine VSOP cognac, Italicus and lemon — 'a cocktail for wine lovers,' elegant and celebratory. The Americano Pesca: Rinquinquin peach, Cocchi Rosso, Campari, soda — low-ABV, bittersweet, built for the aperitivo hour or the guest pacing themselves."
+    },
+    {
+     "q": "A guest says 'surprise me with something smoky after dinner.' Two different right answers — give both, with the sell.",
+     "model": "San Cosme mezcal, Oaxaca — 'light smoke, earthy, the gentle way into mezcal.' Or the Athol Brose — Dalmore 12yr Scotch, oloroso, honey, whipped cream — 'a 1939 nightcap, rich but never cloying.' Origin + flavour = experience."
+    },
+    {
+     "q": "What are Essenza and Autore actually made of? Name the courses that differ.",
+     "model": "Both open with oysters, tartelletta, parfait cannoli + sourdough ritual, then crudo… Autore (7 courses, $260) adds the Cacciucco and the gorgonzola dolce torta ahead of the soufflé; Essenza (5 courses, $200) runs crudo → cappelletti → Wagyu → soufflé. Both close with sorbet and chocolatini, unprinted."
+    },
+    {
+     "q": "Your full 'last five minutes' script: dessert done, table glowing — write it.",
+     "model": "Any warm close that offers a digestivo/coffee, plants the return visit, and ends personally. E.g.: 'Two Athol Broses to land the night… and next time, ask me for the caviar story.' Specific + warm + forward-looking = full marks."
+    }
+   ]
+  },
+  {
+   "key": "wkt4",
+   "icon": "4️⃣",
+   "label": "Test 4 · General Knowledge",
+   "focus": "A bit of everything — food, wine, cocktails, spirits & prices, in random order.",
+   "questions": [
+    {
+     "q": "A guest loves squid ink pasta. Present the FREGOLA AL NERO — and name its allergen family.",
+     "model": "Fregola al nero di seppia — Sardinian pearl pasta in squid ink with arrow squid, preserved lemon and chilli, $38. Squid is a MOLLUSC — so 'no shellfish' rules it out; white wine in the base too. Offer the GF/DF saffron spaghetti as the alternative the Matrix suggests."
+    },
+    {
+     "q": "The CARAMELLE — shape, filling, garnish. Sell it to a vegetarian-leaning guest.",
+     "model": "Caramelle — 'candy-wrapped' pasta — filled with smoked onion and Jerusalem artichoke, finished with hazelnut, $34. 'Sweet smoked onion inside a silk pasta parcel, roasted hazelnuts on top — comfort with craft.' (Egg in the pasta; hazelnut is a listed sub.)"
+    },
+    {
+     "q": "The RISOTTO AI FUNGHI — mushroom, dietary status, and which guest you'd steer to it.",
+     "model": "'Hen of the Woods' mushroom risotto, $46, gluten-free as-is; vegetarian with no butter/cheese swaps per Matrix (white wine in the base — flag for halal). The comfort-seeker, the vegetarian, or the coeliac's safest primo."
+    },
+    {
+     "q": "A table wants steak but can't decide between the Wagyu, the Fiorentina and the T-bone conversation. Lay out the beef offer with prices and one confident steer.",
+     "model": "The Bistecca Wagyu Sher MB9 ($75) — rich, sauced, individual. La Fiorentina — 1kg O'Connor T-bone from Gippsland, carved tableside, built for two ($205). Then steer: 'For the two of you, the Fiorentina — it makes the night.'"
+    },
+    {
+     "q": "Banana semifreddo + a halal guest — what must you know?",
+     "model": "The semifreddo is set with GELATINE — the Matrix flags it red for halal (often pork-derived) with no sub. Guide them to the soufflé or tiramisu instead (checking the tiramisu's Strega for strict no-alcohol guests)."
+    },
+    {
+     "q": "Wine by the glass tonight: pick ONE — producer & region, three taste words — and name the current dish it sings with.",
+     "model": "Montenidoli 'Fiore' Vernaccia, San Gimignano — elegant, saline, precise — with the Cacciucco (the food notes name Vernaccia, Chardonnay or Timorasso). Rainoldi 'San Gregorio' Nebbiolo with the duck liver parfait also earns full marks — any real producer/region/dish match does."
+    },
+    {
+     "q": "Digestivi close: three different endings for three moods — name them.",
+     "model": "Athol Brose for the rich nightcap; a grappa or amaro for the classicist; the Braida Moscato d'Asti for the gently sweet finish. Espresso rides alongside any of them."
+    },
+    {
+     "q": "A guest asks 'why is the Fiorentina $205?' — answer with grace, no apology.",
+     "model": "E.g.: 'It's a full kilo of O'Connor Gippsland beef on the bone, dry-handled, carved at your table — dinner and theatre for two.' Value explained through origin, craft and experience — never defensiveness."
+    },
+    {
+     "q": "A guest with a SHELLFISH allergy asks which openers are safe. Sort the assaggini & antipasti fast.",
+     "model": "Off: oysters, cozze (molluscs), fregola (squid). Safe or adaptable: pumpkin tartelletta, parfait cannoli, culatello board, crudo (it's FISH, not shellfish — different family), caramelle, cappelletti. And it all still goes through Lightspeed with the ALLERGY line + seat."
+    },
+    {
+     "q": "Give three upsells you'd ACTUALLY say tableside — one cocktail, one wine, one dish. Origin + flavour = experience.",
+     "model": "Cocktail: 'An Americano Pesca to start — peach aperitif and Campari, light and elegant.' Wine: 'The Braida Moscato d'Asti with the soufflé — gently sparkling, dessert's best friend.' Dish: 'For two, La Fiorentina — our 1kg O'Connor T-bone, carved tableside.' Any specific, origin-led lines with warmth earn full marks."
+    }
+   ]
+  }
  ],
- cafe:[
-  {key:'wkt1',icon:'🍝',label:'Test 1 · Foundations',focus:'The signature dishes, the producers, the Matrix basics.',
-   questions:[
-    {q:"Present the ravioli doppio as if it's the main attraction: the two fillings, the sauce, and the producer behind the hazelnuts.",
-     model:"Two fillings in one ravioli — a mushroom mix (porcini, portobello, button) on one side and an oozy cacio e pepe of Pecorino Romano and black pepper on the other — finished in butter sauce with roasted hazelnuts from Pepo Farm in Victoria. $36 entrée / $48 main."},
-    {q:"Sell me BOTH the wood-fired broccolini and the finocchio salad — technique, what's in each — and tell me which one carries anchovy and what the Matrix sub is.",
-     model:"Broccolini ($19): cooked over the fire, warm bagna cauda — garlic, olive oil, butter, Cantabrian anchovies — toasted almonds. Finocchio ($17): shaved fennel, ricotta salata, Otway walnuts, peas, mint, lemon dressing. The anchovy is in the bagna cauda — Matrix sub: lemon dressing instead."},
-    {q:"A DAIRY-allergic guest wants the wood-fired scallop, then the rigatoni alla vodka. What does the Matrix say for each — and what do you do?",
-     model:"Scallop: yes, adapted — no n'duja & honey butter, sub EVOO. Rigatoni: no — the cream and buffalo mozzarella cannot come out, no substitution exists, so I guide them to another pasta. Every adapted dish gets its 'No ___ – sub ___' line in Lightspeed."},
-    {q:"The MARTINI ALTO — present it at the table: what's in it, how is it served, and who is it perfect for?",
-     model:"A 50:50 martini highball — Four Pillars 'Olive Leaf' gin and Cocchi Extra Dry with pear liqueur, olive brine and tonic, pre-carbonated, mini highball, olive & olive leaf. Perfect for G&T or vodka-soda drinkers looking to branch out."},
-    {q:"Wine by the glass with the pasta: name ONE red — producer & region, three taste words — and write the exact line you'd say.",
-     model:"Le Corti 'Chianti Classico' Sangiovese, Toscana — bright, savoury, food-driven. 'May I pour a glass of the Le Corti Chianti Classico with the rigatoni? It's made for pasta.' (La Palazzina Nebbiolo also earns full marks.)"},
-    {q:"The cotoletta has changed — what meat is it now, where does it come from, and what arrives on the plate with it?",
-     model:"Cotoletta di maiale: a brined, crumbed free-range pork loin cutlet on the bone (~200g) from Western Plains pork, between Ballarat and Geelong. Mixed cucumbers, pickled green tomatoes, shaved shallot, parsley, lemon cheek, garlic aioli. $48."},
-    {q:"Give three upsells you'd ACTUALLY say tableside — one cocktail, one wine, one dish. Origin + flavour = experience.",
-     model:"Cocktail: 'Start with a Bambino — our take on the Bamboo, Cocchi Americano and manzanilla with a hint of pineapple.' Wine: 'A glass of Vin Santo with the Bonet — Tuscany's amber dessert wine.' Dish: 'The gorgonzola arancini, wrapped in Ramarro Farm radicchio, are perfect to share while you decide.'"}
-   ]},
-  {key:'wkt2',icon:'🥩',label:'Test 2 · Primi, Pasta & Whites',focus:'Every starter and pasta, portions, and the whites & lighter cocktails.',
-   questions:[
-    {q:"Walk a table through the antipasti + primi with prices, ending on one confident recommendation.",
-     model:"Oysters rosé mignonette ($8ea), marinated olives ($10), gorgonzola arancini ($10ea), wood-fired scallop ($12ea), duck croquette ($14ea), lamb skewer ($16ea); then cured marlin ($35), beef tartare ($35), Jerusalem artichoke tart ($30), duck liver parfait ($30). Close with a confident steer — 'start with the arancini and two oysters each.'"},
-    {q:"The BEEF TARTARE — cut, seasoning, what it's served on, and the egg question a guest might ask.",
-     model:"Southern Ranges eye fillet, hand-cut, seasoned with anchovy, capers, shallots; woodfired capsicum aioli; served with a fried fennel-seed cracker (contains butter). The pepper aioli is egg-based — Matrix sub: plain aioli. $35."},
-    {q:"Portions: a guest asks 'entrée or main?' for the pastas. Give the ravioli and saccottini answer with both prices.",
-     model:"Ravioli doppio: 2 pieces entrée / 3 as a main — $36/$48. Short rib saccottini: 4 entrée / 6 main — $38/$50. (Tagliatelle $35/$49, rigatoni $34/$46.) Same craft, two appetites."},
-    {q:"Present the SMOKED MUSSEL TAGLIATELLE and the SHORT RIB SACCOTTINI in one breath each.",
-     model:"Tagliatelle: smoked Flinders mussels through fresh egg pasta in roasted-tomato butter — coastal and comforting. Saccottini: 'little sacks' from Emilia-Romagna filled with slow-braised short rib, Port veal jus, spicy gremolata — the winter hug of the menu."},
-    {q:"Three whites, three guests: (a) 'bright and zesty', (b) 'exactly a Pinot Grigio', (c) 'unoaked Chardonnay / Chablis style'. Producer & region each.",
-     model:"(a) The Next Hundred Years Riesling — 'bright and zesty' verbatim. (b) Corte Giara Pinot Grigio, Veneto — 'exactly what they're looking for.' (c) Canevaro Luca 'Piccolo' Timorasso, Derthona — 'a great alternative to Chablis or unoaked Chardonnay.'"},
-    {q:"The BLOODY MARY — build, the technique word, and its perfect moment.",
-     model:"Vanishing Point vodka, manzanilla sherry, tomato juice, Worcestershire, lemon, Tabasco, celery salt & pepper — THROWN, not shaken; celery garnish, Cortina highball. The all-day-dining classic — brunch or the long lunch opener."},
-    {q:"Present the ENZONI to a guest torn between a Negroni and something fresher.",
-     model:"'Gin sour meets Negroni' — Four Pillars Rare Dry, Campari, Chianti, raspberry, lemon. Created by Enzo Errico; ours swaps grapes for raspberries and Chianti as a nod to our Tuscan grill. Bitter AND bright — the best of both."},
-    {q:"A guest with a NUT allergy scans the pastas and starters. Sort them fast, subs included.",
-     model:"Watch: ravioli doppio (hazelnuts — sub available), artichoke tart (CASHEW in the custard — red, no sub), broccolini (almonds — sub). Clean: rigatoni, saccottini, tagliatelle, tartare, marlin, croquette. Confirm on Lightspeed with the ALLERGY line + seat."},
-    {q:"Write your 30-second pitch that turns 'two quick pastas' into a proper lunch (drink + side + finish).",
-     model:"Any warm structure: named glass with the pasta (Le Corti), one side (fennel or broccolini), a planted dessert ('save room — the tiramisu goes fast'). Specific, easy, zero pressure = full marks."}
-   ]},
-  {key:'wkt3',icon:'🔥',label:'Test 3 · The Grill, Reds & House Spirits',focus:'Dalla griglia by heart, the red list, the seven bottles.',
-   questions:[
-    {q:"DALLA GRIGLIA by heart: every cut, weight, origin and price.",
-     model:"Butterflied flathead, Corner Inlet VIC ($60) · 450g Barnsley lamb chop, Junee NSW ($54) · 180g Southern Ranges eye fillet MB2, Gippsland ($76) · 300g O'Connor scotch fillet, Gippsland ($80) · 180g Westholme Wagyu hanger, QLD ($75) · La Fiorentina 1kg O'Connor T-bone ($205)."},
-    {q:"The three grill sauces — name them and give one guest-facing line for each.",
-     model:"Mostarda alla Romana — 'fruit and fire, the Roman way.' Salsa verde — 'green, sharp, herbal — and yes, there's anchovy in it.' Sangiovese & bone marrow sugo — 'red wine and marrow, the steak's best friend.'"},
-    {q:"POLLO AL MATTONE — the story, the origin of the birds, and who you'd sell it to.",
-     model:"'Chicken under a brick' — Tuscan method, spatchcocked and pressed for maximum crisp skin, confit garlic and rosemary. Free-range birds from Bannockburn, near Geelong. $46 — the comfort-seeker's answer to the grill."},
-    {q:"PESCE ALLA LIVORNESE is $MP — what does that mean and how do you present it?",
-     model:"Market price — the fish changes with the day's catch. 'Today's fish is X, wood-fired with olives, fennel and chilli — today it's $Y.' Always check the pass before service; never guess the fish or the price."},
-    {q:"Reds, three guests: (a) 'light red, Pinot-ish', (b) 'I only drink Merlot', (c) 'a proper Aussie Syrah'. Producer & region each.",
-     model:"(a) Ocean Eight Pinot Noir, Mornington — 'anyone looking for a lighter red' — or La Palazzina Nebbiolo. (b) Ministry of Clouds Grenache, McLaren Vale — 'good for the Merlot lovers' — or the Annesanti Merlot itself, Umbria. (c) Diletto 'Westgate' Syrah, Grampians."},
-    {q:"HOUSE SPIRITS lightning round: Vodka, Gin, Rye — producer, place, flavour line.",
-     model:"Vanishing Point, Melbourne — clean, smooth, subtle grain sweetness. Four Pillars, Yarra Valley — bright citrus, native botanicals. The Gospel Straight Rye, Brunswick — bold spice, pepper, dried fruit."},
-    {q:"Same for Tequila, Mezcal, Bourbon, Blended Scotch.",
-     model:"Batanga blanco, Jalisco — fresh agave, crisp. San Cosme mezcal, Oaxaca — light smoke, approachable. Four Roses bourbon, Kentucky — vanilla, caramel, soft. Whyte & Mackay, Glasgow — light smoke, honey, smooth."},
-    {q:"The STINGRAY — spec, style, and its moment.",
-     model:"Gospel Straight Rye, Cocchi Rosso, Fernet Branca, chocolate bitters — stirred, lowball, mint and orange oil. A bold, bitter Manhattan twist — the whiskey lover's nightcap."},
-    {q:"Fries and a SEAFOOD-allergic guest — the conversation, honestly.",
-     model:"The shared fryer carries traces of seafood (and gluten, dairy, egg) — we never guarantee the fries for an allergy. Say it straight, offer the wood-fired sides instead (pumpkin, broccolini adapted), and log it on Lightspeed."},
-    {q:"Write the line that sells the 300g scotch fillet over the 180g eye fillet — without talking down either.",
-     model:"E.g.: 'The eye fillet is elegance; the scotch is generosity — 300g of O'Connor cube roll with real marbling. If you're hungry, the scotch is the night.' Specific, warm, both dishes honoured."}
-   ]},
-  {key:'wkt4',icon:'🍰',label:'Test 4 · Dolci, Prices & The Menus',focus:'The sweet close, every price, and which menu fits which table.',
-   questions:[
-    {q:"The dolci list by heart — every dessert, price, and one selling hook each.",
-     model:"Florentino Tiramisu ($24) — the classic, pavesini and mascarpone. Bonet Piemontese ($20) — dark chocolate terrine, warm rum caramel poured tableside, GF. Gelato alla nocciola ($20) — toasted hazelnuts, sea salt. Tre formaggi ($35) — pear & fennel paste. Affogato ($20) — tiramisu gelato, espresso, and the guest's choice of Amaretto, Frangelico or Kahlúa."},
-    {q:"MENU DEL GIORNO — structure, prices, and the one add-on rule.",
-     model:"2 courses $55 / 3 courses $65, from a fixed list (marlin, tartare, artichoke tart or parfait → rigatoni, pesce, pollo…) — and the 200g O'Connor striploin tagliata carries a +$10 supplement. The weekday lunch answer for the time-pressed."},
-    {q:"An office group of NINE books dinner. Which menus do you offer — and what do you NOT hand out?",
-     model:"7+ pax = group menus: the Shared Menu at $85pp (antipasto to dolce, family-style) or the Individual Choice at $98pp (30 pax or below). You do NOT hand out nine à la carte menus — house policy and better service."},
-    {q:"Kids menu by heart — every dish and price.",
-     model:"Pasta e burro $26 · Spaghetti bolognese $29 · 200g O'Connor bistecca & fries $48 · Filetto di pesce & fries $45. Fired fast, always first."},
-    {q:"The BONET's tableside moment — script it, then flag its dietary surprise.",
-     model:"'The Bonet is Piedmont's answer to chocolate — a dense terrine, and the warm rum caramel is poured right here at the table.' Surprise: it's GLUTEN-FREE as long as the amaretti stay off (Matrix: no amaretti biscuit) — a coeliac's chocolate moment."},
-    {q:"Prices rapid-fire: cotoletta, Fiorentina, scotch fillet, arancini, affogato, MDG 3 courses.",
-     model:"$48 · $205 · $80 · $10 each · $20 · $65."},
-    {q:"A coeliac guest wants a full lunch — starter, main, dessert. Build it from the Matrix.",
-     model:"Start: marlin (GF) or oysters. Main: anything dalla griglia (all GF) or pesce alla Livornese — mind the fries (fryer traces), go wood-fired pumpkin instead. Dessert: the Bonet without amaretti, or gelato. Logged with subs on Lightspeed."},
-    {q:"The AFFOGATO ritual — walk it through, including the choice you offer.",
-     model:"A scoop of tiramisu gelato, a shot of espresso poured over, caramelised cocoa nibs — and the guest picks their liqueur: Amaretto, Frangelico or Kahlúa. Dessert, coffee and digestivo in one glass, $20."},
-    {q:"'We're just here for coffee' at 3pm — write the gentle conversion line.",
-     model:"E.g.: 'Of course — and if the coffee needs company, the affogato is our 3pm institution: espresso over gelato. Dangerous knowledge.' Warm, zero pressure, one specific hook = full marks."},
-    {q:"Your favourite table of the week says 'we'll be back — when should we come?' Close it like a host.",
-     model:"Any answer that books the return: name a day, a dish to come back for ('Thursday — the saccottini day'), and a personal touch. The best upsell in hospitality is the next visit."}
-   ]}
+ "cafe": [
+  {
+   "key": "wkt1",
+   "icon": "1️⃣",
+   "label": "Test 1 · General Knowledge",
+   "focus": "A bit of everything — food, wine, cocktails, spirits & prices, in random order.",
+   "questions": [
+    {
+     "q": "Present the ravioli doppio as if it's the main attraction: the two fillings, the sauce, and the producer behind the hazelnuts.",
+     "model": "Two fillings in one ravioli — a mushroom mix (porcini, portobello, button) on one side and an oozy cacio e pepe of Pecorino Romano and black pepper on the other — finished in butter sauce with roasted hazelnuts from Pepo Farm in Victoria. $36 entrée / $48 main."
+    },
+    {
+     "q": "DALLA GRIGLIA by heart: every cut, weight, origin and price.",
+     "model": "Butterflied flathead, Corner Inlet VIC ($60) · 450g Barnsley lamb chop, Junee NSW ($54) · 180g Southern Ranges eye fillet MB2, Gippsland ($76) · 300g O'Connor scotch fillet, Gippsland ($80) · 180g Westholme Wagyu hanger, QLD ($75) · La Fiorentina 1kg O'Connor T-bone ($205)."
+    },
+    {
+     "q": "The dolci list by heart — every dessert, price, and one selling hook each.",
+     "model": "Florentino Tiramisu ($24) — the classic, pavesini and mascarpone. Bonet Piemontese ($20) — dark chocolate terrine, warm rum caramel poured tableside, GF. Gelato alla nocciola ($20) — toasted hazelnuts, sea salt. Tre formaggi ($35) — pear & fennel paste. Affogato ($20) — tiramisu gelato, espresso, and the guest's choice of Amaretto, Frangelico or Kahlúa."
+    },
+    {
+     "q": "Three whites, three guests: (a) 'bright and zesty', (b) 'exactly a Pinot Grigio', (c) 'unoaked Chardonnay / Chablis style'. Producer & region each.",
+     "model": "(a) The Next Hundred Years Riesling — 'bright and zesty' verbatim. (b) Corte Giara Pinot Grigio, Veneto — 'exactly what they're looking for.' (c) Canevaro Luca 'Piccolo' Timorasso, Derthona — 'a great alternative to Chablis or unoaked Chardonnay.'"
+    },
+    {
+     "q": "The MARTINI ALTO — present it at the table: what's in it, how is it served, and who is it perfect for?",
+     "model": "A 50:50 martini highball — Four Pillars 'Olive Leaf' gin and Cocchi Extra Dry with pear liqueur, olive brine and tonic, pre-carbonated, mini highball, olive & olive leaf. Perfect for G&T or vodka-soda drinkers looking to branch out."
+    },
+    {
+     "q": "HOUSE SPIRITS lightning round: Vodka, Gin, Rye — producer, place, flavour line.",
+     "model": "Vanishing Point, Melbourne — clean, smooth, subtle grain sweetness. Four Pillars, Yarra Valley — bright citrus, native botanicals. The Gospel Straight Rye, Brunswick — bold spice, pepper, dried fruit."
+    },
+    {
+     "q": "MENU DEL GIORNO — structure, prices, and the one add-on rule.",
+     "model": "2 courses $55 / 3 courses $65, from a fixed list (marlin, tartare, artichoke tart or parfait → rigatoni, pesce, pollo…) — and the 200g O'Connor striploin tagliata carries a +$10 supplement. The weekday lunch answer for the time-pressed."
+    },
+    {
+     "q": "Fries and a SEAFOOD-allergic guest — the conversation, honestly.",
+     "model": "The shared fryer carries traces of seafood (and gluten, dairy, egg) — we never guarantee the fries for an allergy. Say it straight, offer the wood-fired sides instead (pumpkin, broccolini adapted), and log it on Lightspeed."
+    },
+    {
+     "q": "Give three upsells you'd ACTUALLY say tableside — one cocktail, one wine, one dish. Origin + flavour = experience.",
+     "model": "Cocktail: 'Start with a Bambino — our take on the Bamboo, Cocchi Americano and manzanilla with a hint of pineapple.' Wine: 'A glass of Vin Santo with the Bonet — Tuscany's amber dessert wine.' Dish: 'The gorgonzola arancini, wrapped in Ramarro Farm radicchio, are perfect to share while you decide.'"
+    }
+   ]
+  },
+  {
+   "key": "wkt2",
+   "icon": "2️⃣",
+   "label": "Test 2 · General Knowledge",
+   "focus": "A bit of everything — food, wine, cocktails, spirits & prices, in random order.",
+   "questions": [
+    {
+     "q": "Walk a table through the antipasti + primi with prices, ending on one confident recommendation.",
+     "model": "Oysters rosé mignonette ($8ea), marinated olives ($10), gorgonzola arancini ($10ea), wood-fired scallop ($12ea), duck croquette ($14ea), lamb skewer ($16ea); then cured marlin ($35), beef tartare ($35), Jerusalem artichoke tart ($30), duck liver parfait ($30). Close with a confident steer — 'start with the arancini and two oysters each.'"
+    },
+    {
+     "q": "The cotoletta has changed — what meat is it now, where does it come from, and what arrives on the plate with it?",
+     "model": "Cotoletta di maiale: a brined, crumbed free-range pork loin cutlet on the bone (~200g) from Western Plains pork, between Ballarat and Geelong. Mixed cucumbers, pickled green tomatoes, shaved shallot, parsley, lemon cheek, garlic aioli. $48."
+    },
+    {
+     "q": "The BONET's tableside moment — script it, then flag its dietary surprise.",
+     "model": "'The Bonet is Piedmont's answer to chocolate — a dense terrine, and the warm rum caramel is poured right here at the table.' Surprise: it's GLUTEN-FREE as long as the amaretti stay off (Matrix: no amaretti biscuit) — a coeliac's chocolate moment."
+    },
+    {
+     "q": "Wine by the glass with the pasta: name ONE red — producer & region, three taste words — and write the exact line you'd say.",
+     "model": "Le Corti 'Chianti Classico' Sangiovese, Toscana — bright, savoury, food-driven. 'May I pour a glass of the Le Corti Chianti Classico with the rigatoni? It's made for pasta.' (La Palazzina Nebbiolo also earns full marks.)"
+    },
+    {
+     "q": "The BLOODY MARY — build, the technique word, and its perfect moment.",
+     "model": "Vanishing Point vodka, manzanilla sherry, tomato juice, Worcestershire, lemon, Tabasco, celery salt & pepper — THROWN, not shaken; celery garnish, Cortina highball. The all-day-dining classic — brunch or the long lunch opener."
+    },
+    {
+     "q": "Same for Tequila, Mezcal, Bourbon, Blended Scotch.",
+     "model": "Batanga blanco, Jalisco — fresh agave, crisp. San Cosme mezcal, Oaxaca — light smoke, approachable. Four Roses bourbon, Kentucky — vanilla, caramel, soft. Whyte & Mackay, Glasgow — light smoke, honey, smooth."
+    },
+    {
+     "q": "Kids menu by heart — every dish and price.",
+     "model": "Pasta e burro $26 · Spaghetti bolognese $29 · 200g O'Connor bistecca & fries $48 · Filetto di pesce & fries $45. Fired fast, always first."
+    },
+    {
+     "q": "A DAIRY-allergic guest wants the wood-fired scallop, then the rigatoni alla vodka. What does the Matrix say for each — and what do you do?",
+     "model": "Scallop: yes, adapted — no n'duja & honey butter, sub EVOO. Rigatoni: no — the cream and buffalo mozzarella cannot come out, no substitution exists, so I guide them to another pasta. Every adapted dish gets its 'No ___ – sub ___' line in Lightspeed."
+    },
+    {
+     "q": "Write your 30-second pitch that turns 'two quick pastas' into a proper lunch (drink + side + finish).",
+     "model": "Any warm structure: named glass with the pasta (Le Corti), one side (fennel or broccolini), a planted dessert ('save room — the tiramisu goes fast'). Specific, easy, zero pressure = full marks."
+    }
+   ]
+  },
+  {
+   "key": "wkt3",
+   "icon": "3️⃣",
+   "label": "Test 3 · General Knowledge",
+   "focus": "A bit of everything — food, wine, cocktails, spirits & prices, in random order.",
+   "questions": [
+    {
+     "q": "The BEEF TARTARE — cut, seasoning, what it's served on, and the egg question a guest might ask.",
+     "model": "Southern Ranges eye fillet, hand-cut, seasoned with anchovy, capers, shallots; woodfired capsicum aioli; served with a fried fennel-seed cracker (contains butter). The pepper aioli is egg-based — Matrix sub: plain aioli. $35."
+    },
+    {
+     "q": "The three grill sauces — name them and give one guest-facing line for each.",
+     "model": "Mostarda alla Romana — 'fruit and fire, the Roman way.' Salsa verde — 'green, sharp, herbal — and yes, there's anchovy in it.' Sangiovese & bone marrow sugo — 'red wine and marrow, the steak's best friend.'"
+    },
+    {
+     "q": "POLLO AL MATTONE — the story, the origin of the birds, and who you'd sell it to.",
+     "model": "'Chicken under a brick' — Tuscan method, spatchcocked and pressed for maximum crisp skin, confit garlic and rosemary. Free-range birds from Bannockburn, near Geelong. $46 — the comfort-seeker's answer to the grill."
+    },
+    {
+     "q": "The AFFOGATO ritual — walk it through, including the choice you offer.",
+     "model": "A scoop of tiramisu gelato, a shot of espresso poured over, caramelised cocoa nibs — and the guest picks their liqueur: Amaretto, Frangelico or Kahlúa. Dessert, coffee and digestivo in one glass, $20."
+    },
+    {
+     "q": "Reds, three guests: (a) 'light red, Pinot-ish', (b) 'I only drink Merlot', (c) 'a proper Aussie Syrah'. Producer & region each.",
+     "model": "(a) Ocean Eight Pinot Noir, Mornington — 'anyone looking for a lighter red' — or La Palazzina Nebbiolo. (b) Ministry of Clouds Grenache, McLaren Vale — 'good for the Merlot lovers' — or the Annesanti Merlot itself, Umbria. (c) Diletto 'Westgate' Syrah, Grampians."
+    },
+    {
+     "q": "Present the ENZONI to a guest torn between a Negroni and something fresher.",
+     "model": "'Gin sour meets Negroni' — Four Pillars Rare Dry, Campari, Chianti, raspberry, lemon. Created by Enzo Errico; ours swaps grapes for raspberries and Chianti as a nod to our Tuscan grill. Bitter AND bright — the best of both."
+    },
+    {
+     "q": "An office group of NINE books dinner. Which menus do you offer — and what do you NOT hand out?",
+     "model": "7+ pax = group menus: the Shared Menu at $85pp (antipasto to dolce, family-style) or the Individual Choice at $98pp (30 pax or below). You do NOT hand out nine à la carte menus — house policy and better service."
+    },
+    {
+     "q": "Prices rapid-fire: cotoletta, Fiorentina, scotch fillet, arancini, affogato, MDG 3 courses.",
+     "model": "$48 · $205 · $80 · $10 each · $20 · $65."
+    },
+    {
+     "q": "Write the line that sells the 300g scotch fillet over the 180g eye fillet — without talking down either.",
+     "model": "E.g.: 'The eye fillet is elegance; the scotch is generosity — 300g of O'Connor cube roll with real marbling. If you're hungry, the scotch is the night.' Specific, warm, both dishes honoured."
+    }
+   ]
+  },
+  {
+   "key": "wkt4",
+   "icon": "4️⃣",
+   "label": "Test 4 · General Knowledge",
+   "focus": "A bit of everything — food, wine, cocktails, spirits & prices, in random order.",
+   "questions": [
+    {
+     "q": "Portions: a guest asks 'entrée or main?' for the pastas. Give the ravioli and saccottini answer with both prices.",
+     "model": "Ravioli doppio: 2 pieces entrée / 3 as a main — $36/$48. Short rib saccottini: 4 entrée / 6 main — $38/$50. (Tagliatelle $35/$49, rigatoni $34/$46.) Same craft, two appetites."
+    },
+    {
+     "q": "Present the SMOKED MUSSEL TAGLIATELLE and the SHORT RIB SACCOTTINI in one breath each.",
+     "model": "Tagliatelle: smoked Flinders mussels through fresh egg pasta in roasted-tomato butter — coastal and comforting. Saccottini: 'little sacks' from Emilia-Romagna filled with slow-braised short rib, Port veal jus, spicy gremolata — the winter hug of the menu."
+    },
+    {
+     "q": "PESCE ALLA LIVORNESE is $MP — what does that mean and how do you present it?",
+     "model": "Market price — the fish changes with the day's catch. 'Today's fish is X, wood-fired with olives, fennel and chilli — today it's $Y.' Always check the pass before service; never guess the fish or the price."
+    },
+    {
+     "q": "Sell me BOTH the wood-fired broccolini and the finocchio salad — technique, what's in each — and tell me which one carries anchovy and what the Matrix sub is.",
+     "model": "Broccolini ($19): cooked over the fire, warm bagna cauda — garlic, olive oil, butter, Cantabrian anchovies — toasted almonds. Finocchio ($17): shaved fennel, ricotta salata, Otway walnuts, peas, mint, lemon dressing. The anchovy is in the bagna cauda — Matrix sub: lemon dressing instead."
+    },
+    {
+     "q": "A guest with a NUT allergy scans the pastas and starters. Sort them fast, subs included.",
+     "model": "Watch: ravioli doppio (hazelnuts — sub available), artichoke tart (CASHEW in the custard — red, no sub), broccolini (almonds — sub). Clean: rigatoni, saccottini, tagliatelle, tartare, marlin, croquette. Confirm on Lightspeed with the ALLERGY line + seat."
+    },
+    {
+     "q": "A coeliac guest wants a full lunch — starter, main, dessert. Build it from the Matrix.",
+     "model": "Start: marlin (GF) or oysters. Main: anything dalla griglia (all GF) or pesce alla Livornese — mind the fries (fryer traces), go wood-fired pumpkin instead. Dessert: the Bonet without amaretti, or gelato. Logged with subs on Lightspeed."
+    },
+    {
+     "q": "The STINGRAY — spec, style, and its moment.",
+     "model": "Gospel Straight Rye, Cocchi Rosso, Fernet Branca, chocolate bitters — stirred, lowball, mint and orange oil. A bold, bitter Manhattan twist — the whiskey lover's nightcap."
+    },
+    {
+     "q": "Two wine moments: the guest having the pesce, and the guest having the Bonet. Name both pours — producer & the notes' words.",
+     "model": "Fontaleoni Vernaccia, San Gimignano — 'great for anyone having seafood.' And the Terre Natuzzi Vin Santo del Chianti with the Bonet — Tuscany's amber dessert wine, honey against warm chocolate."
+    },
+    {
+     "q": "'We're just here for coffee' at 3pm — write the gentle conversion line.",
+     "model": "E.g.: 'Of course — and if the coffee needs company, the affogato is our 3pm institution: espresso over gelato. Dangerous knowledge.' Warm, zero pressure, one specific hook = full marks."
+    },
+    {
+     "q": "Your favourite table of the week says 'we'll be back — when should we come?' Close it like a host.",
+     "model": "Any answer that books the return: name a day, a dish to come back for ('Thursday — the saccottini day'), and a personal touch. The best upsell in hospitality is the next visit."
+    }
+   ]
+  }
  ],
- cb:null
+ "cb": null
 };
 
 /* ============================================================
@@ -1503,12 +1703,12 @@ const DIALOGUE_DATA={
       {t:'"And all three sides, obviously — you\'ll want everything."',sat:-6,rev:50,rt:'NEVER',fb:'Pushing the whole list reads as selling, not guiding. The check grew, the trust didn\'t.'},
       {t:'Say nothing — the steak is big enough.',sat:0,rev:0,rt:'WEAK',fb:'Every main deserves a side suggestion. That\'s the standard.'}
      ]},
-    {guest:'Mains are down, the mood is glowing. Halfway through the plates.',
+    {guest:'The order is nearly closed — menus about to leave the table.',
      ch:[
-      {t:'"Our soufflé needs a little preparation — if it appeals, I can have the kitchen begin one now so it\'s perfectly timed."',sat:10,rev:27,rt:'PERFECT',fb:'Dessert planted BEFORE they\'re full — with a built-in reason to say yes now.'},
-      {t:'"And save a thought for the cheese trolley — today\'s wheel is glorious."',sat:8,rev:32,rt:'PERFECT',fb:'The savoury path catches the "not sweet" couple. $32.'},
-      {t:'Wait until the plates are cleared, then bring the dessert menu.',sat:2,rev:0,rt:'WEAK',fb:'Decisions on a full stomach skew to "no".'},
-      {t:'Drop the bill folder on the corner of the table to save time.',sat:-12,rev:0,rt:'NEVER',fb:'You just ended their anniversary.'}
+      {t:'"And to finish — the soufflé needs twenty minutes, so we order it now and it lands perfectly after your mains."',sat:10,rev:27,rt:'PERFECT',fb:'House standard: the FULL order up front — starters, mains, sides, and the soufflé with its lead time.'},
+      {t:'"Shall I note the cheese trolley to finish? Today\'s wheel is glorious."',sat:8,rev:32,rt:'PERFECT',fb:'The savoury close, secured at order time. $32.'},
+      {t:'Close the order — dessert can wait until later.',sat:2,rev:0,rt:'WEAK',fb:'For the soufflé, later is too late — 20 minutes of lead time ordered now is the whole trick.'},
+      {t:'"You won\'t have room for dessert after the Fiorentina anyway."',sat:-8,rev:0,rt:'NEVER',fb:'Never decide "no" for the guest.'}
      ]},
     {guest:'Dessert is finished. They\'re lingering, in no rush to leave.',
      ch:[
@@ -1549,12 +1749,12 @@ const DIALOGUE_DATA={
       {t:'Leave sides off — the mains are generous.',sat:0,rev:0,rt:'WEAK',fb:'Big tables expect abundance. Sides ARE the abundance.'},
       {t:'"Do you want any sides or whatever?"',sat:-3,rev:18,rt:'NEVER',fb:'"Or whatever" — you talked yourself out of your own recommendation.'}
      ]},
-    {guest:'Plates cleared. Someone says "I couldn\'t possibly…" while eyeing the dessert menu.',
+    {guest:'The host wraps up the order: "…and should we sort dessert now too?"',
      ch:[
-      {t:'"Four soufflés take twenty minutes — say the word now and they arrive with your coffees, perfectly timed."',sat:11,rev:108,rt:'PERFECT',fb:'"I couldn\'t possibly" means "convince me". 4 × $27, ordered at the right moment.'},
-      {t:'"One soufflé, four spoons — and the tiramisu for balance?"',sat:9,rev:51,rt:'PERFECT',fb:'Sharing lowers the barrier — a generous, easy yes.'},
-      {t:'Bring dessert menus and step away.',sat:4,rev:48,rt:'GOOD',fb:'Fine — but the theatrical moment was yours to make.'},
-      {t:'Start clearing and bring the bill folder.',sat:-8,rev:0,rt:'NEVER',fb:'The night wasn\'t over. Never call it for them.'}
+      {t:'"Absolutely — four soufflés, ordered now: they take twenty minutes, so they\'ll land with your coffees, perfectly timed."',sat:11,rev:108,rt:'PERFECT',fb:'Full order up front, lead time turned into theatre. 4 × $27.'},
+      {t:'"One soufflé to share and the tiramisu for balance — locked in now."',sat:9,rev:51,rt:'PERFECT',fb:'The generous sharing version, secured at order time. Equally right.'},
+      {t:'"Let\'s see how you feel after the mains."',sat:4,rev:0,rt:'GOOD',fb:'Gentle — but the soufflé can\'t be a late decision, and "later" often becomes "no".'},
+      {t:'"You\'ll be too full, trust me."',sat:-8,rev:0,rt:'NEVER',fb:'Never decide "no" for the guest.'}
      ]}
    ]},
   {key:'business',icon:'💼',name:'The Business Lunch',desc:'Four suits, 75 minutes, one decision-maker.',
@@ -1729,7 +1929,7 @@ const DIALOGUE_DATA={
       {t:'"The antipasti section is all good."',sat:2,rev:0,rt:'WEAK',fb:'They asked for a decision, not a region.'},
       {t:'"Depends how hungry you are, I guess."',sat:-3,rev:0,rt:'NEVER',fb:'You handed the awkwardness back to them.'}
      ]},
-    {guest:'Starters are a hit. "And for mains — what would YOU have?"',
+    {guest:'Same order, menus still open: "And for mains — what would YOU have?"',
      ch:[
       {t:'"The eye fillet with the sangiovese & bone marrow sugo, and the butterflied flathead — steak and fire-cooked fish, best of both."',sat:11,rev:136,rt:'PERFECT',fb:'$76 + $60, confidently told. They wanted YOUR call.'},
       {t:'"The pork cotoletta and the ravioli doppio — comfort on one side, craft on the other. And the broccolini between you."',sat:10,rev:103,rt:'PERFECT',fb:'$48 + $36 + $19 — a warmer road to the same place.'},
@@ -1798,14 +1998,14 @@ const GROW_DATA={
       {t:'"The patate al forno and the brussels sprouts — the table needs both."',q:2,acc:70,rev:36,fb:'A side for every main. $18 + $18 at the perfect moment.'},
       {t:'"The insalata della casa cuts through beautifully."',q:2,acc:75,rev:14,fb:'One well-told side also wins — smaller, surer.'},
       {t:'Close the menus and fire the order.',q:0,acc:100,rev:0,fb:'The sides window closes with the menus.'}]},
-    {c:'Wine not yet discussed. Mains on the way.',o:[
+    {c:'The food order is closing — wine not yet discussed.',o:[
       {t:'"May I pair the table? A bottle that loves both plates."',q:2,acc:65,rev:70,fb:'Wine at ordering time is expected — the highest-value moment.'},
       {t:'"A glass each to match your mains?"',q:1,acc:75,rev:36,fb:'Real and accepted — the bottle was the fuller play.'},
       {t:'Drop the wine list and walk away.',q:0,acc:35,rev:40,fb:'The list without a guide converts poorly.'}]},
-    {c:'Mains half-eaten, mood glowing.',o:[
-      {t:'Plant the soufflé: "It needs 20 minutes — I can have the kitchen begin one now."',q:2,acc:60,rev:27,fb:'Planted before they\'re full, with a reason to say yes NOW — the $27 lands on this moment.'},
-      {t:'"Another glass while you finish?"',q:1,acc:45,rev:18,fb:'A fair mid-meal top-up.'},
-      {t:'Ask if they want the bill soon.',q:0,acc:100,rev:0,fb:'Bill talk mid-main ends the spending — and the mood.'}]}
+    {c:'Last call before the menus leave: dessert?',o:[
+      {t:'"The soufflé needs twenty minutes — order it now and it lands right after your mains."',q:2,acc:60,rev:27,fb:'House standard: the whole order up front — the soufflé\'s lead time is sold at order time, always.'},
+      {t:'"I\'ll check back on dessert after your mains."',q:1,acc:35,rev:24,fb:'Works for the tiramisu — but the soufflé can\'t be a late call, and "later" converts worse.'},
+      {t:'Close the order without mentioning dessert.',q:0,acc:100,rev:0,fb:'The dessert moment IS the order moment here.'}]}
   ]},
   {key:'pretheatre',icon:'🎭',name:'The Pre-Theatre Rush',base:0,label:'Two guests · curtain at 8:45 · seated 7:00',moments:[
     {c:'"We have theatre tickets — curtain at 8:45."',o:[
@@ -1970,11 +2170,11 @@ const GROW_DATA={
 const RIGHTCALL_DATA={
  dr:[
   {ctx:'🔥 Saturday · fully booked · kitchen slammed',q:'Table 12 will want the soufflé. When do you handle it?',
-   o:['At order time — sell it WITH the mains so the kitchen fires it on schedule','Mid-meal, once the mood is glowing','After clearing, with the dessert menus'],
-   why:'On a busy night there is no mid-meal window — the 20-minute soufflé is sold when the order goes in, or not at all.'},
-  {ctx:'🌙 Quiet Tuesday · half the room empty',q:'Same table, same soufflé. When now?',
-   o:['Mid-meal — plant it while they\'re glowing, the kitchen has room to fire on demand','At order time, same as always','Never — quiet nights are for quick tables'],
-   why:'With kitchen headroom, the mid-meal plant converts best: they\'re happy, not full, and the timing flexes around them. Context flips the answer.'},
+   o:['At order time — the full order goes in at once, soufflé included, so the kitchen fires on schedule','Mid-meal, once the mood is glowing','After clearing, with the dessert menus'],
+   why:'House standard: starters, mains, sides AND the soufflé are taken up front. On a slammed night the 20-minute lead time makes this non-negotiable.'},
+  {ctx:'🌙 Quiet Tuesday · half the room empty',q:'Same table, same soufflé. Does the quiet night change WHEN?',
+   o:['No — still at order time. What changes is HOW: you have time to sell it with the full story','Yes — plant it mid-meal instead, the kitchen has room','Yes — offer it after clearing, no rush tonight'],
+   why:'The procedure never moves — full order up front, always. The quiet room changes your STYLE (story, warmth, time), never the standard.'},
   {ctx:'🔥 Full room · 12 tickets on the pass',q:'A 4-top hesitates over entrées, menus open, service backing up.',
    o:['Decide for them, warmly: "The crudo and the tartelette — you\'ll love them." Order in, room keeps moving','Give them another five minutes','Send the sommelier over to chat wine first'],
    why:'On a packed night, confident guidance is kindness — to them AND to every other table in your section.'},
@@ -2251,11 +2451,15 @@ const GAMES={
     window._dg=function(el){
       if(S.gs.lock)return;S.gs.lock=true;
       const c=D.nodes[i].ch[+el.dataset.i];
-      sat=Math.max(0,Math.min(100,sat+c.sat));rev+=c.rev;pts+=PT[c.rt];
+      const gain=(c.rt==='PERFECT'||c.rt==='GOOD')?c.rev:0;
+      sat=Math.max(0,Math.min(100,sat+c.sat));rev+=gain;pts+=PT[c.rt];
+      /* refresh the on-screen check + mood immediately */
+      const amt=document.querySelector('.dm-check'); if(amt)amt.textContent='$'+rev;
+      setMeta(`<span class="pill">${i+1}/${D.nodes.length}</span><span class="pill gold">$${rev}</span>`);
       el.classList.add(c.rt==='PERFECT'?'correct':'wrong');
       el.innerHTML+=` <span class="rating-badge rating-${c.rt}">${c.rt}</span>`;
       const fb=document.getElementById('fb');
-      fb.innerHTML=`${c.rt==='PERFECT'?'🎯':(c.rt==='GOOD'?'👍':(c.rt==='WEAK'?'⚠️':'🚫'))} ${c.fb}${c.rev?` <strong style="color:var(--green)">+$${c.rev}</strong>`:''}`;
+      fb.innerHTML=`${c.rt==='PERFECT'?'🎯':(c.rt==='GOOD'?'👍':(c.rt==='WEAK'?'⚠️':'🚫'))} ${c.fb}${gain?` <strong style="color:var(--green)">+$${gain} on the check</strong>`:''}`;
       fb.classList.add('show');
       if(c.rt==='PERFECT')fb.classList.add('good');else if(c.rt==='NEVER')fb.classList.add('bad');
       else fb.style.background='rgba(255,193,7,.12)';
@@ -2263,12 +2467,24 @@ const GAMES={
     };
     function finish(){
       const maxPts=D.nodes.length*2;
+      const maxRev=D.nodes.reduce((a,n)=>a+Math.max.apply(null,n.ch.filter(c=>c.rt==='PERFECT'||c.rt==='GOOD').map(c=>c.rev).concat([0])),0);
+      const pct=Math.round(pts/maxPts*100);
       let ending,icon;
-      if(sat>=85&&rev>=D.maxRev*0.55){icon='🌟';ending='They book again before they leave. Table of the night — the experience and the check both soared.';}
+      if(sat>=85&&rev>=maxRev*0.55){icon='🌟';ending='They book again before they leave. Table of the night — the experience and the check both soared.';}
       else if(sat>=65){icon='🙂';ending='A good table. They left happy — but a few moments slipped past you.';}
       else{icon='😐';ending='The table left flat. Every guest line is an invitation — re-read the room.';}
-      showResult(pts,maxPts,'dialogue',`<div style="margin:10px 0;font-size:1rem;color:var(--navy)">${icon} ${D.name}: ${ending}</div>
-        <p style="color:#666;font-size:.9rem">Final check: <strong style="color:var(--gold)">$${rev}</strong> · Guest mood: <strong>${sat}/100</strong> · ${list.length>1?'Try the other tables — each teaches a different read.':''}</p>`);
+      saveProgress('dialogue',pct);
+      if(pct>=80)launchConfetti();
+      setArea(`<div class="result-card">
+        <div class="result-score">$${rev}</div>
+        <div class="result-label">you built <strong>$${rev}</strong> of a possible <strong>$${maxRev}</strong> at this table</div>
+        <div style="margin:8px 0;font-family:sans-serif;font-size:.85rem;color:#666">Guest mood <strong>${sat}/100</strong> · decision quality <strong style="color:${pct>=80?'var(--green)':'var(--gold)'}">${pct}%</strong> — saved to your record.</div>
+        <div class="result-msg">${icon} ${D.name}: ${ending}</div>
+        <div class="result-actions">
+          <button class="btn btn-outline" onclick="launchGame('dialogue')">🔄 ${list.length>1?'Another table':'Retry'}</button>
+          <button class="btn btn-green" onclick="exitGame()">← Back to games</button>
+        </div></div>`);
+      setMeta(`<span class="pill gold">$${rev}</span>`);
     }
     picker();
   },
@@ -2279,7 +2495,7 @@ const GAMES={
     let G=null,i=0,total=0,pts=0;
     function picker(){
       setMeta('');
-      setArea(`<div class="q-progress">Pick your service — realistic tables, realistic odds. Your score follows your <strong>decisions</strong>, not the dice.</div>
+      setArea(`<div class="q-progress">Pick your service — build the check from the first hello. Every good suggestion adds to the bill; weak moves add nothing.</div>
         <div class="rp-grid">${list.map((s,idx)=>`<div class="rp-card" data-i="${idx}" onclick="window._gsc(this)"><div class="rp-ic">${s.icon}</div><h3>${s.name}</h3><p>${s.label}</p></div>`).join('')}</div>`);
     }
     window._gsc=function(el){G=list[+el.dataset.i];i=0;total=G.base;pts=0;render();};
@@ -2297,14 +2513,24 @@ const GAMES={
       if(S.gs.lock)return;S.gs.lock=true;
       const o=G.moments[i].o[+el.dataset.i];
       pts+=o.q;
-      const accepted=o.rev>0&&(Math.random()*100)<o.acc;
-      if(accepted)total+=o.rev;
+      const gain=o.q>=1?o.rev:0;   /* only genuine sales add to the check — no dice */
+      total+=gain;
+      /* refresh the on-screen check immediately */
+      const amt=document.querySelector('.rev-amt'); if(amt)amt.textContent='$'+total;
+      setMeta(`<span class="pill gold">$${total}</span><span class="pill">${i+1}/${G.moments.length}</span>`);
       el.classList.add(o.q===2?'best':(o.q===1?'good':'miss'));
       document.querySelectorAll('.dopt').forEach(x=>{x.onclick=null;x.style.cursor='default';});
       const fb=document.getElementById('fb');
-      let roll='';
-      if(o.rev>0)roll=accepted?` 🎲 The guest says <strong>yes</strong> (+$${o.rev} · odds ${o.acc}%).`:` 🎲 This time they pass (odds were ${o.acc}%) — still the right call.`;
-      fb.innerHTML=`${o.q===2?'🎯':(o.q===1?'👍':'❌')} ${o.fb}${roll}`;
+      let extra='';
+      if(gain){
+        extra=`<div class="odds-wrap">
+          <div class="odds-verdict yes">✅ <b>+$${gain}</b> on the check</div>
+          ${o.acc<100?`<div class="odds-row"><span class="odds-lbl">Real-life acceptance</span><div class="odds-bar"><div class="odds-fill" style="width:${o.acc}%"></div></div><span class="odds-pct">~${o.acc}%</span></div>`:''}
+        </div>`;
+      }else{
+        extra=`<div class="odds-wrap"><div class="odds-verdict no">— <b>+$0</b> · the check doesn't move on this one</div></div>`;
+      }
+      fb.innerHTML=`${o.q===2?'🎯':(o.q===1?'👍':'❌')} ${o.fb}${extra}`;
       fb.classList.add('show');
       if(o.q===2)fb.classList.add('good');else if(o.q===0)fb.classList.add('bad');
       else fb.style.background='rgba(255,193,7,.12)';
@@ -2312,7 +2538,20 @@ const GAMES={
     };
     function finish(){
       const maxPts=G.moments.length*2;
-      showResult(pts,maxPts,'growcheck',`<p style="color:#666;font-size:.9rem">${G.name} — final check: <strong style="color:var(--gold)">$${total}</strong>${G.base?` (started at $${G.base})`:''}.<br>Score = decision quality; in real service, the odds do the rest. ${list.length>1?'Try another service!':''}</p>`);
+      const maxRev=G.base+G.moments.reduce((a,m)=>a+Math.max.apply(null,m.o.filter(o=>o.q>=1).map(o=>o.rev).concat([0])),0);
+      const pct=Math.round(pts/maxPts*100);
+      saveProgress('growcheck',pct);
+      if(pct>=80)launchConfetti();
+      setArea(`<div class="result-card">
+        <div class="result-score">$${total}</div>
+        <div class="result-label">you built <strong>$${total}</strong> of a possible <strong>$${maxRev}</strong> on this service</div>
+        <div style="margin:10px 0;font-family:sans-serif;font-size:.85rem;color:#666">${G.name} · decision quality <strong style="color:${pct>=80?'var(--green)':'var(--gold)'}">${pct}%</strong> — saved to your record.</div>
+        <div class="result-msg">${total>=maxRev*0.85?'🏆 Almost every dollar that was on the table.':(pct>=80?'🎉 Sharp calls — a few dollars slipped, the craft didn\'t.':'📚 The money was there — re-run the moments you missed.')}</div>
+        <div class="result-actions">
+          <button class="btn btn-outline" onclick="launchGame('growcheck')">🔄 ${list.length>1?'Another service':'Retry'}</button>
+          <button class="btn btn-green" onclick="exitGame()">← Back to games</button>
+        </div></div>`);
+      setMeta(`<span class="pill gold">$${total}</span>`);
     }
     picker();
   },
@@ -2489,7 +2728,7 @@ const GAMES={
     const venueFinal={
       dr:[
         {q:"La Fiorentina is:",options:["A 1kg bone-in T-bone meant to be shared","A 500g fillet","A rack of lamb","A short rib"],explanation:"Gippsland T-bone, carved tableside — the signature."},
-        {q:"The soufflé must be planted:",options:["Mid-meal — it needs a 20-minute lead time","After mains are cleared","Any time","Only for 4+ guests"],explanation:"Plant it while they're eating — the lead time is your reason to ask now."},
+        {q:"The soufflé is ordered:",options:["With the full order at the start — its 20-minute lead is timed off the mains","After the mains are cleared","Mid-meal, once the mood is right","Only on quiet nights"],explanation:"House standard: starters, mains, sides and the soufflé all go in together."},
         {q:"Best moment for the aperitivo suggestion:",options:["At arrival, before the order","With dessert","When the bill is requested","Mid-main"],explanation:"Arrival is the aperitivo moment — acceptance is never higher."},
         {q:"A guest says 'I don't drink red wine.' You:",options:["Ask a discovery question and guide them to a white or rosato","Insist the reds are special","Offer water","Repeat 'no red at all?'"],explanation:"Objection → discovery → personalised alternative. Never argue."}
       ],
