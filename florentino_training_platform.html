@@ -972,7 +972,7 @@ const SERVICE_READ = {
   <div class="rule">The standing rule: <strong>make at least one genuine recommendation at every table.</strong> Confidence comes from repetition.</div>`,
 
   venueNote:{
-    dr:`<div class="callout"><strong>In the Dining Room:</strong> this is fine dining — lead with the experience. Open with the oysters and a glass of Champagne, plant the soufflé before mains are cleared (20-min lead time), and pair to the food. La Fiorentina is your hero — built to be shared.</div>`,
+    dr:`<div class="callout"><strong>In the Dining Room:</strong> this is fine dining — lead with the experience. Water first, drinks lists down, then the sommelier opens the night from the Champagne trolley. Take the full order at once — soufflé included (20-min lead). La Fiorentina is your hero — built to be shared.</div>`,
     cafe:`<div class="callout"><strong>In the Café:</strong> the energy is relaxed but the technique is identical. Pick tonight's hero dish before service. "Save room — the tiramisu goes fast." Suggest a side with every main, and offer a glass that pairs with the pasta.</div>`,
     cb:`<div class="callout"><strong>In the Cellar Bar:</strong> lead with the wine. You're a curious, knowledgeable companion, not a salesperson. "Celebrating, or winding down?" Sell a bottle over two glasses by making the value visible. Anchor every visit with a snack pairing — "the Burrata with the Prosecco is magic."</div>`
   }
@@ -1655,7 +1655,7 @@ const PHIL_Q=[
   {q:"Guests spend more above all when they:",options:["Trust the server and see them as an expert","Are given the longest menu","Are left alone to decide","Feel rushed to order"],explanation:"People buy confidence more than products."},
   {q:"Which word paints the better picture?",options:["'Divine' instead of 'nice'","'Good' instead of 'fine'","'Available' instead of 'on the menu'","'Cheap' instead of 'affordable'"],explanation:"Vivid adjectives let guests taste the dish before it arrives."},
   {q:"The standing floor rule is:",options:["Make at least one genuine recommendation at every table","Always suggest the priciest wine","Never recommend unless asked","Describe the whole menu to everyone"],explanation:"Confidence comes from repetition — one real recommendation, every table."},
-  {q:"When should dessert be planted?",options:["Before the mains are finished","Only after the plates are cleared","Only if the guest asks","At the very start of the meal"],explanation:"Decisions on a full stomach skew to 'no' — plant early."},
+  {q:"When is dessert ideally taken?",options:["With the full order at the start — if not, return after the mains","Only once plates are cleared","Mid-main, when the mood peaks","Never before coffee"],explanation:"We aim to take everything at once (the soufflé needs its 20-minute lead) — the dessert return, when needed, happens after the mains."},
   {q:"A guest objects. You should:",options:["Never argue — guide them to an alternative","Insist the recommendation is correct","Drop the recommendation entirely","Tell them most guests disagree"],explanation:"Never argue, always guide."}
 ];
 const PHIL_VENUE={
@@ -1677,7 +1677,7 @@ const DIALOGUE_DATA={
    nodes:[
     {guest:'"It\'s our anniversary tonight, actually."',
      ch:[
-      {t:'"Congratulations! May I start you with a glass of Champagne — the Louis Roederer is beautiful tonight?"',sat:12,rev:50,rt:'PERFECT',fb:'Celebration spotted → mark the occasion AND open the journey.'},
+      {t:'"Congratulations! Still or sparkling for the table — and our sommelier is on his way with the Champagne trolley. The Roederer is beautiful tonight."',sat:12,rev:50,rt:'PERFECT',fb:'The house sequence, sold with occasion: water call, drinks lists, trolley. The night opens itself.'},
       {t:'"Wonderful — a cocktail to begin? Our Fig Leaf Negroni is a white Negroni with fig leaf, or the Americano Pesca if you\'d like lighter."',sat:10,rev:40,rt:'PERFECT',fb:'Also right — a confident, storied cocktail open works just as well as Champagne.'},
       {t:'"Lovely. Can I get you some still or sparkling water?"',sat:2,rev:0,rt:'WEAK',fb:'Warm, but you let the celebration moment pass.'},
       {t:'"Happy anniversary! Our most expensive Champagne is the vintage Roederer — shall I?"',sat:-8,rev:0,rt:'NEVER',fb:'Never sell on price. Recommend because it adds value.'}
@@ -1828,15 +1828,15 @@ const DIALOGUE_DATA={
    nodes:[
     {guest:'"We\'ve got a bit of time today for once!"',
      ch:[
-      {t:'"Then start properly — the gorgonzola arancini are perfect to share while you look at the menu. A glass of Prosecco with them?"',sat:12,rev:45,rt:'PERFECT',fb:'Time = permission. Shared starter ($10 each) + aperitivo immediately.'},
-      {t:'"In that case — three Martini Altos. Our 50:50 martini highball, pre-carbonated. You\'ve earned it."',sat:10,rev:54,rt:'PERFECT',fb:'A confident signature-cocktail open is just as right.'},
-      {t:'"Great — I\'ll give you a few minutes with the menu."',sat:2,rev:0,rt:'WEAK',fb:'They TOLD you they have time. That was an invitation.'},
+      {t:'"Then let\'s do it properly — still or sparkling to start, and a glass of Prosecco each while I get your lists?"',sat:12,rev:45,rt:'PERFECT',fb:'The house sequence with charm: water call, then the drinks order. Food menus come next.'},
+      {t:'"In that case — three Martini Altos. Our 50:50 martini highball, pre-carbonated. You\'ve earned it."',sat:10,rev:54,rt:'PERFECT',fb:'A confident signature-cocktail open is just as right — drinks first, always.'},
+      {t:'"Great — I\'ll give you a few minutes with the menu."',sat:2,rev:0,rt:'WEAK',fb:'They TOLD you they have time — and drinks come before menus anyway.'},
       {t:'"Our set lunch deal is the best value if you\'re staying a while."',sat:-4,rev:0,rt:'NEVER',fb:'Inventing offers we don\'t run erodes trust instantly.'}
      ]},
     {guest:'Two order pasta, one orders the cotoletta.',
      ch:[
       {t:'"Lovely — the shaved fennel salad cuts through the cotoletta beautifully. And a glass of the Le Corti Chianti Classico with the pasta?"',sat:10,rev:33,rt:'PERFECT',fb:'A side for every main + a glass that pairs. $17 + glass.'},
-      {t:'"For the table: the fennel salad AND the wood-fired broccolini — and two glasses of the Chianti for the pastas."',sat:10,rev:62,rt:'PERFECT',fb:'The generous version: $17 + $19 + two glasses. Both reads are right.'},
+      {t:'"To start: arancini for the table. Then the fennel salad with the cotoletta — and two glasses of the Chianti for the pastas."',sat:10,rev:73,rt:'PERFECT',fb:'The full-order version: starter + side + wine taken in ONE pass ($30 + $17 + 2 glasses). That\'s the house way.'},
       {t:'"Any sides with that?"',sat:4,rev:12,rt:'GOOD',fb:'Right instinct — but name the side and paint it.'},
       {t:'Ring it through as ordered.',sat:0,rev:0,rt:'WEAK',fb:'Every main deserves a side suggestion.'}
      ]},
@@ -1982,10 +1982,10 @@ const DIALOGUE_DATA={
 const GROW_DATA={
  dr:[
   {key:'saturday',icon:'🌙',name:'Saturday Night Two-Top',base:0,label:'Couple, just seated · nothing ordered yet',moments:[
-    {c:'They\'ve just sat down, menus closed, chatting.',o:[
-      {t:'"May I start you with a glass of Champagne while you decide?"',q:2,acc:70,rev:50,fb:'Arrival = aperitivo moment. Highest acceptance of the night.'},
-      {t:'"Still or sparkling water for the table?"',q:1,acc:90,rev:9,fb:'A real (small) yes — but the aperitivo was the bigger open.'},
-      {t:'Take the food order straight away.',q:0,acc:100,rev:0,fb:'Efficient, but you skipped the most accepted upsell of the night.'}]},
+    {c:'They\'ve just sat down. Your opening move?',o:[
+      {t:'"Still or sparkling? — and the wine and cocktail lists are here; our sommelier is coming round with the Champagne trolley."',q:2,acc:70,rev:50,fb:'THE house opening: water call, drinks lists down, trolley announced. Two glasses poured tableside.'},
+      {t:'"Still or sparkling for the table?" — and leave it there.',q:1,acc:90,rev:9,fb:'The right first question — but without the lists and the trolley, the night idles.'},
+      {t:'Go straight for the food order.',q:0,acc:100,rev:0,fb:'Wrong sequence: water → drinks lists → trolley → THEN food menus.'}]},
     {c:'Entrées: they hesitate between two starters.',o:[
       {t:'"Half a dozen oysters with salted mandarin — shall we start there?"',q:2,acc:65,rev:48,fb:'Hesitation = they want guidance. 6 × $8.'},
       {t:'"The crudo is beautiful tonight."',q:1,acc:55,rev:36,fb:'A real recommendation that lands — the shared open was just bigger.'},
@@ -2202,7 +2202,7 @@ const RIGHTCALL_DATA={
    o:['Tell the stories — the Bonet\'s tableside caramel, the affogato ritual. Sell the theatre','One quick line, same as the rush','Bring the menu and step away'],
    why:'Empty room = your stage. The storied sell converts higher AND builds regulars. Context decides.'},
   {ctx:'🔥 Kitchen on a 25-minute pasta wait',q:'A new table sits down hungry. Your move?',
-   o:['Sell the wait away: "Arancini to share — they land in five minutes while the pasta\'s made fresh."','Take the order and mention the wait apologetically','Hope they don\'t notice the wait'],
+   o:['Sell the wait away: "Drinks first — and arancini to share: they land in five minutes while the pasta\'s made fresh."','Take the order and mention the wait apologetically','Hope they don\'t notice the wait'],
    why:'A wait is a snack opportunity wearing a disguise. Fill it with $10 arancini and the table never feels it.'},
   {ctx:'👨‍👩‍👧 Family with young kids just seated',q:'Order of operations?',
    o:['Kids\' food first, fired immediately — then the adults order in peace','Everyone orders together, kitchen fires together','Adults first — they\'re paying'],
@@ -2729,7 +2729,7 @@ const GAMES={
       dr:[
         {q:"La Fiorentina is:",options:["A 1kg bone-in T-bone meant to be shared","A 500g fillet","A rack of lamb","A short rib"],explanation:"Gippsland T-bone, carved tableside — the signature."},
         {q:"The soufflé is ordered:",options:["With the full order at the start — its 20-minute lead is timed off the mains","After the mains are cleared","Mid-meal, once the mood is right","Only on quiet nights"],explanation:"House standard: starters, mains, sides and the soufflé all go in together."},
-        {q:"Best moment for the aperitivo suggestion:",options:["At arrival, before the order","With dessert","When the bill is requested","Mid-main"],explanation:"Arrival is the aperitivo moment — acceptance is never higher."},
+        {q:"In the Dining Room, sparkling by the glass arrives via:",options:["The Champagne trolley — the sommelier pours at the table, right after the water call","The bar, on request only","The food menu","It's not offered by the glass"],explanation:"Water question → drinks lists down → the sommelier rolls the trolley. That's the opening ritual."},
         {q:"A guest says 'I don't drink red wine.' You:",options:["Ask a discovery question and guide them to a white or rosato","Insist the reds are special","Offer water","Repeat 'no red at all?'"],explanation:"Objection → discovery → personalised alternative. Never argue."}
       ],
       cafe:[
